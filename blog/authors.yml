@@ -15,9 +15,20 @@ slorber:
   image_url: https://github.com/slorber.png
   page:
     # customize the url of the author page at /blog/authors/<permalink>
-    permalink: '/all-sebastien-lorber-articles'
+    permalink: "/all-sebastien-lorber-articles"
   socials:
     x: sebastienlorber
     linkedin: sebastienlorber
     github: slorber
     newsletter: https://thisweekinreact.com
+
+Sheetal:
+  name: Sheetalsingh
+  title: Software Engineer @ Glean
+  url: https://github.com/happycoder0011
+  image_url: https://github.com/sheetal.png
+  page:
+    permalink: "/all-sheetalsingh-articles"
+  socials:
+    x: sheetal_111
+    github: happycoder0011
