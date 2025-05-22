@@ -1,6 +1,8 @@
 ---
 title: UI Framework Performance Guide
-description: A beginner's guide to measuring and scaling UI framework performance
+slug: ui-framework-perfomance-guide
+authors: [Sheetal]
+tags: [frontend, UI]
 ---
 
 # Understanding UI Framework Performance
