@@ -17,3 +17,33 @@ hola:
   label: Hola
   permalink: /hola
   description: Hola tag description
+
+frontend:
+  label: Frontend
+  permalink: /frontend
+  description: Frontend tag description
+
+ui:
+  label: UI
+  permalink: /ui
+  description: UI tag description
+
+javascript:
+  label: JavaScript
+  permalink: /javascript
+  description: JavaScript tag description
+
+typescript:
+  label: TypeScript
+  permalink: /typescript
+  description: TypeScript tag description
+
+golang:
+  label: Go
+  permalink: /golang
+  description: Go tag description
+
+backend:
+  label: Backend
+  permalink: /backend
+  description: Backend tag description
