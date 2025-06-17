@@ -3,6 +3,12 @@
  * and scoped locally.
  */
 
+ .main-container {
+  background-color: #020303;
+  width: 100vw;
+  height: 100vh;
+ }
+
 .heroBanner {
   padding: 4rem 0;
   text-align: center;
