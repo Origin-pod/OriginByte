@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'OriginByte',
   tagline: 'Write it out',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/profile.jpg',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
@@ -17,8 +17,8 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Origin-Pod', // Usually your GitHub org/user name.
+  projectName: 'OriginByte', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -68,10 +68,10 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'SSR',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'My profile pic',
+        src: 'img/profile.jpg',
       },
       items: [
         {
@@ -82,7 +82,7 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/happycoder0011',
           label: 'GitHub',
           position: 'right',
         },
