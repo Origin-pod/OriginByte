@@ -1,0 +1,210 @@
+LuminaJS API Documentation
+.lum Single-File Components
+LuminaJS uses a single-file component format (\*.lum) similar to Vue’s SFCs, allowing markup, logic, and styling to be defined together
+vuejs.org
+. A .lum file may include <template>, <script>, and <style> blocks in one file. For example, a simple component could look like:
+
+<!-- MyComponent.lum -->
+<script>
+export default {
+  name: 'MyComponent',
+  props: { title: String }
+}
+</script>
+
+<template>
+  <h1>{{ title }}</h1>
+</template>
+
+<style>
+h1 { color: teal; }
+</style>
+
+In this .lum format, the <script> block (usually JavaScript or TypeScript) defines component logic (export default), the <template> block contains the HTML structure (with Lumina’s templating syntax), and <style> contains scoped CSS. This approach “encapsulate[s] the view, logic and styling of a component in the same file”
+vuejs.org
+, improving modularity and development experience. The Lumina compiler pre-processes .lum files into standard JS modules and CSS (like Vue’s compiler for .vue files
+vuejs.org
+). File Structure Example:
+src/pages/About.lum → ~/about route (renders About page)
+src/components/Header.lum – reusable component
+src/layouts/MainLayout.lum – a layout that can wrap pages (see Layouts below)
+Syntax: Lumina components export an object or class via export default in <script>, and reference props/state via template bindings (e.g. {{ title }}). The exact DSL may combine Vue/JSX/Vue-like syntax. Example Usage:
+
+<!-- src/pages/Home.lum -->
+<script>
+import Header from '../components/Header.lum';
+export default {
+  data() { return { message: 'Welcome to Lumina!' }; }
+}
+</script>
+
+<template>
+  <Header />
+  <p>{{ message }}</p>
+</template>
+
+<style>
+p { font-size: 1.2em; color: #333; }
+</style>
+
+State Management
+signal(initialValue)
+Description: LuminaJS provides a reactive state primitive called signal(), inspired by SolidJS. Calling signal(initialValue) returns a getter and setter pair for a reactive value
+docs.solidjs.com
+. The getter (e.g. count()) returns the current value, and the setter (e.g. setCount(newValue)) updates it. When the setter is used, any computed values or components depending on that signal automatically update (re-render)
+docs.solidjs.com
+. Parameters:
+initialValue (any) — the initial state value.
+Returns: An array [get, set] where get is a function returning the current value, and set is a function to update the value. Syntax:
+const [count, setCount] = signal(0);
+Example:
+// Define a counter signal
+const [count, setCount] = signal(0);
+
+// Read the current count
+console.log(count()); // 0
+
+// Update the count
+setCount(5);
+console.log(count()); // 5
+Here count() always yields the latest value. Calling setCount(next) updates the signal and triggers any dependent logic
+docs.solidjs.com
+.
+createContext(defaultValue)
+Description: LuminaJS implements context-based state sharing like React. The function createContext(defaultValue) creates a Context object. Components can provide a context value via <Context.Provider> and descendants can consume it. This works just like React’s Context API
+legacy.reactjs.org
+. Parameters:
+defaultValue (any) — the default context value if no Provider is set in the component tree.
+Returns: A Context object with .Provider. Syntax:
+const MyContext = createContext({ user: null });
+Example:
+// Create a context with a default user object
+const UserContext = createContext({ user: null });
+
+// In some parent component:
+return (
+<UserContext.Provider value={{ user: { name: 'Alice' } }}>
+<ChildComponent />
+</UserContext.Provider>
+);
+
+// In ChildComponent:
+const userContext = useContext(UserContext);
+console.log(userContext.user.name); // "Alice"
+This allows deeply nested components to access shared data without prop-drilling. The usage mirrors React’s React.createContext behavior
+legacy.reactjs.org
+(Lumina’s Provider broadcasts the value to all descendants)
+legacy.reactjs.org
+.
+Global Stores
+Description: For application-wide shared state, LuminaJS supports global stores – singletons that hold reactive data accessible from any component. In practice, you would export a reactive object (or signal) from a module and import it wherever needed. This follows the pattern of lifting shared state into a global store (as recommended by Vue and others
+vuejs.org
+). Usage: For example, one could create a reactive store:
+// store.js
+import { reactive } from 'lumina';
+export const store = reactive({ count: 0 });
+Then any component importing store sees the same reactive object. Changes to store.count will update all consumers. This effectively creates a “single source of truth” for shared data
+vuejs.org
+. (In LuminaJS, a helper like reactive() or even multiple signals may back this global store.) Example:
+// store.js
+export const store = { count: 0 }; // assume made reactive by Lumina
+
+// ComponentA.lum
+
+<script>
+import { store } from './store.js';
+function increment() { store.count++; }
+</script>
+<template>
+  <button @click="increment">Increment</button>
+</template>
+
+// ComponentB.lum
+
+<script>
+import { store } from './store.js';
+</script>
+<template>
+  <p>Count is: {{ store.count }}</p> 
+</template>
+Both components share store.count. Updating it in one instantly reflects in the other. This global store approach avoids prop-drilling and centralizes mutation logic
+vuejs.org
+.
+Routing, Layouts & Nested Routes
+LuminaJS uses file-based routing akin to frameworks like Astro and Next.js. Each .lum file under src/pages/ (or similar) becomes a route. For example, src/pages/index.lum maps to /, and src/pages/about.lum maps to /about. Nested folders create nested paths. Lumina supports dynamic routes via filename patterns (e.g. pages/blog/[slug].lum → /blog/:slug) just as Astro does
+docs.astro.build
+docs.astro.build
+.
+Example:
+src/pages/index.lum        → GET /
+src/pages/about.lum        → GET /about
+src/pages/blog/[id].lum    → GET /blog/123 (captures `id`)
+src/pages/products/[slug]/details.lum → GET /products/widget/details
+These file conventions automatically create the corresponding routes (no manual routing config needed)
+docs.astro.build
+. Lumina also supports nested layouts: you can define layout components (e.g. in a layouts/ folder) and wrap pages. A page file can import a layout or specify which layout to use, allowing common UI (headers, nav, etc.) to be shared across child routes.
+Layouts and Nested Routes: Lumina treats components in a layouts/ directory as wrappers. For example, a MainLayout.lum could be applied to all child pages. A page file might declare its layout or be placed inside a directory that uses a __layout.lum file (similar to SvelteKit/Next.js layouts). This enables deeply nested routing with layout inheritance (e.g. an admin layout for /admin/* routes). Handling Not-Found Routes: Lumina can handle undefined routes by providing a catch-all component (e.g. src/pages/[...404].lum or similar pattern), rendering a 404 page. This is analogous to frameworks that allow wildcard pages.
+CLI Commands
+LuminaJS includes a command-line interface for project scaffolding and development, similar to other frameworks’ CLIs
+nextjs.org
+. The primary commands are:
+lumina create <app-name> – Create a new Lumina project. This bootstraps a starter app in a new directory (or current directory) with default configuration. (Comparable to npx create-next-app in Next.js.)
+lumina dev – Start the development server. Runs Lumina in development mode with hot-reloading. By default it serves the app (often on http://localhost:3000) for testing. (This mirrors next dev or vite dev.)
+lumina build – Build for production. Bundles and optimizes the application for deployment (minifying code, generating static assets, etc.). As with other JS frameworks, this produces a dist/ or build/ folder ready to host. For example, Next.js’s next build “creates an optimized production build”
+nextjs.org
+ – Lumina’s lumina build serves the same purpose.
+Syntax:
+lumina create my-app    # scaffold a new project
+cd my-app
+lumina dev              # start dev server (hot-reloading)
+lumina build            # production build
+Usage Example:
+# Create a new Lumina app named "awesome"
+npx lumina create awesome
+cd awesome
+lumina dev
+After running lumina dev, the console will show a URL (e.g. localhost:3000). Changes to source files trigger live updates. When ready, running lumina build outputs the optimized app (minified JS/CSS) for deployment. These commands mirror common patterns in Next.js, Vite, etc.
+nextjs.org
+.
+Compiler & Plugin APIs
+LuminaJS includes a compiler that processes .lum components and applies plugins for custom behavior. Like Vite or Astro, developers can write plugins with hooks into the build pipeline. For example, Vite plugins use hooks such as transform or handleHotUpdate to manipulate code or assets
+vite.dev
+. Lumina’s plugin system will similarly offer lifecycle hooks during compilation (e.g. configuring dev server, transforming templates or JS, etc.), allowing extensions for things like custom directives, asset handling, or additional languages. Plugin Example (Pseudo-code):
+// lumina plugin example
+export default function myLuminaPlugin() {
+  return {
+    name: 'my-lumina-plugin',
+    transform(code, id) {
+      // modify component template or JS code
+      if (id.endsWith('.lum')) {
+        // e.g. replace a placeholder, inject a script, etc.
+        return code.replace('[[VERSION]]', process.env.VERSION);
+      }
+    }
+  };
+}
+In this example, the plugin’s transform hook gets each module’s code and filename. This is analogous to Vite’s transformIndexHtml hook for HTML (which receives the HTML string and context
+vite.dev
+). Lumina plugins could also hook into build start/end, server setup, or generate routes, following patterns from Astro’s integration hooks or Rollup/Vite plugin API.
+Template Parsing
+Under the hood, the Lumina compiler parses .lum templates into JavaScript render functions. This process is similar to how Vue’s SFC compiler works: Vue’s compiler-sfc converts the <template>, <script>, and <style> of a .vue file into an ES module that exports a render function
+vuejs.org
+. Lumina does the same for .lum: templates are compiled to efficient JS (often without runtime HTML parsing), and scoped CSS is extracted. The result is that after build, each .lum component becomes a standard JS module you can import.
+Hydration
+LuminaJS supports server-side rendering (SSR) and hydration. After an initial HTML page is rendered on the server, Lumina’s client-side scripts “hydrate” the page by attaching event listeners and making it interactive. In other words, the static HTML sent to the browser is “revived” into a live app. Hydration is “the process of turning static HTML code rendered on the server into an interactive application in the browser”
+debugbear.com
+. Lumina’s hydration mechanism runs on page load: it takes the server-rendered DOM and binds Lumina components’ logic to it. This allows fast first paint (server rendering) followed by interactivity (client hydration) – a model seen in frameworks like React, Svelte, and Astro
+debugbear.com
+dev.to
+. Lumina may offer directives (like client:load or similar) to control when and how components hydrate, akin to Astro’s partial hydration features. Related: You can link to similar concepts in other frameworks (see Astro Integrations API and Vite Plugin API). The APIs listed above are analogous to React’s Context, Solid’s reactivity, and file routing in Astro. For more details on each model, refer to the cited framework documentation. Sources: LuminaJS’s design borrows patterns from Vue SFCs
+vuejs.org
+, React Context
+legacy.reactjs.org
+, SolidJS reactivity
+docs.solidjs.com
+, Astro file-based routing
+docs.astro.build
+docs.astro.build
+, and Vite plugin hooks
+vite.dev
+. These sources illustrate the underlying ideas that LuminaJS integrates. All LuminaJS APIs should work together to provide a cohesive full-stack development experience.
