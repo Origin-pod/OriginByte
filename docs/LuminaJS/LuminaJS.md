@@ -30,10 +30,10 @@ A next-gen JavaScript framework combining the best of React, Vue, Svelte, Rails,
 
 | Goal                                | Metric                                      | Target                |
 | ----------------------------------- | ------------------------------------------- | --------------------- |
-| Fast build & load times             | Bundle size, TTI (Time to Interactive)      | Bundle <50KB, TTI <1s |
-| Excellent developer experience (DX) | Time to first “Hello World” demo            | <2 minutes            |
-| Progressive adoption                | % of core APIs requiring opt‑in config      | ≥80% default‑on       |
-| Reliability & stability             | Framework‑powered production incidents/year | ≤1                    |
+| Fast build & load times             | Bundle size, TTI (Time to Interactive)      | `<50KB`, `<1s>`       |
+| Excellent developer experience (DX) | Time to first “Hello World” demo            | `<2 minutes>`         |
+| Progressive adoption                | % of core APIs requiring opt‑in config      | `≥80% default‑on`     |
+| Reliability & stability             | Framework‑powered production incidents/year | `≤1`                  |
 | Community engagement                | GitHub stars, contributor count             | 5K stars, 50 contribs |
 
 ---
@@ -210,4 +210,4 @@ lumina-app/
 
 ---
 
-_Prepared by: \[Your Name], Date: June 22, 2025_
+_Prepared by: [Your Name], Date: June 22, 2025_
