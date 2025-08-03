@@ -268,3 +268,11 @@ This entire process happens in milliseconds, and the browser optimizes each step
 | **Layout**      | Render Tree  | Geometry (boxes & positions) |
 | **Paint**       | Layout boxes | Raster layers                |
 | **Composite**   | Layers       | Final image on screen        |
+
+#### Curious ?
+
+Now the question arises, how we used to do it without GPUs ?
+
+Let's explore that in the next article HTML to Pixel without GPUs...
+
+Stay tuned /
