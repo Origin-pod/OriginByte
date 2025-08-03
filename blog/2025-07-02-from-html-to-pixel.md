@@ -1,6 +1,6 @@
 ---
 slug: from-html-to-pixel
-title: From HTML to Pixel
+title: (1/n) From HTML to Pixel
 authors: [Sheetal]
 tags: [frontend, UI]
 ---

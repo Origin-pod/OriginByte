@@ -1,6 +1,6 @@
 ---
 slug: from-html-to-pixel-without-gpu
-title: From HTML to Pixel without GPU
+title: (2/n) From HTML to Pixel without GPU
 authors: [Sheetal]
 tags: [frontend, UI]
 ---
