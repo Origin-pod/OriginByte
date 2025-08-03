@@ -80,14 +80,10 @@ function LandingPage () {
           <div>
             I'm open to partnering on{' '}
             <span className="hovereffect">side projects,</span>{' '}
-            <span className="hovereffect">mentoring,</span>{' '}
             <span className="hovereffect">brainstorming,</span>{' '}
-            <span className="hovereffect">beta testing new products,</span>{' '}
-            <span className="hovereffect">freelance website development,</span>{' '}
+            <span className="hovereffect">beta testing,</span>{' '}
             <span className="hovereffect">technical writing,</span>{' '}
-            <span className="hovereffect">joining a book club,</span>{' '}
-            <span className="hovereffect">reviewing book proposals,</span>{' '}
-            <span className="hovereffect">and writing blog posts.</span>{' '}
+            <span className="hovereffect">joining a book club.</span>{' '}
           </div>
         </div>
       </div>
