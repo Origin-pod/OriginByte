@@ -33,7 +33,15 @@ const sidebars: SidebarsConfig = {
      {
       type: 'category',
       label: 'Random Explorations',
-      items: ['Random Explorations/Why-rails'],
+      items: ['Random Explorations/Why-rails',  {
+        type: 'category',
+        label: 'Browser',
+        items: [
+          'Random Explorations/Browser/BrowserInternals',
+          'Random Explorations/Browser/Rendering_Engine',
+          'Random Explorations/Browser/Rust-rendering-engine-and-framework',
+        ],
+      }] ,
     },
     {
       type: 'category',
