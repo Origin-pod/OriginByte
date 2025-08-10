@@ -1,0 +1,7 @@
+- Hophub - Ideation Phase
+- Devfolio - Ideation Phase ✅ Design ䷢
+- Setup a boilerplate for all your projects
+  - Auth
+  - Design System
+- Use n8n to generate workflows for yourself
+- Build an voice assistant over the n8n workflows to work like jarvis

@@ -1,0 +1,1 @@
+A project to Kind of social media for hobby partner seekers and do something like a social media dating app which will have proximity radar and can post hobby meetings and ask people to join. With ad filters and all that.
