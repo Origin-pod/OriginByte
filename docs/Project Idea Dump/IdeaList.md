@@ -3,5 +3,7 @@
 - Setup a boilerplate for all your projects
   - Auth
   - Design System
+  - Flagging
+  - Deployment
 - Use n8n to generate workflows for yourself
 - Build an voice assistant over the n8n workflows to work like jarvis
