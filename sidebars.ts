@@ -41,7 +41,16 @@ const sidebars: SidebarsConfig = {
           'Random Explorations/Browser/Rendering_Engine',
           'Random Explorations/Browser/Rust-rendering-engine-and-framework',
         ],
-      }] ,
+      }, {
+        type: 'category',
+        label: 'Databases',
+        items: [
+          'Random Explorations/Databases/basics',
+          'Random Explorations/Databases/database-diagrams',
+          'Random Explorations/Databases/practical-examples',
+        ],
+      },
+      ],
     },
     {
       type: 'category',

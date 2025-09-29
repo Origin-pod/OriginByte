@@ -1,4 +1,4 @@
-# Ideation
+<!-- # Ideation
 
 6th September 2025
 
@@ -84,4 +84,4 @@ What makes a programming language ?
   - Use the idiomatic archive to write using llms
     - Break down problem into HLD and LLD
     - Use the TDD to impelemnt the architecture
-    - Use the idiomatic archive to write meet the TDD criteria
+    - Use the idiomatic archive to write meet the TDD criteria -->
