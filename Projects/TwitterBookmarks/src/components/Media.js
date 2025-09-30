@@ -4,7 +4,7 @@ const Media = ({ media }) => {
   if (!media || media.length === 0) return null;
 
   return (
-    <div className="media-container">
+    <div className={`media-container ${media.length === 1 ? 'single-item' : ''}`}>
       {media.map((item, index) => {
         if (item.type === 'photo') {
           return (
