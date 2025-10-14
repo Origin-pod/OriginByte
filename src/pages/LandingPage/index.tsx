@@ -74,7 +74,7 @@ function LandingPage () {
             ,
           </h4>
           <h4>writing poetry, travelling places</h4>
-          <h4>& experiencing life.</h4>
+          <h4>& capturing moments</h4>
           <h4>Create . Cherish . Code . </h4>
           <br />
           <div>

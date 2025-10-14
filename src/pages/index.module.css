@@ -3,27 +3,55 @@
  * and scoped locally.
  */
 
- .main-container {
+.main-container {
   background-color: #020303;
-  width: 100vw;
-  height: 100vh;
- }
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
 
 .heroBanner {
-  padding: 4rem 0;
+  padding: clamp(2rem, 5vw, 4rem) 1rem;
   text-align: center;
   position: relative;
   overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-@media screen and (max-width: 996px) {
+@media screen and (max-width: 768px) {
   .heroBanner {
-    padding: 2rem;
+    padding: 1.5rem 1rem;
+  }
+  
+  .heroTitle {
+    font-size: 2rem;
+    line-height: 1.2;
   }
 }
 
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem;
 }
+
+.buttons a {
+  min-width: 120px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+}
+
+@supports (padding: max(0px)) {
+  .main-container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
