@@ -8,6 +8,13 @@ const config: Config = {
   title: 'OriginByte',
   tagline: 'Write it out',
   favicon: 'img/profile.jpg',
+  
+  // Prevent automatic browser opening
+  customFields: {
+    browser: {
+      open: false
+    }
+  },
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
@@ -65,6 +72,11 @@ const config: Config = {
   ],
 
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: false,
+    },
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {

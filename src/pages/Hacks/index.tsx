@@ -38,7 +38,7 @@ const projects = {
       technologies: ['Chrome Extension', 'AI/ML', 'Browser APIs'],
       date: '2023',
       status: 'In Progress',
-      link: '/hacks/twitter-bookmarks',
+      link: 'https://github.com/happycoder0011/Twitter-Bookmark-2.0',
       type: 'Personal Project'
     }
   ]
