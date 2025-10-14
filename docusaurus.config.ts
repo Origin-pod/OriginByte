@@ -80,6 +80,11 @@ const config: Config = {
           position: 'left',
           label: 'Notes',
         },
+        {
+          to: '/hacks',
+          position: 'left',
+          label: 'Hacks',
+        },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/happycoder0011',
