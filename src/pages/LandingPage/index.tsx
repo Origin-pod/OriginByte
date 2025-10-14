@@ -65,16 +65,36 @@ function LandingPage () {
         <div className="aboutme-section">
           <h4>Welcome to my world.</h4>
           <h4>Living my best life !!</h4>
-          <h4>writing code,</h4>
           <h4>
-            solving problem,{' '}
-            <span className="hovereffect" >
-              reading literature
-            </span>
-            ,
+            <a 
+              href="https://github.com/happycoder0011" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hovereffect"
+            >
+              Code for fun
+            </a>
           </h4>
-          <h4>writing poetry, travelling places</h4>
-          <h4>& capturing moments</h4>
+          <h4>
+            <a 
+              href="https://www.goodreads.com/review/list/166403141?shelf=%23ALL%23" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hovereffect"
+            >
+              Read books
+            </a>
+          </h4>
+          <h4>
+            <a 
+              href="https://www.instagram.com/pondertub/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hovereffect"
+            >
+              Capture moments
+            </a>
+          </h4>
           <h4>Create . Cherish . Code . </h4>
           <br />
           <div>
