@@ -72,6 +72,11 @@ const sidebars: SidebarsConfig = {
       label: 'Conf Talks Notes',
       items: ['Conf Talks Notes/an_introduction_to_residuality_theory'],
     },
+    {
+      type: 'category',
+      label: 'Research Paper',
+      items: ['Research Paper/Modeling_Code__Is_Text_All_You_Need'],
+    },
   ],
 };
 
