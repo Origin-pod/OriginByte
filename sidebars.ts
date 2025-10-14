@@ -75,7 +75,12 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Research Paper',
-      items: ['Research Paper/Modeling_Code__Is_Text_All_You_Need'],
+      items: [
+        'Research Paper/Modeling_Code__Is_Text_All_You_Need',
+        'Research Paper/CodeGRAG__Extracting_Composed_Syntax_Graphs',
+        'Research Paper/Talk_like_a_graph__Encoding_graphs_for_LLMs',
+        'Research Paper/CodeGraph__Enhancing_Graph_Reasoning_of_LLMs_with_Code',
+      ],
     },
   ],
 };
