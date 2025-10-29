@@ -8,7 +8,7 @@ const projects = {
       title: 'Fluent UI - Accessibility Improvements',
       description: 'Contributed accessibility fixes to Microsoft\'s Fluent UI component library',
       technologies: ['TypeScript', 'React', 'Accessibility'],
-      date: '2023',
+      date: '2025',
       link: 'https://github.com/microsoft/fluentui/pull/35300',
       type: 'Open Source Contribution'
     }
@@ -18,7 +18,7 @@ const projects = {
       title: 'Parseltongue',
       description: 'A Rust-based programming language for natural language processing and AI applications',
       technologies: ['Rust', 'NLP', 'Compiler Design'],
-      date: '2023',
+      date: '2025',
       link: 'https://github.com/that-in-rust/parseltongue',
       type: 'Research Project'
     }
@@ -28,7 +28,7 @@ const projects = {
       title: 'Vanish',
       description: 'A privacy-focused web extension that helps manage and protect your online presence',
       technologies: ['JavaScript', 'Browser Extensions', 'Privacy'],
-      date: '2023',
+      date: '2025',
       link: 'https://github.com/happycoder0011/Vanish',
       type: 'Personal Project'
     },
@@ -36,7 +36,7 @@ const projects = {
       title: 'Twitter Bookmarks 2.0',
       description: 'A smarter way to organize and retrieve your saved tweets and resources',
       technologies: ['Chrome Extension', 'AI/ML', 'Browser APIs'],
-      date: '2023',
+      date: '2025',
       status: 'In Progress',
       link: 'https://github.com/happycoder0011/Twitter-Bookmark-2.0',
       type: 'Personal Project'
