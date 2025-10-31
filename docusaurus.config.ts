@@ -8,7 +8,7 @@ const config: Config = {
   title: 'OriginByte',
   tagline: 'Write it out',
   favicon: 'img/profile.jpg',
-  
+  onBrokenLinks: 'warn', // or 'ignore'
   // Prevent automatic browser opening
   customFields: {
     browser: {
@@ -26,8 +26,6 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Origin-Pod', // Usually your GitHub org/user name.
   projectName: 'OriginByte', // Usually your repo name.
-
-  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
