@@ -62,10 +62,10 @@ Head gesture detection could provide a middle-ground solution - more affordable 
 
 | **Risk**                          | **Validation Method**                     | **Success Criteria**                     |
 | --------------------------------- | ----------------------------------------- | ---------------------------------------- |
-| **Technical Feasibility**         | Build proof-of-concept with MediaPipe     | >70% accuracy in good lighting conditions |
+| **Technical Feasibility**         | Build proof-of-concept with MediaPipe     | &gt;70% accuracy in good lighting conditions |
 | **User Acceptance**               | User interviews with accessibility users  | 60%+ prefer over voice alternatives      |
 | **Market Size**                   | Survey potential users, analyze competitors| 1K+ interested users in first month      |
-| **Reliability**                   | Extended testing in varied conditions     | <20% false positives per reading session |
+| **Reliability**                   | Extended testing in varied conditions     | &lt;20% false positives per reading session |
 
 ## 5. Features & Prioritization
 
@@ -96,17 +96,17 @@ Features prioritized using MoSCoW method (Must-have, Should-have, Could-have, Wo
 
 - **Input**: Webcam (480p+ resolution); supports 80% of laptops (e.g., via OpenCV).
 - **Output**: Rendered pages at 150 DPI; gesture events trigger UI updates.
-- **Integrations**: MediaPipe for pose estimation (local ML model, <50MB); PyMuPDF for PDFs; ebooklib for EPUBs.
+- **Integrations**: MediaPipe for pose estimation (local ML model, &lt;50MB); PyMuPDF for PDFs; ebooklib for EPUBs.
 
 ### Technical Reality Check
 
 | **Component**          | **Claim vs Reality**                                                                 |
 | ---------------------- | ------------------------------------------------------------------------------------ |
 | **MediaPipe Accuracy** | Claim: 95% → Reality: 70-80% in optimal conditions, 50-60% in poor lighting          |
-| **Latency**            | Claim: <100ms → Reality: 150-300ms on consumer hardware                              |
+| **Latency**            | Claim: &lt;100ms → Reality: 150-300ms on consumer hardware                              |
 | **False Positives**    | Not addressed → Reality: High during natural head movement while reading              |
 | **Lighting Dependency**| Not addressed → Reality: Major limiting factor for real-world usage                   |
-| **Resource Usage**     | Claim: <200MB RAM → Reality: 300-500MB with video processing                         |
+| **Resource Usage**     | Claim: &lt;200MB RAM → Reality: 300-500MB with video processing                         |
 
 ### Dependencies & Risks
 
@@ -144,7 +144,7 @@ Features prioritized using MoSCoW method (Must-have, Should-have, Could-have, Wo
 
 **Go/No-Go Criteria**:
 - 70%+ of interviewed users express strong interest in head gestures
-- Technical spike achieves >65% accuracy in normal lighting
+- Technical spike achieves &gt;65% accuracy in normal lighting
 - Clear differentiation from existing solutions identified
 
 ### Phase 1: MVP (Only if Phase 0 passes)
@@ -186,11 +186,11 @@ Features prioritized using MoSCoW method (Must-have, Should-have, Could-have, Wo
 
 ### If You Must Proceed
 
-**Minimum Viable Validation** (2 weeks, <40 hours):
+**Minimum Viable Validation** (2 weeks, &lt;40 hours):
 1. Build simple MediaPipe PoC (single gesture detection)
 2. Test with 10 accessibility users
 3. Compare against voice control alternatives
-4. Only proceed if >70% accuracy AND strong user preference
+4. Only proceed if &gt;70% accuracy AND strong user preference
 
 **Expected Outcome**: High probability of "no-go" decision based on technical and user research validation.
 

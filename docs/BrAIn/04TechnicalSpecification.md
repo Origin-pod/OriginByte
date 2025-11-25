@@ -290,8 +290,9 @@ voice.get('/stream', async (c) => {
 export default voice;
 ```
 
-Would you like me to continue with the remaining sections of the document?ebSocket Handler for Real-time Transcription
+WebSocket Handler for Real-time Transcription
 
+```typescript
 // src/websocket/transcription.ts
 export async function handleWebSocketStream(c) {
 const pair = new WebSocketPair()
@@ -327,6 +328,8 @@ const [client, server] = pair.ports
     })
 
 }
+
+```
 
 ⏺ 4. Cloudflare Pages Frontend Architecture
 
@@ -382,6 +385,7 @@ VITE_WS_URL = "wss://api.brain.ai.workers.dev"
 
 Voice Recording Component (Cloudflare Optimized)
 
+```typescript
 // src/components/voice/VoiceRecorder.tsx
 import { useState, useRef, useCallback } from 'react'
 import { useWebSocket } from '@/hooks/useWebSocket'
@@ -391,8 +395,7 @@ onTranscript: (text: string) => void
 onProcessingComplete: (result: ProcessingResult) => void
 }
 
-export default function VoiceRecorder({ onTranscript, onProcessingComplete }:
-VoiceRecorderProps) {
+export default function VoiceRecorder({ onTranscript, onProcessingComplete }: VoiceRecorderProps) {
 const [isRecording, setIsRecording] = useState(false)
 const [audioLevel, setAudioLevel] = useState(0)
 const mediaRecorderRef = useRef<MediaRecorder>()
@@ -515,8 +518,11 @@ const analyserRef = useRef<AnalyserNode>()
 
 }
 
+```
+
 WebSocket Hook for Cloudflare Workers
 
+```typescript
 // src/hooks/useWebSocket.ts
 import { useState, useEffect, useRef, useCallback } from 'react'
 

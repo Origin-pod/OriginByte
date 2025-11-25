@@ -8,6 +8,21 @@ and everything technical. This is a complex request that requires planning multi
 5. Frontend architecture
 6. Development roadmap
 
+Since this is a complex multi-step task, I should use the TodoWrite tool to plan and track this work. Let me create a comprehensive
+technical plan.
+
+The user wants to build this as a website first, so I'll focus on a web-based implementation while keeping in mind the mobile-first
+nature of the voice interface.
+
+Let me break this down into logical sections:
+
+1. User flows (core interactions)
+2. System architecture
+3. Database design
+4. API design
+5. Frontend architecture
+6. Development roadmap
+
 ## 1. User Flows
 
 ### Core User Flow
@@ -66,7 +81,7 @@ CREATE TABLE tasks (
   title TEXT NOT NULL,
   description TEXT,
   due_date TIMESTAMP WITH TIME ZONE,
-  status TEXT DEFAULT 'pending',
+  status TEXT DEFAULT 'pending', -- pending, completed, cancelled
   priority INTEGER DEFAULT 1,
   created_at TIMESTAMP DEFAULT NOW()
 );
@@ -130,13 +145,8 @@ function useVoiceRecorder() {
   const [transcript, setTranscript] = useState("");
   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
 
-  const startRecording = async () => { 
-    // Implementation here
-  };
-  
-  const stopRecording = async () => { 
-    // Implementation here
-  };
+  const startRecording = async () => { /* ... */ };
+  const stopRecording = async () => { /* ... */ };
   
   return { isRecording, transcript, startRecording, stopRecording };
 }
@@ -145,7 +155,7 @@ function useRealtimeTranscription() {
   const [transcript, setTranscript] = useState("");
   const websocket = useRef<WebSocket | null>(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     // Setup WebSocket connection
     return () => {
       // Cleanup
@@ -159,9 +169,8 @@ function useSemanticSearch() {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  const search = async (query: string) => { 
+  const search = async (query: string) => {
     // API call
-    return [];
   };
   
   return { searchResults, isSearching, search };
@@ -174,9 +183,9 @@ function useSemanticSearch() {
 import create from 'zustand';
 
 interface BrainState {
-  entries: any[];
-  addEntry: (entry: any) => void;
-  updateEntry: (id: string, updates: any) => void;
+  entries: Entry[];
+  addEntry: (entry: Omit<Entry, 'id' | 'createdAt'>) => void;
+  updateEntry: (id: string, updates: Partial<Entry>) => void;
   deleteEntry: (id: string) => void;
 }
 
@@ -184,18 +193,9 @@ const useStore = create<BrainState>((set) => ({
   entries: [],
   addEntry: (entry) =>
     set((state) => ({
-      entries: [...state.entries, { ...entry, id: Date.now().toString(), createdAt: new Date() }],
+      entries: [...state.entries, { ...entry, id: uuidv4(), createdAt: new Date() }],
     })),
-  updateEntry: (id, updates) =>
-    set((state) => ({
-      entries: state.entries.map((entry) =>
-        entry.id === id ? { ...entry, ...updates, updatedAt: new Date() } : entry
-      ),
-    })),
-  deleteEntry: (id) =>
-    set((state) => ({
-      entries: state.entries.filter((entry) => entry.id !== id),
-    })),
+  // ... other actions
 }));
 ```
 
@@ -225,12 +225,12 @@ src/
     └── brain-store.ts
 ```
 
-### MVP Feature Priority
+### 3. MVP Feature Priority
 
-- **Must-have**: Voice capture, transcription, basic search
-- **Should-have**: Task extraction, voice feedback
-- **Could-have**: Semantic search, insights
-- **Won't-have (initially)**: Integrations, team features
+- Must-have: Voice capture, transcription, basic search
+- Should-have: Task extraction, voice feedback
+- Could-have: Semantic search, insights
+- Won't-have (initially): Integrations, team features
 
 This architecture provides a solid foundation for building a voice-first second brain that feels magical from the first interaction. The key is to make voice capture frictionless and AI processing feel instantaneous.
 
