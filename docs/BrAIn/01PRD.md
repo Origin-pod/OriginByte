@@ -64,7 +64,7 @@ We’ll now reframe the **core user journey** from a voice-centric lens.
 **System Reaction:**
 
 - Speech-to-text (OpenAI Whisper / Deepgram / Vosk local model)
-- NLP parses intent → {task, idea, reflection, goal}
+- NLP parses intent → (task, idea, reflection, goal)
 - Extracts entities (time, emotion, tags)
 - Replies back in voice:
 
