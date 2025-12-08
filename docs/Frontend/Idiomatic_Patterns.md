@@ -1,164 +1,164 @@
-# Front-End Micro-Patterns for Senior Engineers (LLD Prep)
+# Front-End Micro-Patterns for **Se**nior **Eng**ineers (LLD **Pr**ep)
 
-This document covers micro-level front-end design patterns that a senior software engineer should know for low-level design (LLD) and system design interviews.
-
----
-
-## 🎨 UI Component Patterns
-
-- **Controlled vs. Uncontrolled Components**
-  - Controlled: State managed via props (e.g., controlled `<input>`).
-  - Uncontrolled: State held in DOM via refs/default values.
-- **Container vs. Presentational Components**
-  - Container (smart): Handles data, state, side-effects.
-  - Presentational (dumb): Purely UI rendering.
-- **Compound Components**
-  - Parent component provides context to child components (`<Tabs><Tab/><TabPanel/></Tabs>`).
-- **Render Props**
-  - Passing a function as a prop to control rendering.
-- **Higher-Order Components (HOCs)**
-  - Wrapping logic around a component (largely replaced by hooks).
-- **Slot/Children Pattern**
-  - Passing arbitrary content via `children` or slots (Vue/Svelte).
-- **Controlled Form Handling**
-  - Debounced inputs, validation, dirty-state tracking.
-- **Headless Component Pattern**
-  - Logic without styles; users provide render structure.
-- **Fallback / Skeletons / Loading States**
-- **Error Boundaries**
-  - Catching render errors and displaying fallback UI.
+**Th**is **doc**ument **co**vers micro-level front-end **de**sign **pat**terns **th**at a **se**nior **sof**tware **eng**ineer **sh**ould **kn**ow for low-level **de**sign (LLD) and **sy**stem **de**sign **int**erviews.
 
 ---
 
-## 🧩 State Management Micro-Patterns
+## 🎨 UI **Com**ponent **Pat**terns
 
-- **Local Component State** (hooks, signals, reactive vars).
-- **Derived State** (compute instead of storing redundantly).
-- **Lifting State Up** (shared ownership).
-- **Context for Cross-Cutting State** (global provider).
-- **Reducer Pattern** (`useReducer`, Redux-style).
-- **State Machines & Statecharts** (XState).
-- **Atomic State** (Recoil/Jotai).
-- **Event Emitters / Pub-Sub**.
-- **Immutable State Updates**.
-- **Undo/Redo Stack** (time travel for UI).
+- ****Con**trolled vs. **Unc**ontrolled **Com**ponents**
+  - **Con**trolled: **St**ate **ma**naged via **pr**ops (e.g., **con**trolled `<**in**put>`).
+  - **Unc**ontrolled: **St**ate **he**ld in DOM via refs/default **va**lues.
+- ****Con**tainer vs. **Pre**sentational **Com**ponents**
+  - **Con**tainer (**sm**art): **Ha**ndles **da**ta, **st**ate, side-effects.
+  - **Pre**sentational (**du**mb): **Pu**rely UI **ren**dering.
+- ****Com**pound **Com**ponents**
+  - **Pa**rent **com**ponent **pro**vides **co**ntext to **ch**ild **com**ponents (`<Tabs><Tab/><TabPanel/></Tabs>`).
+- ****Re**nder **Pr**ops**
+  - **Pa**ssing a **fun**ction as a **pr**op to **co**ntrol **ren**dering.
+- **Higher-Order **Com**ponents (**HO**Cs)**
+  - **Wra**pping **lo**gic **ar**ound a **com**ponent (**la**rgely **rep**laced by **ho**oks).
+- **Slot/Children **Pa**ttern**
+  - **Pa**ssing **arb**itrary **co**ntent via `**chi**ldren` or **sl**ots (Vue/Svelte).
+- ****Con**trolled **Fo**rm **Han**dling**
+  - **Deb**ounced **in**puts, **val**idation, dirty-state **tra**cking.
+- ****Hea**dless **Com**ponent **Pa**ttern**
+  - **Lo**gic **wi**thout **st**yles; **us**ers **pr**ovide **re**nder **str**ucture.
+- ****Fal**lback / **Ske**letons / **Lo**ading **St**ates**
+- ****Er**ror **Bou**ndaries**
+  - **Cat**ching **re**nder **er**rors and **dis**playing **fal**lback UI.
 
 ---
 
-## 🔄 Data Fetching & Caching Patterns
+## 🧩 **St**ate **Man**agement Micro-Patterns
+
+- ****Lo**cal **Com**ponent **St**ate** (**ho**oks, **si**gnals, **rea**ctive **va**rs).
+- ****De**rived **St**ate** (**co**mpute **in**stead of **st**oring **red**undantly).
+- ****Li**fting **St**ate Up** (**sh**ared **own**ership).
+- ****Co**ntext for Cross-Cutting **St**ate** (**gl**obal **pro**vider).
+- ****Re**ducer **Pa**ttern** (`**use**Reducer`, Redux-style).
+- ****St**ate **Mac**hines & **Sta**techarts** (**XS**tate).
+- ****At**omic **St**ate** (Recoil/Jotai).
+- ****Ev**ent **Emi**tters / Pub-Sub**.
+- ****Imm**utable **St**ate **Up**dates**.
+- **Undo/Redo **St**ack** (**ti**me **tr**avel for UI).
+
+---
+
+## 🔄 **Da**ta **Fet**ching & **Ca**ching **Pat**terns
 
 - **SWR / Stale-While-Revalidate**.
-- **Suspense for Data Fetching**.
-- **Infinite Scroll vs. Pagination**.
-- **Request Deduplication**.
-- **Optimistic UI Updates**.
-- **Prefetching Data on Hover/Idle**.
-- **Cache Invalidation Strategies**.
+- ****Sus**pense for **Da**ta **Fet**ching**.
+- ****Inf**inite **Sc**roll vs. **Pag**ination**.
+- ****Re**quest **Ded**uplication**.
+- ****Opt**imistic UI **Up**dates**.
+- ****Pre**fetching **Da**ta on Hover/Idle**.
+- ****Ca**che **Inv**alidation **Str**ategies**.
 
 ---
 
-## 📦 Rendering Optimization Patterns
+## 📦 **Ren**dering **Opt**imization **Pat**terns
 
-- **Virtualized Lists** (windowing).
-- **Lazy Loading / Code Splitting**.
-- **Memoization** (`useMemo`, `useCallback`).
-- **Pure Components / `React.memo`**.
-- **Skeleton/Placeholder Rendering**.
-- **Shallow Rendering / Selectors**.
-- **Concurrency Patterns** (React concurrent mode).
-
----
-
-## 🖇️ Composition & Reuse Micro-Patterns
-
-- **Custom Hooks / Composables**.
-- **Decorator Pattern**.
-- **Mixins (legacy, but relevant)**.
-- **Adapter Pattern** (normalize props/APIs).
-- **Facade Pattern** (simplified APIs).
+- ****Vir**tualized **Li**sts** (**win**dowing).
+- ****La**zy **Lo**ading / **Co**de **Spl**itting**.
+- ****Mem**oization** (`**us**eMemo`, `**use**Callback`).
+- ****Pu**re **Com**ponents / `React.memo`**.
+- **Skeleton/Placeholder **Ren**dering**.
+- ****Sh**allow **Ren**dering / **Sel**ectors**.
+- ****Con**currency **Pat**terns** (**Re**act **con**current **mo**de).
 
 ---
 
-## 🌍 Accessibility & Interaction Patterns
+## 🖇️ **Com**position & **Re**use Micro-Patterns
 
-- **Keyboard Navigation** (focus traps, arrow key movement).
-- **ARIA Roles & Live Regions**.
-- **Accessible Modals, Menus, Tooltips**.
-- **Skip Links & Focus Management**.
-- **Click Outside / Escape Key Handling**.
-- **Responsive Layout Adjustments** (breakpoints, adaptive patterns).
-
----
-
-## ⚡ Event Handling & DOM Patterns
-
-- **Delegated Event Handling**.
-- **Throttling & Debouncing Events**.
-- **Passive Event Listeners**.
-- **Synthetic Events vs. Native Events**.
-- **Gesture Handling** (pan, pinch, swipe).
-- **IntersectionObserver for Lazy Elements**.
+- ****Cu**stom **Ho**oks / **Com**posables**.
+- ****Dec**orator **Pa**ttern**.
+- ****Mi**xins (**le**gacy, but **rel**evant)**.
+- ****Ad**apter **Pa**ttern** (**nor**malize props/APIs).
+- ****Fa**cade **Pa**ttern** (**sim**plified **AP**Is).
 
 ---
 
-## 🛠️ Error Handling & Resilience Patterns
+## 🌍 **Acc**essibility & **Int**eraction **Pat**terns
 
-- **Retry with Backoff** (exponential, jitter).
-- **Graceful Fallback UI**.
-- **Boundary Guards** (prop validation, type narrowing).
-- **Circuit Breaker Pattern** (stop retrying broken APIs).
+- ****Key**board **Nav**igation** (**fo**cus **tr**aps, **ar**row key **mov**ement).
+- ****AR**IA **Ro**les & **Li**ve **Re**gions**.
+- ****Acc**essible **Mo**dals, **Me**nus, **Too**ltips**.
+- ****Sk**ip **Li**nks & **Fo**cus **Man**agement**.
+- ****Cl**ick **Ou**tside / **Es**cape Key **Han**dling**.
+- ****Res**ponsive **La**yout **Adj**ustments** (**bre**akpoints, **ada**ptive **pat**terns).
 
 ---
 
-## 🧱 Styling & Theming Patterns
+## ⚡ **Ev**ent **Han**dling & DOM **Pat**terns
 
-- **CSS-in-JS / CSS Modules / Utility Classes**.
-- **Atomic CSS / Tailwind-like patterns**.
-- **BEM & Scoped Naming Conventions**.
-- **Theme Provider Pattern**.
-- **Responsive Design Tokens**.
-- **Design Tokens with CSS Vars**.
-- **Dynamic Styling based on State**.
+- ****Del**egated **Ev**ent **Han**dling**.
+- ****Thr**ottling & **Deb**ouncing **Ev**ents**.
+- ****Pa**ssive **Ev**ent **Lis**teners**.
+- ****Syn**thetic **Ev**ents vs. **Na**tive **Ev**ents**.
+- ****Ge**sture **Han**dling** (pan, **pi**nch, **sw**ipe).
+- ****Int**ersectionObserver for **La**zy **Ele**ments**.
+
+---
+
+## 🛠️ **Er**ror **Han**dling & **Res**ilience **Pat**terns
+
+- ****Re**try **wi**th **Ba**ckoff** (**exp**onential, **ji**tter).
+- ****Gra**ceful **Fal**lback UI**.
+- ****Bou**ndary **Gu**ards** (**pr**op **val**idation, **ty**pe **nar**rowing).
+- ****Ci**rcuit **Br**eaker **Pa**ttern** (**st**op **ret**rying **br**oken **AP**Is).
+
+---
+
+## 🧱 **St**yling & **Th**eming **Pat**terns
+
+- **CSS-in-JS / CSS **Mo**dules / **Ut**ility **Cl**asses**.
+- ****At**omic CSS / Tailwind-like **pat**terns**.
+- **BEM & **Sc**oped **Na**ming **Con**ventions**.
+- ****Th**eme **Pro**vider **Pa**ttern**.
+- ****Res**ponsive **De**sign **To**kens**.
+- ****De**sign **To**kens **wi**th CSS **Va**rs**.
+- ****Dy**namic **St**yling **ba**sed on **St**ate**.
 
 ---
 
 ## 🔐 Security-Oriented Micro-Patterns
 
-- **Sanitization & Escaping** (XSS prevention).
-- **Strict CSP-Compatible Rendering**.
-- **Clickjacking Prevention**.
-- **Secure Cookie Handling**.
-- **JWT Storage Strategies** (in-memory vs. localStorage).
+- ****San**itization & **Esc**aping** (XSS **pre**vention).
+- ****St**rict CSP-Compatible **Ren**dering**.
+- ****Cli**ckjacking **Pre**vention**.
+- ****Se**cure **Co**okie **Han**dling**.
+- **JWT **St**orage **Str**ategies** (in-memory vs. **loc**alStorage).
 
 ---
 
-## 🏗️ Testing & Debugging Patterns
+## 🏗️ **Te**sting & **Deb**ugging **Pat**terns
 
-- **Test ID / Data Attributes for Selectors**.
-- **Mocking API Requests** (MSW, fake servers).
-- **Snapshot Testing**.
-- **E2E Patterns** (Cypress, Playwright).
-- **Visual Regression Testing** (Percy, Chromatic).
-
----
-
-## 🧮 Algorithmic / Utility Micro-Patterns
-
-- **Diffing Algorithms** (virtual DOM).
-- **String/HTML Escaping Utilities**.
-- **Deep Clone vs. Shallow Clone**.
-- **Debounce & Throttle Implementations**.
-- **Binary Search in UI** (autocomplete, search).
-- **Priority Queues** (task scheduling).
+- ****Te**st ID / **Da**ta **Att**ributes for **Sel**ectors**.
+- ****Mo**cking API **Req**uests** (MSW, **fa**ke **se**rvers).
+- ****Sna**pshot **Te**sting**.
+- **E2E **Pat**terns** (**Cy**press, **Pla**ywright).
+- ****Vi**sual **Reg**ression **Te**sting** (**Pe**rcy, **Chr**omatic).
 
 ---
 
-## ✅ Senior-Level Interview Expectations
+## 🧮 **Alg**orithmic / **Ut**ility Micro-Patterns
 
-- Be able to **demonstrate trade-offs**:
-  - Optimistic vs. pessimistic updates.
-  - Pagination vs. virtualization.
-  - Debounce vs. throttle.
-  - Context vs. lifting state.
-- Show **scalability & maintainability** thinking.
-- Highlight **performance, accessibility, and security** concerns.
+- ****Di**ffing **Alg**orithms** (**vi**rtual DOM).
+- **String/HTML **Esc**aping **Uti**lities**.
+- ****De**ep **Cl**one vs. **Sh**allow **Cl**one**.
+- ****Deb**ounce & **Thr**ottle **Imp**lementations**.
+- ****Bi**nary **Se**arch in UI** (**aut**ocomplete, **se**arch).
+- ****Pri**ority **Qu**eues** (**ta**sk **sch**eduling).
+
+---
+
+## ✅ Senior-Level **Int**erview **Exp**ectations
+
+- Be **ab**le to ****dem**onstrate trade-offs**:
+  - **Opt**imistic vs. **pes**simistic **up**dates.
+  - **Pag**ination vs. **vir**tualization.
+  - **Deb**ounce vs. **thr**ottle.
+  - **Co**ntext vs. **li**fting **st**ate.
+- **Sh**ow ****sca**lability & **mai**ntainability** **thi**nking.
+- **Hig**hlight ****per**formance, **acc**essibility, and **sec**urity** **con**cerns.

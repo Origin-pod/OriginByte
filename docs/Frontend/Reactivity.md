@@ -1,140 +1,140 @@
 ---
-title: JavaScript Reactivity for Beginners
-description: A beginner-friendly guide to understanding reactivity in JavaScript
+**ti**tle: **Jav**aScript **Rea**ctivity for **Beg**inners
+**des**cription: A beginner-friendly **gu**ide to **und**erstanding **rea**ctivity in **Jav**aScript
 ---
 
-# JavaScript Reactivity for Beginners
+# **Jav**aScript **Rea**ctivity for **Beg**inners
 
-## 1. Basic JavaScript Variables
+## 1. **Ba**sic **Jav**aScript **Var**iables
 
-Let's start with the simplest form of data storage in JavaScript:
+Let's **st**art **wi**th the **sim**plest **fo**rm of **da**ta **st**orage in **Jav**aScript:
 
-```javascript
-let price = 10;
-let quantity = 2;
-let total = price * quantity;
+```**jav**ascript
+let **pr**ice = 10;
+let **qua**ntity = 2;
+let **to**tal = **pr**ice * **qua**ntity;
 
 console.log(total); // 20
 
-// If we change price
-price = 20;
-console.log(total); // Still 20! Not what we want
+// If we **ch**ange **pr**ice
+**pr**ice = 20;
+console.log(total); // **St**ill 20! Not **wh**at we **wa**nt
 ```
 
-The problem: When we change `price`, `total` doesn't automatically update. This is because JavaScript is not reactive by default.
+The **pr**oblem: **Wh**en we **ch**ange `**pr**ice`, `**to**tal` doesn't **aut**omatically **up**date. **Th**is is **be**cause **Jav**aScript is not **rea**ctive by **de**fault.
 
-## 2. Making It Reactive with Functions
+## 2. **Ma**king It **Rea**ctive **wi**th **Fun**ctions
 
-The simplest way to make something reactive is to use functions:
+The **sim**plest way to **ma**ke **som**ething **rea**ctive is to use **fun**ctions:
 
-```javascript
-let price = 10;
-let quantity = 2;
+```**jav**ascript
+let **pr**ice = 10;
+let **qua**ntity = 2;
 
-function calculateTotal() {
-  return price * quantity;
+**fun**ction **cal**culateTotal() {
+  **re**turn **pr**ice * **qua**ntity;
 }
 
 console.log(calculateTotal()); // 20
 
-price = 20;
-console.log(calculateTotal()); // 40 - Now it updates!
+**pr**ice = 20;
+console.log(calculateTotal()); // 40 - Now it **up**dates!
 ```
 
-This works, but we have to manually call `calculateTotal()` every time we want the updated value.
+**Th**is **wo**rks, but we **ha**ve to **man**ually **ca**ll `**cal**culateTotal()` **ev**ery **ti**me we **wa**nt the **up**dated **va**lue.
 
-## 3. Using Object Properties (Getters and Setters)
+## 3. **Us**ing **Ob**ject **Pro**perties (**Ge**tters and **Se**tters)
 
-We can use JavaScript's `Object.defineProperty` to create reactive properties:
+We can use JavaScript's `Object.defineProperty` to **cr**eate **rea**ctive **pro**perties:
 
-```javascript
-let data = {
-  price: 10,
-  quantity: 2,
+```**jav**ascript
+let **da**ta = {
+  **pr**ice: 10,
+  **qua**ntity: 2,
 };
 
-let total = 0;
+let **to**tal = 0;
 
-// Create a reactive property
-Object.defineProperty(data, "total", {
+// **Cr**eate a **rea**ctive **pro**perty
+Object.defineProperty(data, "**to**tal", {
   get() {
-    return this.price * this.quantity;
+    **re**turn this.price * this.quantity;
   },
 });
 
 console.log(data.total); // 20
 
 data.price = 20;
-console.log(data.total); // 40 - Automatically updates!
+console.log(data.total); // 40 - **Aut**omatically **up**dates!
 ```
 
-## 4. Using Proxy (Modern JavaScript)
+## 4. **Us**ing **Pr**oxy (**Mo**dern **Jav**aScript)
 
-The `Proxy` object is a more modern way to make objects reactive:
+The `**Pr**oxy` **ob**ject is a **mo**re **mo**dern way to **ma**ke **ob**jects **rea**ctive:
 
-```javascript
-let data = {
-  price: 10,
-  quantity: 2,
+```**jav**ascript
+let **da**ta = {
+  **pr**ice: 10,
+  **qua**ntity: 2,
 };
 
-// Create a proxy
-let proxy = new Proxy(data, {
-  get(target, property) {
-    console.log(`Getting ${property}`);
-    return target[property];
+// **Cr**eate a **pr**oxy
+let **pr**oxy = new Proxy(data, {
+  get(target, **pro**perty) {
+    console.log(`Getting ${**pro**perty}`);
+    **re**turn target[property];
   },
-  set(target, property, value) {
-    console.log(`Setting ${property} to ${value}`);
-    target[property] = value;
-    return true;
+  set(target, **pro**perty, **va**lue) {
+    console.log(`Setting ${**pro**perty} to ${**va**lue}`);
+    target[property] = **va**lue;
+    **re**turn **tr**ue;
   },
 });
 
-console.log(proxy.price); // Logs: "Getting price" then 10
-proxy.price = 20; // Logs: "Setting price to 20"
+console.log(proxy.price); // **Lo**gs: "**Ge**tting **pr**ice" **th**en 10
+proxy.price = 20; // **Lo**gs: "**Se**tting **pr**ice to 20"
 ```
 
-## 5. Creating a Simple Reactivity System
+## 5. **Cre**ating a **Si**mple **Rea**ctivity **Sy**stem
 
-Let's build a basic reactivity system step by step:
+Let's **bu**ild a **ba**sic **rea**ctivity **sy**stem **st**ep by **st**ep:
 
-```javascript
-// 1. Create a dependency tracker
-class Dep {
-  constructor() {
+```**jav**ascript
+// 1. **Cr**eate a **dep**endency **tr**acker
+**cl**ass Dep {
+  **con**structor() {
     this.subscribers = new Set();
   }
 
-  // Add a subscriber
-  depend() {
-    if (activeEffect) {
+  // Add a **sub**scriber
+  **de**pend() {
+    if (**act**iveEffect) {
       this.subscribers.add(activeEffect);
     }
   }
 
-  // Notify all subscribers
-  notify() {
-    this.subscribers.forEach((effect) => effect());
+  // **No**tify all **sub**scribers
+  **no**tify() {
+    this.subscribers.forEach((effect) => **ef**fect());
   }
 }
 
-// 2. Create a reactive function
-let activeEffect = null;
+// 2. **Cr**eate a **rea**ctive **fun**ction
+let **act**iveEffect = **nu**ll;
 
-function watchEffect(effect) {
-  activeEffect = effect;
-  effect();
-  activeEffect = null;
+**fun**ction watchEffect(effect) {
+  **act**iveEffect = **ef**fect;
+  **ef**fect();
+  **act**iveEffect = **nu**ll;
 }
 
-// 3. Make an object reactive
-function reactive(obj) {
-  const deps = new Map();
+// 3. **Ma**ke an **ob**ject **rea**ctive
+**fun**ction reactive(obj) {
+  **co**nst **de**ps = new Map();
 
-  return new Proxy(obj, {
+  **re**turn new Proxy(obj, {
     get(target, key) {
-      if (activeEffect) {
+      if (**act**iveEffect) {
         let dep = deps.get(key);
         if (!dep) {
           dep = new Dep();
@@ -142,130 +142,130 @@ function reactive(obj) {
         }
         dep.depend();
       }
-      return target[key];
+      **re**turn target[key];
     },
-    set(target, key, value) {
-      target[key] = value;
-      const dep = deps.get(key);
+    set(target, key, **va**lue) {
+      target[key] = **va**lue;
+      **co**nst dep = deps.get(key);
       if (dep) {
         dep.notify();
       }
-      return true;
+      **re**turn **tr**ue;
     },
   });
 }
 
-// 4. Use our reactive system
-const state = reactive({
-  price: 10,
-  quantity: 2,
+// 4. Use our **rea**ctive **sy**stem
+**co**nst **st**ate = **rea**ctive({
+  **pr**ice: 10,
+  **qua**ntity: 2,
 });
 
-// Watch for changes
-watchEffect(() => {
+// **Wa**tch for **ch**anges
+**wat**chEffect(() => {
   console.log(`Total: ${state.price * state.quantity}`);
 });
 
-// Change values
-state.price = 20; // Logs: "Total: 40"
-state.quantity = 3; // Logs: "Total: 60"
+// **Ch**ange **va**lues
+state.price = 20; // **Lo**gs: "**To**tal: 40"
+state.quantity = 3; // **Lo**gs: "**To**tal: 60"
 ```
 
-## 6. Real-World Example: Shopping Cart
+## 6. Real-World **Ex**ample: **Sho**pping **Ca**rt
 
-Let's see how this works in a practical example:
+Let's see how **th**is **wo**rks in a **pra**ctical **ex**ample:
 
-```javascript
-// Create a reactive shopping cart
-const cart = reactive({
-  items: [],
-  total: 0,
+```**jav**ascript
+// **Cr**eate a **rea**ctive **sho**pping **ca**rt
+**co**nst **ca**rt = **rea**ctive({
+  **it**ems: [],
+  **to**tal: 0,
 });
 
-// Watch for changes in the cart
-watchEffect(() => {
-  cart.total = cart.items.reduce((sum, item) => sum + item.price, 0);
-  console.log(`Cart total: $${cart.total}`);
+// **Wa**tch for **ch**anges in the **ca**rt
+**wat**chEffect(() => {
+  cart.total = cart.items.reduce((sum, **it**em) => sum + item.price, 0);
+  console.log(`Cart **to**tal: $${cart.total}`);
 });
 
-// Add items to cart
-cart.items.push({ name: "Apple", price: 1 });
-cart.items.push({ name: "Banana", price: 2 });
-// Logs: "Cart total: $3"
+// Add **it**ems to **ca**rt
+cart.items.push({ **na**me: "**Ap**ple", **pr**ice: 1 });
+cart.items.push({ **na**me: "**Ba**nana", **pr**ice: 2 });
+// **Lo**gs: "**Ca**rt **to**tal: $3"
 
-// Update item price
+// **Up**date **it**em **pr**ice
 cart.items[0].price = 2;
-// Logs: "Cart total: $4"
+// **Lo**gs: "**Ca**rt **to**tal: $4"
 ```
 
-## 7. Common Patterns in Modern Frameworks
+## 7. **Co**mmon **Pat**terns in **Mo**dern **Fra**meworks
 
-### Vue.js Style
+### Vue.js **St**yle
 
-```javascript
-const state = reactive({
-  count: 0,
+```**jav**ascript
+**co**nst **st**ate = **rea**ctive({
+  **co**unt: 0,
 });
 
-watchEffect(() => {
+**wat**chEffect(() => {
   document.getElementById("counter").textContent = state.count;
 });
 
-// Update will automatically reflect in the DOM
+// **Up**date **wi**ll **aut**omatically **re**flect in the DOM
 state.count++;
 ```
 
-### React Style
+### **Re**act **St**yle
 
-```javascript
-let state = {
-  count: 0,
+```**jav**ascript
+let **st**ate = {
+  **co**unt: 0,
 };
 
-function setState(newState) {
-  state = { ...state, ...newState };
-  render();
+**fun**ction setState(newState) {
+  **st**ate = { ...**st**ate, ...**new**State };
+  **re**nder();
 }
 
-function render() {
+**fun**ction **re**nder() {
   document.getElementById("counter").textContent = state.count;
 }
 
-// Update will trigger a re-render
-setState({ count: state.count + 1 });
+// **Up**date **wi**ll **tr**igger a re-render
+**set**State({ **co**unt: state.count + 1 });
 ```
 
-## Key Concepts to Remember
+## Key **Con**cepts to **Rem**ember
 
-1. **Reactivity** means automatically updating when data changes
-2. **Dependencies** are tracked when data is accessed
-3. **Effects** are functions that run when dependencies change
-4. **Proxies** and **Getters/Setters** are tools to make objects reactive
-5. **State Management** is about keeping track of changes
+1. ****Rea**ctivity** **me**ans **aut**omatically **upd**ating **wh**en **da**ta **ch**anges
+2. ****Dep**endencies** are **tr**acked **wh**en **da**ta is **acc**essed
+3. ****Ef**fects** are **fun**ctions **th**at run **wh**en **dep**endencies **ch**ange
+4. ****Pr**oxies** and **Getters/Setters** are **to**ols to **ma**ke **ob**jects **rea**ctive
+5. ****St**ate **Man**agement** is **ab**out **ke**eping **tr**ack of **ch**anges
 
-## Common Pitfalls
+## **Co**mmon **Pit**falls
 
-1. **Circular Dependencies**
+1. ****Cir**cular **Dep**endencies**
 
-```javascript
-// Avoid this!
-watchEffect(() => {
+```**jav**ascript
+// **Av**oid **th**is!
+**wat**chEffect(() => {
   state.a = state.b + 1;
 });
 
-watchEffect(() => {
+**wat**chEffect(() => {
   state.b = state.a + 1;
 });
 ```
 
-2. **Memory Leaks**
+2. ****Me**mory **Le**aks**
 
-```javascript
-// Always clean up effects when done
-const stop = watchEffect(() => {
-  // effect code
+```**jav**ascript
+// **Al**ways **cl**ean up **ef**fects **wh**en **do**ne
+**co**nst **st**op = **wat**chEffect(() => {
+  // **ef**fect **co**de
 });
 
-// When component unmounts
-stop();
+// **Wh**en **com**ponent **unm**ounts
+**st**op();
 ```
