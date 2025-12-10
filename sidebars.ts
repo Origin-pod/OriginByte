@@ -231,6 +231,8 @@ const sidebars: SidebarsConfig = {
             'To-Read Resources/May-2025',
             'To-Read Resources/Oct-2025',
             'To-Read Resources/Nov-2025',
+            'To-Read Resources/opensoource',
+            'To-Read Resources/waitlisted',
           ],
         },
         {
@@ -272,10 +274,19 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: 'category',
+          label: 'Project Ideas',
+          items: [
+            'Project Idea Dump/IdeaList',
+            'Project Idea Dump/hopHub',
+            'Project Idea Dump/Devfolio',
+          ],
+        },
+        {
+          type: 'category',
           label: 'LuminaJS',
           items: [
-            'LuminaJS/v0.0.0',
-            'LuminaJS/LuminaJS',
+            'Project Idea Dump/LuminaJS/v0.0.0',
+            'Project Idea Dump/LuminaJS/LuminaJS',
           ],
         },
         {
@@ -289,7 +300,7 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'HandsFree',
-          items: ['HandsFree/InitialPrd'],
+          items: ['Project Idea Dump/HandsFree/InitialPrd'],
         },
         {
           type: 'category',
@@ -308,6 +319,18 @@ const sidebars: SidebarsConfig = {
         'Theoritical Physics/Mind_map',
         'Theoritical Physics/Paper_1',
       ],
+    },
+
+    // Additional sections
+    {
+      type: 'category',
+      label: 'Productivity',
+      items: ['Productivity/v1'],
+    },
+    {
+      type: 'category',
+      label: 'Iggy',
+      items: ['Iggy/Intro'],
     },
 
     // Daily Logs
