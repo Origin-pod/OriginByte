@@ -6,6 +6,7 @@ import { GoCopilot } from "react-icons/go";
 import { FaCat } from "react-icons/fa";
 import { FaMoon } from "react-icons/fa";
 import { GiCook } from "react-icons/gi";
+import SplashCursor from './SplashCursor'
 
  const data = {
     title:"Sheetal Singh",
@@ -51,6 +52,8 @@ const Badge = ({Icon,label}) => {
 function LandingPage () {
   return (
 <div className="aboutme-container">
+<SplashCursor />
+
       <div>
         <img src={profile} className="aboutme-profile-img" alt="Profile" />
       </div>
