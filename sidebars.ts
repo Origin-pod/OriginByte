@@ -18,8 +18,6 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   // Main documentation sidebar
   tutorialSidebar: [
-    'intro',
-
     // C++ Section (files not found - commented out for now)
     // {
     //   type: 'category',
@@ -111,20 +109,19 @@ const sidebars: SidebarsConfig = {
     // Frontend Development (Deep Dive)
     {
       type: 'category',
-      label: 'Frontend Development',
+      label: 'Frontend',
       items: [
         'Frontend/Reactivity',
         'Frontend/DOM Manipulation Architectures',
         'Frontend/Idiomatic_Patterns',
-        'Frontend/Decoding Web Performance',
-        'Thinking Patterns/Idiomatic_Patterns',
-      ],
+        // 'Frontend/Decoding Web Performance' // TBD
+      ]
     },
 
     // Backend Development
     {
       type: 'category',
-      label: 'Backend Development',
+      label: 'Backend',
       items: [
         'Backend/REST_and_API_Design',
         'Backend/Go_idiomatic_patterns',
@@ -142,29 +139,22 @@ const sidebars: SidebarsConfig = {
     },
 
     // BrAIn Section
+    // {
+    //   type: 'category',
+    //   label: 'BrAIn Project',
+    //   items: [
+    //     'BrAIn/01PRD',
+    //     'BrAIn/01MVPPrd',
+    //     'BrAIn/03TechnicalBase',
+    //     'BrAIn/04TechnicalSpecification',
+    //     'BrAIn/05TechnicalSpecification',
+    //     'BrAIn/06VoiceProcessingComponent',
+    //     'BrAIn/07DatabaseSchema',
+    //     'BrAIn/LaunchChecklist',
+    //   ],
+    // },
+    // Browser
     {
-      type: 'category',
-      label: 'BrAIn Project',
-      items: [
-        'BrAIn/01PRD',
-        'BrAIn/01MVPPrd',
-        'BrAIn/03TechnicalBase',
-        'BrAIn/04TechnicalSpecification',
-        'BrAIn/05TechnicalSpecification',
-        'BrAIn/06VoiceProcessingComponent',
-        'BrAIn/07DatabaseSchema',
-        'BrAIn/LaunchChecklist',
-      ],
-    },
-
-    
-    // Random Explorations
-    {
-      type: 'category',
-      label: 'Random Explorations',
-      items: [
-        'Random Explorations/Why-rails',
-        {
           type: 'category',
           label: 'Browser',
           items: [
@@ -174,7 +164,8 @@ const sidebars: SidebarsConfig = {
             'Random Explorations/Browser/RustUI',
           ],
         },
-        {
+        // Databases
+     {
           type: 'category',
           label: 'Databases',
           items: [
@@ -184,22 +175,25 @@ const sidebars: SidebarsConfig = {
             'Random Explorations/Databases/VectorDB',
           ],
         },
-        {
+        // OS
+         {
           type: 'category',
           label: 'OS',
           items: [
             'Random Explorations/OS/Kernel',
           ],
         },
-        {
-          type: 'category',
-          label: 'UBI',
-          items: [
+    // Random Explorations
+    {
+      type: 'category',
+      label: 'Random Explorations',
+      items: [
+        'Random Explorations/Why-rails',
+       
             'Random Explorations/UBI/UBI',
             'Random Explorations/UBI/Rails_inspiration',
             'Random Explorations/UBI/Usecases',
-          ],
-        },
+            
       ],
     },
 
@@ -210,7 +204,8 @@ const sidebars: SidebarsConfig = {
       items: [
         'Thinking Patterns/Segmentation-Differentiation',
         'Thinking Patterns/Software_Philosophies',
-        'Thinking Patterns/Idiomatic_Patterns',
+              // 'Thinking Patterns/Idiomatic_Patterns',  ---> To be iterated
+
       ],
     },
 
@@ -228,10 +223,8 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'To-Read Resources',
           items: [
-            'To-Read Resources/May-2025',
-            'To-Read Resources/Oct-2025',
-            'To-Read Resources/Nov-2025',
-            'To-Read Resources/opensoource',
+            'To-Read Resources/ToRead',
+            'To-Read Resources/opensource',
             'To-Read Resources/waitlisted',
           ],
         },
@@ -251,7 +244,6 @@ const sidebars: SidebarsConfig = {
         'Conf Talks Notes/an_introduction_to_residuality_theory',
         'Conf Talks Notes/RL-Kernels-Reasoning-Quantization-and-Agents-Daniel-Han',
         'Conf Talks Notes/From-Text-to-Vision-to-Voice-Exploring-Multimodality-with-Open-AI-Romain-Huet',
-        'Talk-Planning/Talk-topics',
       ],
     },
 
@@ -310,6 +302,15 @@ const sidebars: SidebarsConfig = {
       ],
     },
 
+    // Dev Tooling
+    {
+      type: 'category',
+      label: 'Dev Tooling',
+      items: [
+            'Dev Tooling/Dogs/What is Husky',
+      ],
+    },
+
     // Theoretical Physics
     {
       type: 'category',
@@ -320,26 +321,6 @@ const sidebars: SidebarsConfig = {
         'Theoritical Physics/Paper_1',
       ],
     },
-
-    // Additional sections
-    {
-      type: 'category',
-      label: 'Productivity',
-      items: ['Productivity/v1'],
-    },
-    {
-      type: 'category',
-      label: 'Iggy',
-      items: ['Iggy/Intro'],
-    },
-
-    // Daily Logs
-    {
-      type: 'category',
-      label: 'Daily Logs',
-      items: ['Read of the Day/dailylog'],
-    },
-
     // Templates section removed - _note_template not found in docs
   ],
   
