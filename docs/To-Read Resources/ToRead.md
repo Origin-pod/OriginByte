@@ -2,7 +2,7 @@
 
 ## 4th September 2025
 
-- https://notesbyaman.substack.com/p/the-idea-of-god
+- https://writing.amandeepsingh.dev/p/the-idea-of-god
 
 ## 18th November 2025
 
@@ -46,3 +46,5 @@ https://github.com/renderhq/autumnjs
 ## October 2025
 
 - Knowledge graph - https://platform.parallel.ai/shared/deep-research/51d9c7ca-f145-4cfe-8725-45f6ffe15343
+
+- LLM point : https://huyenchip.com/llama-police
