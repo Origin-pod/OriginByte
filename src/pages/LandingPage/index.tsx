@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import profile from '../../../static/img/profile.jpg'
 import './landingPage.css'
 import { GiMountainRoad } from "react-icons/gi";
@@ -6,56 +6,68 @@ import { GoCopilot } from "react-icons/go";
 import { FaCat } from "react-icons/fa";
 import { FaMoon } from "react-icons/fa";
 import { GiCook } from "react-icons/gi";
-import SplashCursor from './SplashCursor'
 
- const data = {
-    title:"Sheetal Singh",
-    badges: [
-        {
-            label: 'Software Engineer',
-            icon: GoCopilot,
-            color: "purple"
-        },
-        {
-            label: 'Mountain Lover',
-            icon: GiMountainRoad,
-            color: "purple"
-         },
-         {
-            label: 'Cat Mom',
-            icon: FaCat,
-            color: "purple"
-        },
-        {
-            label: 'Night Owl',
-            icon: FaMoon,
-            color: "purple"
-        },
-        {
-            label: 'Amateur Chef',
-            icon: GiCook,
-            color: "purple"
-        },
+// Lazy load the heavy SplashCursor component to improve initial page load
+const SplashCursor = lazy(() => import('./SplashCursor'))
 
-    ],
+
+const data = {
+  title: "Sheetal Singh",
+  badges: [
+    {
+      label: 'Software Engineer',
+      icon: GoCopilot,
+      color: "purple"
+    },
+    {
+      label: 'Mountain Lover',
+      icon: GiMountainRoad,
+      color: "purple"
+    },
+    {
+      label: 'Cat Mom',
+      icon: FaCat,
+      color: "purple"
+    },
+    {
+      label: 'Night Owl',
+      icon: FaMoon,
+      color: "purple"
+    },
+    {
+      label: 'Amateur Chef',
+      icon: GiCook,
+      color: "purple"
+    },
+
+  ],
 }
 
-const Badge = ({Icon,label}) => {
+const Badge = ({ Icon, label }) => {
   return (
     <div className='badge'>
-        <Icon/>
-        {label}
+      <Icon />
+      {label}
     </div>
   )
 }
 
-function LandingPage () {
+function LandingPage() {
   return (
-<div className="aboutme-container">
-<SplashCursor />
+    <div className="aboutme-container">
+      <Suspense fallback={null}>
+        <SplashCursor />
+      </Suspense>
 
       <div>
-        <img src={profile} className="aboutme-profile-img" alt="Profile" />
+        <img
+          src={profile}
+          className="aboutme-profile-img"
+          alt="Profile"
+          loading="lazy"
+          width="150"
+          height="150"
+        />
       </div>
       <div>
         <p className="aboutme-title">Sheetal Singh 👋</p>
@@ -69,9 +81,9 @@ function LandingPage () {
           <h4>Welcome to my world.</h4>
           <h4>Living my best life !!</h4>
           <h4>
-            <a 
-              href="https://github.com/happycoder0011" 
-              target="_blank" 
+            <a
+              href="https://github.com/happycoder0011"
+              target="_blank"
               rel="noopener noreferrer"
               className="hovereffect"
             >
@@ -79,9 +91,9 @@ function LandingPage () {
             </a>
           </h4>
           <h4>
-            <a 
-              href="https://www.goodreads.com/review/list/166403141?shelf=%23ALL%23" 
-              target="_blank" 
+            <a
+              href="https://www.goodreads.com/review/list/166403141?shelf=%23ALL%23"
+              target="_blank"
               rel="noopener noreferrer"
               className="hovereffect"
             >
@@ -89,9 +101,9 @@ function LandingPage () {
             </a>
           </h4>
           <h4>
-            <a 
-              href="https://www.instagram.com/pondertub/" 
-              target="_blank" 
+            <a
+              href="https://www.instagram.com/pondertub/"
+              target="_blank"
               rel="noopener noreferrer"
               className="hovereffect"
             >

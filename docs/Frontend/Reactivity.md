@@ -45,7 +45,9 @@ This works, but we have to manually call `calculateTotal()` every time we want t
 
 ## 3. Using Object Properties (Getters and Setters)
 
-We can use JavaScript's `Object.defineProperty` to create reactive properties:
+`Object.defineProperty` is a built-in JavaScript method that allows you to define or modify the properties of an object. It takes three arguments: the object on which you want to define the property, the name of the property, and an object that contains the property's descriptors.
+
+Here's how it works:
 
 ```javascript
 let data = {
@@ -65,7 +67,8 @@ Object.defineProperty(data, "total", {
 console.log(data.total); // 20
 
 data.price = 20;
-console.log(data.total); // 40 - Automatically updates!
+console.log(Object.keys(data)); // ['price', 'quantity'] - The `Object.keys()` method returns an array of a given object's own enumerable property names. In this case, we're logging the keys of the `data` object, which includes the `price` and `quantity` properties.
+console.log(Object.keys(data)); // ['price', 'quantity'] - The `total` property is not included in the array of keys. The `Object.keys()` method returns an array of a given object's own enumerable property names, but it does not include properties created by getters or setters. In this case, the `total` property is a getter that calculates the total based on the `price` and `quantity` properties, so it is not included in the array of keys.
 ```
 
 ## 4. Using Proxy (Modern JavaScript)
