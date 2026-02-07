@@ -50,19 +50,25 @@ const Badge = ({ Icon, label }) => (
   </div>
 )
 
+function isMobile() {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia('(max-width: 768px)').matches
+    || 'ontouchstart' in window
+}
+
 function LandingPage() {
   const [showSplash, setShowSplash] = useState(false)
 
   useEffect(() => {
+    if (isMobile()) return
+
     const enable = () => setShowSplash(true)
     window.addEventListener('mousemove', enable, { once: true })
-    window.addEventListener('touchstart', enable, { once: true })
     const id = typeof requestIdleCallback !== 'undefined'
       ? requestIdleCallback(() => enable(), { timeout: 3000 })
       : setTimeout(enable, 3000)
     return () => {
       window.removeEventListener('mousemove', enable)
-      window.removeEventListener('touchstart', enable)
       typeof requestIdleCallback !== 'undefined'
         ? cancelIdleCallback(id as number)
         : clearTimeout(id as ReturnType<typeof setTimeout>)

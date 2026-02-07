@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 
 import LandingPage from './LandingPage';
+import styles from './index.module.css';
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
@@ -12,7 +13,7 @@ export default function Home(): ReactNode {
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
       noFooter>
-      <main className='main-container'>
+      <main className={styles['main-container']}>
       <LandingPage/>
       </main>
     </Layout>
