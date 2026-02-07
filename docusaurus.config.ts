@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'OriginByte',
   tagline: 'Write it out',
-  favicon: 'img/profile.jpg',
+  favicon: 'img/favicon.ico',
   onBrokenLinks: 'warn', // or 'ignore'
   // Prevent automatic browser opening
   customFields: {
@@ -15,6 +15,28 @@ const config: Config = {
       open: false
     }
   },
+
+  future: {
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+    },
+    experimental_faster: {
+      swcJsLoader: true,
+      swcJsMinimizer: true,
+      swcHtmlMinimizer: true,
+      lightningCssMinimizer: true,
+      mdxCrossCompilerCache: true,
+      ssgWorkerThreads: true,
+    },
+  },
+
+  headTags: [
+    {
+      tagName: 'style',
+      attributes: { id: 'critical-css' },
+      innerHTML: `body{margin:0;background:#000;color:#fff}.navbar{background:#242526}.aboutme-container{display:flex;flex-direction:column;align-items:center;min-height:100vh;background:#000;color:#fff;text-align:center;padding:1rem}.aboutme-profile-img{border-radius:50%;width:150px;height:150px;object-fit:cover;margin:1rem auto}.aboutme-title{font-size:2rem;font-weight:bold}.aboutme-badges{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}.badge{display:inline-flex;border-radius:25px;padding:.25rem .5rem;align-items:center;gap:.25rem;font-size:.75rem;color:#fff}`,
+    },
+  ],
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
