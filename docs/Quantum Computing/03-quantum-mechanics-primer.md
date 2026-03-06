@@ -14,50 +14,49 @@ Quantum computing is mostly **linear algebra + probability**, with a few quantum
 
 ### States are vectors (kets)
 
-- A pure state is a normalized vector \(|\psi\rangle\) in a complex vector space (Hilbert space).
-- For one qubit, a common basis is \(\{|0\rangle, |1\rangle\}\).
-- For \(n\) qubits, the space dimension is \(2^n\).
+- A pure state is a normalized vector often written as a “ket” like `|ψ⟩` in a complex Hilbert space.
+- For one qubit, a common basis is `|0⟩, |1⟩`.
+- For `n` qubits, the space dimension is `2^n`.
 
 ### Superposition is linear combination
 
-\[
-|\psi\rangle = \sum_x \alpha_x |x\rangle,\quad \sum_x |\alpha_x|^2 = 1
-\]
+You can write a state as
 
-The \(\alpha_x\) are **amplitudes**; probabilities come from **squared magnitudes**.
+`|ψ⟩ = Σ_x α_x |x⟩` with `Σ_x |α_x|^2 = 1`.
+
+The `α_x` are **amplitudes**; probabilities come from **squared magnitudes**.
 
 ### Global phase doesn’t matter (relative phase does)
 
-- \(|\psi\rangle\) and \(e^{i\theta}|\psi\rangle\) represent the same physical state.
+- `|ψ⟩` and `e^{iθ}|ψ⟩` represent the same physical state.
 - But phases *between components* (relative phase) affect interference.
 
 ### Evolution (closed systems) is unitary
 
-- Quantum gates are represented by **unitary** matrices \(U\) where \(U^\dagger U = I\).
-- Applying a gate updates the state: \(|\psi'\rangle = U|\psi\rangle\).
+- Quantum gates are represented by **unitary** matrices `U` where `U† U = I`.
+- Applying a gate updates the state: `|ψ'⟩ = U|ψ⟩`.
 
 ### Measurement = probabilities + state update
 
-Measuring in the computational basis \(\{|0\rangle,|1\rangle\}\):
+Measuring in the computational basis `|0⟩, |1⟩`:
 
-- Outcome \(0\) occurs with probability \(|\langle 0|\psi\rangle|^2\)
-- Outcome \(1\) occurs with probability \(|\langle 1|\psi\rangle|^2\)
+- Outcome `0` occurs with probability `|⟨0|ψ⟩|^2`
+- Outcome `1` occurs with probability `|⟨1|ψ⟩|^2`
 
 After measurement, the post-measurement state is the normalized projection onto the observed outcome’s subspace.
 
 ### Composite systems: tensor products
 
-- Two qubits: \(|\psi\rangle \otimes |\phi\rangle\) (often written \(|\psi\rangle|\phi\rangle\)).
-- Basis states: \(|00\rangle, |01\rangle, |10\rangle, |11\rangle\).
+- Two qubits: `|ψ⟩ ⊗ |φ⟩` (often written `|ψ⟩|φ⟩`).
+- Basis states: `|00⟩, |01⟩, |10⟩, |11⟩`.
 
 ### Entanglement
 
 A state is **entangled** if it cannot be written as a simple product state.
 
 Example Bell state:
-\[
-|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)
-\]
+
+`|Φ⁺⟩ = (|00⟩ + |11⟩) / √2`
 
 Measuring one qubit gives a correlated result in the other; importantly, this correlation can’t be reproduced by classical shared randomness *for all measurement choices*.
 
@@ -72,15 +71,15 @@ Because amplitudes add, paths can cancel.
 
 Real devices interact with the environment → noise → you can’t assume a pure state.
 
-- A mixed state is represented by a **density matrix** \(\rho\).
-- Pure state: \(\rho = |\psi\rangle\langle\psi|\)
+- A mixed state is represented by a **density matrix** `ρ`.
+- Pure state: `ρ = |ψ⟩⟨ψ|`
 - Noise and measurement can be expressed as **quantum channels** (CPTP maps).
 
 You’ll revisit this for error correction and benchmarking.
 
 ### No-cloning (practically important)
 
-There is no universal operation that takes an unknown \(|\psi\rangle\) and outputs \(|\psi\rangle|\psi\rangle\) for all \(|\psi\rangle\). This is why:
+There is no universal operation that takes an unknown `|ψ⟩` and outputs `|ψ⟩|ψ⟩` for all `|ψ⟩`. This is why:
 
 - quantum “backup copies” don’t exist
 - many classical fault-tolerance intuitions don’t transfer directly

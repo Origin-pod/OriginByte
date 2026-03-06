@@ -21,7 +21,7 @@ So QEC uses **syndrome measurements**: measure carefully chosen observables that
 
 ### Codes, stabilizers, and syndromes
 
-- A **quantum code** encodes \(k\) logical qubits into \(n\) physical qubits.
+- A **quantum code** encodes `k` logical qubits into `n` physical qubits.
 - **Stabilizer codes** describe the code space as the +1 eigenspace of a set of commuting Pauli operators (stabilizers).
 - Measuring stabilizers yields **syndromes** (patterns of ±1) that indicate which error likely occurred.
 
@@ -37,8 +37,8 @@ So QEC uses **syndrome measurements**: measure carefully chosen observables that
 ### Logical qubits and thresholds
 
 - A **logical qubit** is an encoded qubit; logical gates operate on the encoded space.
-- If physical error rate \(p\) is **below threshold**, then:
-  - Increasing the code distance (more physical qubits) can make logical error rate \(p_L\) fall roughly like \((p/p_{\text{th}})^{(d+1)/2}\).
+- If physical error rate `p` is **below threshold**, then:
+  - Increasing the code distance (more physical qubits) can make logical error rate `p_L` fall roughly like `(p / p_th)^((d+1)/2)`.
   - This is the core “scaling” property you need for FTQC.
 
 ### Biased noise and bosonic codes (link to Alice & Bob)

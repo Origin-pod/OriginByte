@@ -321,6 +321,26 @@ const sidebars: SidebarsConfig = {
         'Theoritical Physics/Paper_1',
       ],
     },
+
+    // Quantum Computing
+    {
+      type: 'category',
+      label: 'Quantum Computing',
+      items: [
+        'Quantum Computing/index',
+        'Quantum Computing/what-is-quantum-computing',
+        'Quantum Computing/evolution-timeline',
+        'Quantum Computing/quantum-mechanics-primer',
+        'Quantum Computing/qubits-and-measurement',
+        'Quantum Computing/gates-circuits-and-models',
+        'Quantum Computing/hardware-modalities',
+        'Quantum Computing/error-correction-ftqc',
+        'Quantum Computing/alice-and-bob',
+        'Quantum Computing/cryptography-qkd-and-pqc',
+        'Quantum Computing/glossary',
+        'Quantum Computing/resources',
+      ],
+    },
     // Templates section removed - _note_template not found in docs
   ],
   
