@@ -79,14 +79,7 @@ const sideQuests = [
   },
 ];
 
-const openSource = [
-  {
-    title: 'Fluent UI — Accessibility Fixes',
-    description: 'Contributed accessibility improvements to Microsoft\'s Fluent UI. Making the web usable for everyone, one PR at a time.',
-    tech: ['TypeScript', 'React', 'A11y'],
-    link: 'https://github.com/microsoft/fluentui/pull/35300',
-  },
-];
+const openSource: Array<{ title: string; description: string; tech: string[]; link: string }> = [];
 
 const statusColors: Record<string, string> = {
   'Active': 'statusActive',

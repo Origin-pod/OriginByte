@@ -1,4 +1,4 @@
-import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 // To hide any of the documents add this on top of the file
@@ -155,45 +155,45 @@ const sidebars: SidebarsConfig = {
     // },
     // Browser
     {
-          type: 'category',
-          label: 'Browser',
-          items: [
-            'Random Explorations/Browser/BrowserInternals',
-            'Random Explorations/Browser/Rendering_Engine',
-            'Random Explorations/Browser/Rust-rendering-engine-and-framework',
-            'Random Explorations/Browser/RustUI',
-          ],
-        },
-        // Databases
-     {
-          type: 'category',
-          label: 'Databases',
-          items: [
-            'Random Explorations/Databases/basics',
-            'Random Explorations/Databases/database-diagrams',
-            'Random Explorations/Databases/practical-examples',
-            'Random Explorations/Databases/VectorDB',
-          ],
-        },
-        // OS
-         {
-          type: 'category',
-          label: 'OS',
-          items: [
-            'Random Explorations/OS/Kernel',
-          ],
-        },
+      type: 'category',
+      label: 'Browser',
+      items: [
+        'Random Explorations/Browser/BrowserInternals',
+        'Random Explorations/Browser/Rendering_Engine',
+        'Random Explorations/Browser/Rust-rendering-engine-and-framework',
+        'Random Explorations/Browser/RustUI',
+      ],
+    },
+    // Databases
+    {
+      type: 'category',
+      label: 'Databases',
+      items: [
+        'Random Explorations/Databases/basics',
+        'Random Explorations/Databases/database-diagrams',
+        'Random Explorations/Databases/practical-examples',
+        'Random Explorations/Databases/VectorDB',
+      ],
+    },
+    // OS
+    {
+      type: 'category',
+      label: 'OS',
+      items: [
+        'Random Explorations/OS/Kernel',
+      ],
+    },
     // Random Explorations
     {
       type: 'category',
       label: 'Random Explorations',
       items: [
         'Random Explorations/Why-rails',
-       
-            'Random Explorations/UBI/UBI',
-            'Random Explorations/UBI/Rails_inspiration',
-            'Random Explorations/UBI/Usecases',
-            
+
+        'Random Explorations/UBI/UBI',
+        'Random Explorations/UBI/Rails_inspiration',
+        'Random Explorations/UBI/Usecases',
+
       ],
     },
 
@@ -204,7 +204,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'Thinking Patterns/Segmentation-Differentiation',
         'Thinking Patterns/Software_Philosophies',
-              // 'Thinking Patterns/Idiomatic_Patterns',  ---> To be iterated
+        // 'Thinking Patterns/Idiomatic_Patterns',  ---> To be iterated
 
       ],
     },
@@ -307,7 +307,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Dev Tooling',
       items: [
-            'Dev Tooling/Dogs/What is Husky',
+        'Dev Tooling/Dogs/What is Husky',
       ],
     },
 
@@ -343,7 +343,7 @@ const sidebars: SidebarsConfig = {
     },
     // Templates section removed - _note_template not found in docs
   ],
-  
+
   // Hacks are now a React component page, not a doc page
 };
 
