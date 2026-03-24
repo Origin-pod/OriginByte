@@ -1,0 +1,191 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.md$/, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const date = post.data.date
+  ? new Date(post.data.date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : '';
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <main class="blog-post">
+    <article>
+      <header class="post-header">
+        {date && <time class="post-date">{date}</time>}
+        <h1 class="post-title">{post.data.title}</h1>
+      </header>
+      <div class="post-content">
+        <Content />
+      </div>
+      <footer class="post-footer">
+        <a href="/blog/">&larr; Back to all posts</a>
+      </footer>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .blog-post {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(60px + 2rem) 1.5rem 4rem;
+  }
+
+  .post-header {
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .post-date {
+    font-size: 0.8rem;
+    color: #25c2a0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .post-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0.5rem 0 0;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .post-content {
+    line-height: 1.75;
+    font-size: 1rem;
+    color: #ccc;
+  }
+
+  .post-content :global(h1),
+  .post-content :global(h2),
+  .post-content :global(h3),
+  .post-content :global(h4) {
+    color: #fff;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-content :global(h1) { font-size: 1.8rem; }
+  .post-content :global(h2) { font-size: 1.4rem; }
+  .post-content :global(h3) { font-size: 1.15rem; }
+
+  .post-content :global(a) {
+    color: #25c2a0;
+    text-decoration: none;
+  }
+
+  .post-content :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .post-content :global(code) {
+    background: #1e1e1e;
+    padding: 0.15em 0.35em;
+    border-radius: 4px;
+    font-size: 0.88em;
+    color: #e3e3e3;
+  }
+
+  .post-content :global(pre) {
+    background: #111 !important;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+  }
+
+  .post-content :global(pre code) {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .post-content :global(blockquote) {
+    border-left: 3px solid #25c2a0;
+    margin: 1.25rem 0;
+    padding: 0.5rem 1rem;
+    color: #999;
+    background: #0a0a0a;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .post-content :global(img) {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 1rem 0;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+  }
+
+  .post-content :global(li) {
+    margin-bottom: 0.3rem;
+  }
+
+  .post-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    font-size: 0.9rem;
+  }
+
+  .post-content :global(th),
+  .post-content :global(td) {
+    border: 1px solid #2a2a2a;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  .post-content :global(th) {
+    background: #111;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #2a2a2a;
+  }
+
+  .post-footer a {
+    color: #25c2a0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .post-footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .blog-post { padding: calc(60px + 1rem) 1rem 3rem; }
+    .post-title { font-size: 1.7rem; }
+  }
+</style>

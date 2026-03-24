@@ -1,0 +1,19 @@
+---
+title: "Idea List"
+---
+
+- Hophub - Ideation Phase
+- Devfolio - Ideation Phase ✅ Design ䷢
+- Setup a boilerplate for all your projects
+  - Auth
+  - Design System
+  - Flagging
+  - Deployment
+- Use n8n to generate workflows for yourself
+- Build an voice assistant over the n8n workflows to work like jarvis
+- Build a search engine
+- Build a canvas-based editor
+- Build your own productivity setup.
+
+- Frontend Microprojects
+  -

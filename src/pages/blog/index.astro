@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort((a, b) => {
+  const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return dateB - dateA;
+});
+---
+
+<BaseLayout title="Blog">
+  <main class="blog-page">
+    <header class="blog-hero">
+      <h1 class="blog-title">Blog</h1>
+      <p class="blog-sub">Deep dives, explorations, and things I learn along the way.</p>
+    </header>
+
+    <div class="post-list">
+      {posts.map((post) => {
+        const slug = post.id.replace(/\.md$/, '');
+        const date = post.data.date
+          ? new Date(post.data.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            })
+          : '';
+        return (
+          <a href={`/blog/${slug}/`} class="post-card">
+            <div class="post-meta">
+              {date && <time>{date}</time>}
+            </div>
+            <h2 class="post-title">{post.data.title}</h2>
+            {post.data.description && (
+              <p class="post-desc">{post.data.description}</p>
+            )}
+          </a>
+        );
+      })}
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .blog-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(60px + 2rem) 1.5rem 4rem;
+  }
+
+  .blog-hero {
+    padding: 2rem 0 2.5rem;
+  }
+
+  .blog-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.5rem;
+    background: linear-gradient(135deg, #25c2a0, #4fddbf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .blog-sub {
+    font-size: 1.05rem;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .post-card {
+    display: block;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #2a2a2a;
+    background: #111;
+    text-decoration: none;
+    color: #e3e3e3;
+    transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+
+  .post-card:hover {
+    border-color: #25c2a0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .post-meta {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .post-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+
+  .post-desc {
+    font-size: 0.88rem;
+    color: #999;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .blog-page { padding: calc(60px + 1rem) 1rem 3rem; }
+    .blog-title { font-size: 2rem; }
+    .post-card { padding: 1rem 1.25rem; }
+    .post-title { font-size: 1.05rem; }
+  }
+</style>

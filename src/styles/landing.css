@@ -1,0 +1,255 @@
+/* Shared nav for standalone pages */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background-color: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #2a2a2a;
+  height: 60px;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.nav-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: #999;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #25c2a0;
+}
+
+.main-container {
+  background-color: #000;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Landing page styles */
+.aboutme-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 auto;
+  padding: 1rem;
+  padding-top: calc(60px + 1rem);
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.aboutme-profile-img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+  margin: 1rem auto;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.aboutme-profile-img:hover {
+  transform: scale(1.05);
+}
+
+.aboutme-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.aboutme-location {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.aboutme-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0.5rem 0 1.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.aboutme-section {
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.aboutme-section h4 {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.aboutme-section div {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.hovereffect {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.hovereffect:hover {
+  color: silver;
+  border-bottom-color: silver;
+}
+
+.aboutme-section a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.aboutme-section a:hover {
+  background: linear-gradient(90deg, #ff4d4d, #f9cb28, #4CAF50, #2196F3, #9c27b0);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 2s ease infinite;
+  border-bottom-color: currentColor;
+}
+
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.badge {
+  display: inline-flex;
+  border: 1px solid transparent;
+  border-radius: 25px;
+  padding: 0.25rem 0.5rem;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+  background-color: #6366f1;
+  color: white;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.badge:nth-child(1) { background-color: #8b5cf6; border-color: #a855f7; }
+.badge:nth-child(2) { background-color: #06b6d4; border-color: #22d3ee; }
+.badge:nth-child(3) { background-color: #10b981; border-color: #34d399; }
+.badge:nth-child(4) { background-color: #f59e0b; border-color: #fbbf24; }
+.badge:nth-child(5) { background-color: #ef4444; border-color: #f87171; }
+
+.badge:hover {
+  border-style: solid;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1);
+}
+
+@media (max-width: 768px) {
+  .aboutme-container {
+    padding: 0.75rem;
+    padding-top: calc(60px + 0.75rem);
+    min-height: 100vh;
+    justify-content: flex-start;
+  }
+  .aboutme-profile-img { width: 130px; height: 130px; margin-bottom: 0.75rem; }
+  .aboutme-title { font-size: 1.75rem; margin: 0.5rem 0; }
+  .aboutme-location { font-size: 0.9rem; margin-bottom: 0.75rem; }
+  .aboutme-badges { gap: 0.375rem; margin-bottom: 1rem; }
+  .aboutme-section { padding: 0 0.75rem; }
+  .aboutme-section h4 { font-size: 0.95rem; }
+  .aboutme-section div { font-size: 0.85rem; line-height: 1.5; }
+  .badge { padding: 0.3rem 0.6rem; font-size: 0.7rem; min-height: 32px; }
+}
+
+@media (max-width: 480px) {
+  .aboutme-container { padding: 0.75rem; padding-top: calc(60px + 0.5rem); justify-content: flex-start; }
+  .aboutme-profile-img { width: 110px; height: 110px; margin-bottom: 0.5rem; }
+  .aboutme-title { font-size: 1.4rem; margin: 0.25rem 0; }
+  .aboutme-location { font-size: 0.85rem; margin-bottom: 0.5rem; }
+  .aboutme-badges { gap: 0.3rem; margin-bottom: 0.75rem; padding: 0.25rem; }
+  .aboutme-section { padding: 0 0.5rem; }
+  .aboutme-section h4 { font-size: 0.9rem; }
+  .badge { padding: 0.25rem 0.5rem; font-size: 0.65rem; min-height: 28px; }
+}
+
+@supports (padding: max(0px)) {
+  .aboutme-container {
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}

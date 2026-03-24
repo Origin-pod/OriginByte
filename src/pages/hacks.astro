@@ -1,0 +1,31 @@
+---
+import HacksPage from '../components/HacksPage';
+import '../styles/hacks-page.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Lab - OriginByte</title>
+    <meta name="description" content="Things I build when I should be sleeping" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="/" class="nav-brand">
+          <img src="/profile.jpg" alt="Profile" class="nav-logo" />
+          <span>SSR</span>
+        </a>
+        <div class="nav-links">
+          <a href="/notes/frontend/reactivity/">Notes</a>
+          <a href="/hacks/" class="active">Hacks</a>
+          <a href="/blog/">Blog</a>
+          <a href="https://github.com/happycoder0011" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <HacksPage client:load />
+  </body>
+</html>

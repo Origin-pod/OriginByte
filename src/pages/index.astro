@@ -1,0 +1,33 @@
+---
+import LandingPage from '../components/LandingPage';
+import '../styles/landing.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OriginByte - SSR</title>
+    <meta name="description" content="Write it out" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="/" class="nav-brand">
+          <img src="/profile.jpg" alt="Profile" class="nav-logo" />
+          <span>SSR</span>
+        </a>
+        <div class="nav-links">
+          <a href="/notes/frontend/reactivity/">Notes</a>
+          <a href="/hacks/">Hacks</a>
+          <a href="/blog/">Blog</a>
+          <a href="https://github.com/happycoder0011" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <main class="main-container">
+      <LandingPage client:load />
+    </main>
+  </body>
+</html>

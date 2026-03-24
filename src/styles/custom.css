@@ -1,0 +1,43 @@
+/* OriginByte - Dark theme customization for Starlight */
+
+:root {
+  --sl-color-accent-low: #1a3a2e;
+  --sl-color-accent: #25c2a0;
+  --sl-color-accent-high: #4fddbf;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #e3e3e3;
+  --sl-color-gray-2: #bbbbbb;
+  --sl-color-gray-3: #888888;
+  --sl-color-gray-4: #333333;
+  --sl-color-gray-5: #2a2a2a;
+  --sl-color-gray-6: #111111;
+  --sl-color-black: #000000;
+}
+
+/* Force dark background everywhere */
+:root[data-theme='light'] {
+  --sl-color-bg: #000000;
+  --sl-color-bg-nav: #000000;
+  --sl-color-bg-sidebar: #000000;
+  --sl-color-hairline-light: #2a2a2a;
+  --sl-color-hairline-shade: #333333;
+}
+
+:root[data-theme='dark'],
+:root {
+  --sl-color-bg: #000000;
+  --sl-color-bg-nav: #000000;
+  --sl-color-bg-sidebar: #000000;
+  --sl-color-hairline-light: #2a2a2a;
+  --sl-color-hairline-shade: #333333;
+}
+
+html, body {
+  background-color: #000000;
+}
+
+/* Ensure content area matches */
+.main-pane,
+starlight-theme-provider {
+  background-color: #000000;
+}
