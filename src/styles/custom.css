@@ -41,3 +41,18 @@ html, body {
 starlight-theme-provider {
   background-color: #000000;
 }
+
+/* Hide sidebar scrollbar */
+starlight-menu-button + nav,
+.sidebar-pane,
+[data-pagefind-ignore] nav,
+aside {
+  scrollbar-width: none;           /* Firefox */
+  -ms-overflow-style: none;        /* IE/Edge */
+}
+
+starlight-menu-button + nav::-webkit-scrollbar,
+.sidebar-pane::-webkit-scrollbar,
+aside::-webkit-scrollbar {
+  display: none;                   /* Chrome/Safari */
+}

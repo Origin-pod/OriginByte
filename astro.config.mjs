@@ -48,6 +48,7 @@ export default defineConfig({
         { label: 'Dev Tooling', autogenerate: { directory: 'notes/dev-tooling' } },
         { label: 'Theoretical Physics', autogenerate: { directory: 'notes/theoretical-physics' } },
         { label: 'Quantum Computing', autogenerate: { directory: 'notes/quantum-computing' } },
+        { label: 'In-Depth Handbooks', autogenerate: { directory: 'notes/handbooks' } },
       ],
     }),
     react(),
