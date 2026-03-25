@@ -16,7 +16,7 @@ export default defineConfig({
       logo: {
         src: './src/assets/profile.jpg',
       },
-      favicon: '/favicon.ico',
+      favicon: '/favicon.svg',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/happycoder0011' },
         { icon: 'x.com', label: 'X', href: 'https://x.com/sheetalssr' },
