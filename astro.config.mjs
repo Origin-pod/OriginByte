@@ -1,9 +1,15 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
+import rehypeMermaid from 'rehype-mermaid';
 
 export default defineConfig({
   site: 'https://originbyte.netlify.app',
+  markdown: {
+    rehypePlugins: [
+      [rehypeMermaid, { strategy: 'img-svg', dark: true }],
+    ],
+  },
   integrations: [
     starlight({
       title: 'SSR',
