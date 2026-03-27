@@ -241,41 +241,6 @@ export default function HacksPage() {
           </div>
         </section>
 
-        {/* Open Source */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.sectionIcon}>$</span>
-            Open Source Trail
-          </h2>
-          <p className={styles.sectionSub}>
-            Giving back to the projects that taught me everything.
-          </p>
-          <div className={styles.questList}>
-            {openSource.map((item) => (
-              <a
-                key={item.title}
-                href={item.link}
-                className={styles.questCard}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className={styles.questLeft}>
-                  <h3 className={styles.questTitle}>{item.title}</h3>
-                  <p className={styles.questDesc}>{item.description}</p>
-                  <div className={styles.techRow}>
-                    {item.tech.map((t) => (
-                      <span key={t} className={styles.techPill}>{t}</span>
-                    ))}
-                  </div>
-                </div>
-                <span className={`${styles.statusBadge} ${styles.statusShipped}`}>
-                  Merged
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
-
         {/* Footer */}
         <footer className={styles.footerCta}>
           <p>
