@@ -37,6 +37,14 @@ const originProjects = [
     emoji: '\uD83E\uDD16',
   },
   {
+    title: 'OriginCodeIDE',
+    description: 'A code editor built from the ground up. Because sometimes you just want to know how the magic works.',
+    tech: ['TypeScript'],
+    status: 'Active',
+    link: 'https://github.com/Origin-pod/OriginCodeIDE',
+    emoji: '\uD83D\uDCBB',
+  },
+  {
     title: 'OriginArt',
     description: 'A melting pot of design systems, 2D/3D experiments, and components. Where pixels go to party.',
     tech: ['TypeScript'],
@@ -56,6 +64,13 @@ const originProjects = [
 
 const sideQuests = [
   {
+    title: 'CanvasGPT',
+    description: 'AI-powered brainstorming canvas with inline Cmd+K editing, markdown, math, mermaid diagrams, and interactive tables.',
+    tech: ['TypeScript', 'AI', 'Canvas'],
+    status: 'Active',
+    link: 'https://github.com/happycoder0011/CanvasGPT',
+  },
+  {
     title: 'Parseltongue',
     description: 'A programming language for NLP and AI — built in Rust because we like our compilers fast and our error messages helpful.',
     tech: ['Rust', 'NLP', 'Compiler Design'],
@@ -63,9 +78,23 @@ const sideQuests = [
     link: 'https://github.com/that-in-rust/parseltongue',
   },
   {
+    title: 'Blr-CherryBlossom',
+    description: 'A creative experiment inspired by Bangalore\'s cherry blossom season. Sometimes code is just art.',
+    tech: ['JavaScript'],
+    status: 'Shipped',
+    link: 'https://github.com/happycoder0011/Blr-CherryBlossom',
+  },
+  {
+    title: 'RSVP-Reader',
+    description: 'Rapid Serial Visual Presentation reader — speed reading, one word at a time. Read faster, retain more.',
+    tech: ['HTML', 'JavaScript'],
+    status: 'Shipped',
+    link: 'https://github.com/happycoder0011/RSVP-Reader',
+  },
+  {
     title: 'Vanish',
     description: 'Privacy-focused browser extension. Because your online presence should be a choice, not a default.',
-    tech: ['JavaScript', 'Browser Extensions'],
+    tech: ['TypeScript'],
     status: 'Shipped',
     link: 'https://github.com/happycoder0011/Vanish',
   },
@@ -77,8 +106,6 @@ const sideQuests = [
     link: 'https://github.com/happycoder0011/Twitter-Bookmark-2.0',
   },
 ];
-
-const openSource: Array<{ title: string; description: string; tech: string[]; link: string }> = [];
 
 const statusColors: Record<string, string> = {
   'Active': 'statusActive',
