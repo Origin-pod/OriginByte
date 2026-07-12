@@ -3,6 +3,54 @@ import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
 import rehypeMermaid from 'rehype-mermaid';
 
+const publicSidebar = [
+  { label: 'Frontend', autogenerate: { directory: 'notes/frontend' } },
+  { label: 'Backend', autogenerate: { directory: 'notes/backend' } },
+  { label: 'System Programming', autogenerate: { directory: 'notes/system-programming' } },
+  { label: 'Browser', autogenerate: { directory: 'notes/browser' } },
+  { label: 'Databases', autogenerate: { directory: 'notes/databases' } },
+  { label: 'OS', autogenerate: { directory: 'notes/os' } },
+  { label: 'Random Explorations', autogenerate: { directory: 'notes/random-explorations' } },
+  { label: 'Thinking Patterns', autogenerate: { directory: 'notes/thinking-patterns' } },
+  {
+    label: 'Learning Resources',
+    items: [
+      { label: 'Book Notes', autogenerate: { directory: 'notes/learning-resources/book-notes' } },
+      { label: 'To-Read', autogenerate: { directory: 'notes/learning-resources/to-read' } },
+      { label: 'Courses', autogenerate: { directory: 'notes/learning-resources/courses' } },
+    ],
+  },
+  { label: 'Conference Talks', autogenerate: { directory: 'notes/conference-talks' } },
+  { label: 'Research Papers', autogenerate: { directory: 'notes/research-papers' } },
+  {
+    label: 'Projects & Tools',
+    items: [
+      { label: 'Project Ideas', autogenerate: { directory: 'notes/projects', collapsed: true } },
+      { label: 'LuminaJS', autogenerate: { directory: 'notes/projects/luminajs' } },
+      { label: 'Prompt Library', autogenerate: { directory: 'notes/projects/prompt-library' } },
+      { label: 'HandsFree', autogenerate: { directory: 'notes/projects/handsfree' } },
+      { label: 'Hacks', autogenerate: { directory: 'notes/projects/hacks' } },
+    ],
+  },
+  { label: 'Dev Tooling', autogenerate: { directory: 'notes/dev-tooling' } },
+];
+
+const privateSidebar = [
+  { label: 'Theoretical Physics', autogenerate: { directory: 'notes/theoretical-physics' } },
+  { label: 'Quantum Computing', autogenerate: { directory: 'notes/quantum-computing' } },
+  { label: 'In-Depth Handbooks', autogenerate: { directory: 'notes/handbooks' } },
+];
+
+const sidebar = [...publicSidebar, ...privateSidebar];
+
+const ssrGateHead = [
+  {
+    tag: 'script',
+    attrs: { 'is:inline': true },
+    content: `(function(){try{var s=sessionStorage.getItem('ssr:devmode');if(s==='1'){document.documentElement.classList.add('ssr-unlocked')}else{document.documentElement.classList.add('ssr-locked')}}catch(e){document.documentElement.classList.add('ssr-locked')}})();`,
+  },
+];
+
 export default defineConfig({
   site: 'https://originbyte.netlify.app',
   markdown: {
@@ -21,41 +69,14 @@ export default defineConfig({
         { icon: 'github', label: 'GitHub', href: 'https://github.com/happycoder0011' },
         { icon: 'x.com', label: 'X', href: 'https://x.com/sheetalssr' },
       ],
-      customCss: ['./src/styles/custom.css'],
-      sidebar: [
-        { label: 'Frontend', autogenerate: { directory: 'notes/frontend' } },
-        { label: 'Backend', autogenerate: { directory: 'notes/backend' } },
-        { label: 'System Programming', autogenerate: { directory: 'notes/system-programming' } },
-        { label: 'Browser', autogenerate: { directory: 'notes/browser' } },
-        { label: 'Databases', autogenerate: { directory: 'notes/databases' } },
-        { label: 'OS', autogenerate: { directory: 'notes/os' } },
-        { label: 'Random Explorations', autogenerate: { directory: 'notes/random-explorations' } },
-        { label: 'Thinking Patterns', autogenerate: { directory: 'notes/thinking-patterns' } },
-        {
-          label: 'Learning Resources',
-          items: [
-            { label: 'Book Notes', autogenerate: { directory: 'notes/learning-resources/book-notes' } },
-            { label: 'To-Read', autogenerate: { directory: 'notes/learning-resources/to-read' } },
-            { label: 'Courses', autogenerate: { directory: 'notes/learning-resources/courses' } },
-          ],
-        },
-        { label: 'Conference Talks', autogenerate: { directory: 'notes/conference-talks' } },
-        { label: 'Research Papers', autogenerate: { directory: 'notes/research-papers' } },
-        {
-          label: 'Projects & Tools',
-          items: [
-            { label: 'Project Ideas', autogenerate: { directory: 'notes/projects', collapsed: true } },
-            { label: 'LuminaJS', autogenerate: { directory: 'notes/projects/luminajs' } },
-            { label: 'Prompt Library', autogenerate: { directory: 'notes/projects/prompt-library' } },
-            { label: 'HandsFree', autogenerate: { directory: 'notes/projects/handsfree' } },
-            { label: 'Hacks', autogenerate: { directory: 'notes/projects/hacks' } },
-          ],
-        },
-        { label: 'Dev Tooling', autogenerate: { directory: 'notes/dev-tooling' } },
-        { label: 'Theoretical Physics', autogenerate: { directory: 'notes/theoretical-physics' } },
-        { label: 'Quantum Computing', autogenerate: { directory: 'notes/quantum-computing' } },
-        { label: 'In-Depth Handbooks', autogenerate: { directory: 'notes/handbooks' } },
+      customCss: [
+        './src/styles/custom.css',
       ],
+      head: ssrGateHead,
+      components: {
+        Footer: './src/components/SiteFooter.astro',
+      },
+      sidebar,
     }),
     react(),
   ],

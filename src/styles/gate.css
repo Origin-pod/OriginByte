@@ -1,0 +1,267 @@
+/* ---- private section sidebar gating (FART prevention) ---- */
+html.ssr-locked .ssr-gated,
+html.ssr-locked .sidebar-pane li:has(details ul a[href*="/notes/theoretical-physics/"]),
+html.ssr-locked .sidebar-pane li:has(details ul a[href*="/notes/quantum-computing/"]),
+html.ssr-locked .sidebar-pane li:has(details ul a[href*="/notes/handbooks/"]) {
+  display: none !important;
+}
+
+/* ---- hidden content (locked private pages) ---- */
+.ssr-content-hidden {
+  display: none !important;
+}
+
+/* ---- lock screen ---- */
+.ssr-lock-screen {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.ssr-lock-screen__inner {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.ssr-lock-screen__rune {
+  font-size: 4rem;
+  line-height: 1;
+  opacity: 0.85;
+  animation: ssr-pulse 3.5s ease-in-out infinite;
+  text-shadow: 0 0 24px rgba(120, 200, 180, 0.35);
+}
+
+@keyframes ssr-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+.ssr-lock-screen__title {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: #e3e3e3;
+}
+
+.ssr-lock-screen__sub {
+  margin: 0;
+  color: #888;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ssr-lock-screen__cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  color: #e3e3e3;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ssr-lock-screen__cta:hover {
+  border-color: #25c2a0;
+  color: #25c2a0;
+  background: rgba(37, 194, 160, 0.06);
+  transform: translateY(-1px);
+}
+
+/* ---- footer rune ---- */
+[data-ssr-rune] {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 0.9rem;
+  opacity: 0.25;
+  transition: opacity 0.4s ease, transform 0.4s ease, text-shadow 0.4s ease;
+  user-select: none;
+  text-decoration: none;
+  color: inherit;
+  margin-left: 0.75rem;
+}
+
+html.ssr-unlocked [data-ssr-rune] {
+  opacity: 0.7;
+  text-shadow: 0 0 12px rgba(120, 200, 180, 0.5);
+  animation: ssr-rune-glow 3s ease-in-out infinite;
+}
+
+[data-ssr-rune]:hover {
+  opacity: 0.9;
+  transform: rotate(90deg);
+}
+
+[data-ssr-rune]:focus {
+  outline: none;
+  opacity: 0.6;
+}
+
+@keyframes ssr-rune-glow {
+  0%, 100% { text-shadow: 0 0 12px rgba(120, 200, 180, 0.5); }
+  50% { text-shadow: 0 0 18px rgba(120, 200, 180, 0.8); }
+}
+
+/* ---- dev mode indicator in nav ---- */
+.ssr-dev-indicator[data-ssr-lock] {
+  display: none;
+}
+
+.ssr-dev-indicator[data-ssr-lock]:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #25c2a0;
+  border: 1px solid rgba(37, 194, 160, 0.3);
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(37, 194, 160, 0.06);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.ssr-dev-indicator[data-ssr-lock]:not([hidden]):hover {
+  background: rgba(37, 194, 160, 0.12);
+  border-color: rgba(37, 194, 160, 0.5);
+}
+
+.ssr-dev-indicator[data-ssr-lock]:not([hidden])::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #25c2a0;
+  box-shadow: 0 0 8px rgba(37, 194, 160, 0.6);
+  animation: ssr-blink 2s ease-in-out infinite;
+}
+
+@keyframes ssr-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ---- void page ---- */
+.ssr-void {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+}
+
+.ssr-void__inner {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ssr-void__rune {
+  font-size: 3rem;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.ssr-void__heading {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0;
+}
+
+.ssr-void__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ssr-void__input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  color: #e3e3e3;
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: border-color 0.2s ease;
+}
+
+.ssr-void__input:focus {
+  outline: none;
+  border-color: #25c2a0;
+}
+
+.ssr-void__input::placeholder {
+  color: #444;
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+.ssr-void__submit {
+  padding: 0.85rem 1rem;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  color: #e3e3e3;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ssr-void__submit:hover {
+  border-color: #25c2a0;
+  color: #25c2a0;
+  background: rgba(37, 194, 160, 0.04);
+}
+
+.ssr-void__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ssr-void__feedback {
+  min-height: 1.25rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.04em;
+}
+
+.ssr-void__feedback--ok {
+  color: #25c2a0;
+}
+
+.ssr-void__feedback--err {
+  color: #d96666;
+  animation: ssr-glitch 0.3s ease;
+}
+
+@keyframes ssr-glitch {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, -1px); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0, 0); }
+}

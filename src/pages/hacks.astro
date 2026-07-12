@@ -1,6 +1,8 @@
 ---
 import HacksPage from '../components/HacksPage';
+import GateElements from '../components/GateElements.astro';
 import '../styles/hacks-page.css';
+import '../styles/gate.css';
 ---
 
 <html lang="en">
@@ -10,6 +12,19 @@ import '../styles/hacks-page.css';
     <title>The Lab | SSR</title>
     <meta name="description" content="Things I build when I should be sleeping" />
     <link rel="icon" href="/favicon.svg" />
+    <script is:inline>
+      (function () {
+        try {
+          if (sessionStorage.getItem('ssr:devmode') === '1') {
+            document.documentElement.classList.add('ssr-unlocked');
+          } else {
+            document.documentElement.classList.add('ssr-locked');
+          }
+        } catch (e) {
+            document.documentElement.classList.add('ssr-locked');
+          }
+      })();
+    </script>
   </head>
   <body>
     <nav class="site-nav">
@@ -27,5 +42,6 @@ import '../styles/hacks-page.css';
       </div>
     </nav>
     <HacksPage client:load />
+    <GateElements />
   </body>
 </html>

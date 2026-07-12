@@ -1,0 +1,84 @@
+---
+import '../styles/gate.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const PASSPHRASE_HASH = 'c7b9bdd40758eaa827b7abc1fc31408901ac99cef4f3891c1fb3598f531bb9e6';
+---
+
+<BaseLayout title="enter the void" description="dev mode unlock">
+  <main class="ssr-void">
+    <div class="ssr-void__inner">
+      <div class="ssr-void__rune">🜲</div>
+      <h1 class="ssr-void__heading">speak, friend</h1>
+      <form class="ssr-void__form" id="ssr-void-form" autocomplete="off">
+        <input
+          class="ssr-void__input"
+          type="password"
+          name="passphrase"
+          id="ssr-void-input"
+          placeholder="the secret word…"
+          aria-label="passphrase"
+          required
+        />
+        <button class="ssr-void__submit" type="submit" id="ssr-void-submit">
+          unlock
+        </button>
+      </form>
+      <div class="ssr-void__feedback" id="ssr-void-feedback" aria-live="polite"></div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script is:inline define:vars={{ expectedHash: PASSPHRASE_HASH }}>
+  (function () {
+    const form = document.getElementById('ssr-void-form');
+    const input = document.getElementById('ssr-void-input');
+    const submit = document.getElementById('ssr-void-submit');
+    const feedback = document.getElementById('ssr-void-feedback');
+    if (!form || !input || !submit || !feedback) return;
+
+    async function sha256(text) {
+      const buf = new TextEncoder().encode(text);
+      const hash = await crypto.subtle.digest('SHA-256', buf);
+      return Array.from(new Uint8Array(hash))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    function setFeedback(msg, ok) {
+      feedback.textContent = msg;
+      feedback.className =
+        'ssr-void__feedback ' + (ok ? 'ssr-void__feedback--ok' : 'ssr-void__feedback--err');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const value = input.value;
+      if (!value) return;
+      submit.disabled = true;
+      setFeedback('verifying…', false);
+      try {
+        const hash = await sha256(value.trim().toLowerCase());
+        if (hash === expectedHash) {
+          try {
+            sessionStorage.setItem('ssr:devmode', '1');
+          } catch (_) { /* noop */ }
+          setFeedback('access granted. opening the way…', true);
+          setTimeout(() => {
+            location.href = '/';
+          }, 600);
+        } else {
+          setFeedback('access denied.', false);
+          submit.disabled = false;
+          input.value = '';
+          input.focus();
+        }
+      } catch (err) {
+        setFeedback('something went wrong.', false);
+        submit.disabled = false;
+      }
+    });
+
+    input.focus();
+  })();
+</script>

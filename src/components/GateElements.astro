@@ -1,0 +1,39 @@
+---
+---
+<div class="ssr-site-footer">
+  <span class="ssr-site-footer__text">© SSR</span>
+  <a
+    class="ssr-rune"
+    data-ssr-rune
+    href="/enter-the-void/"
+    title="dev mode"
+    aria-label="rune"
+  >🜲</a>
+  <span
+    class="ssr-dev-indicator"
+    data-ssr-lock
+    title="click to lock"
+    hidden
+  >dev mode</span>
+</div>
+
+<script>
+  import '../scripts/gate.ts';
+</script>
+
+<style>
+  .ssr-site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1.5rem 2rem;
+    color: #555;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .ssr-site-footer__text {
+    opacity: 0.6;
+  }
+</style>
