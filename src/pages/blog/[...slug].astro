@@ -66,21 +66,21 @@ const catLabel = meta?.cat === 'rendering' ? 'Rendering' : meta?.cat === 'framew
   .post-copy :global(h2) {
     font: 400 30px/1.1 var(--serif);
     color: var(--ink);
-    margin: 44px 0 12px;
+    margin: var(--space-7) 0 var(--space-3);
     letter-spacing: -0.01em;
   }
-  .post-copy :global(h3) { color: var(--ink); margin: 28px 0 8px; }
-  .post-copy :global(p) { margin-bottom: 20px; }
+  .post-copy :global(h3) { color: var(--ink); margin: var(--space-6) 0 var(--space-2); }
+  .post-copy :global(p) { margin-bottom: var(--space-5); }
   .post-copy :global(a) { color: var(--ink); background: linear-gradient(var(--hair2), var(--hair2)) 0 100% / 100% 1px no-repeat; }
   .post-copy :global(a:hover) { color: var(--acc-txt); }
-  .post-copy :global(code) { font: 0.88em var(--mono); background: var(--surface); border-radius: 5px; padding: 1px 5px; color: var(--ink); }
-  .post-copy :global(pre) { background: var(--c-black); color: #d7d7d2; border-radius: 12px; padding: 16px 18px; overflow: auto; margin: 20px 0; }
+  .post-copy :global(code) { font: 0.88em var(--mono); background: var(--surface); border-radius: 5px; padding: 1px var(--space-1); color: var(--ink); }
+  .post-copy :global(pre) { background: var(--c-black); color: #d7d7d2; border-radius: 12px; padding: var(--space-4); overflow: auto; margin: var(--space-5) 0; }
   .post-copy :global(pre code) { background: none; padding: 0; color: inherit; }
-  .post-copy :global(blockquote) { border-left: 2px solid var(--acc); margin: 18px 0; padding: 4px 0 4px 16px; color: var(--txt); }
+  .post-copy :global(blockquote) { border-left: 2px solid var(--acc); margin: var(--space-4) 0; padding: var(--space-1) 0 var(--space-1) var(--space-4); color: var(--txt); }
   .body > .post-copy :global(p:first-of-type)::first-letter {
     font: 400 64px/0.8 var(--serif);
     float: left;
-    margin: 7px 9px 0 0;
+    margin: var(--space-2) var(--space-2) 0 0;
     color: var(--ink);
   }
 </style>

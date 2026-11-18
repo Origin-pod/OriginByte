@@ -75,16 +75,18 @@ const fmt = (date?: Date) =>
     </div>
 
     <hr data-r>
-    <div class="search" data-r>
+    <div class="controls" data-r>
+    <div class="search">
       <label class="sbox">⌕<input data-search placeholder="Search apps, notes, books" aria-label="Search"><span class="kbd">/</span></label>
     </div>
-    <div class="seg ctrl" id="homeseg" data-r>
+    <div class="seg" id="homeseg">
       <button aria-pressed="true" data-v="all">All</button>
       <button data-v="work">Work</button>
       <button data-v="lab">Lab</button>
       <button data-v="notes">Notes</button>
       <button data-v="writing">Writing</button>
       <button data-v="library">Library</button>
+    </div>
     </div>
     <p class="empty">Nothing matches “<b></b>”. Try <i>rust</i>, <i>agents</i> or <i>pixel</i>.</p>
 
@@ -146,10 +148,8 @@ const fmt = (date?: Date) =>
       <div class="list reads">
         {readingBooks.map((book) => (
           <a class="row" href="/library/" data-s={`${book.title} ${book.author ?? ''}`}>
-            <span class="t">
-              {book.title}
-              {book.author && <span class="d">{book.author}</span>}
-            </span>
+            <span class="t">{book.title}</span>
+            {book.author && <span class="d">{book.author}</span>}
           </a>
         ))}
       </div>
