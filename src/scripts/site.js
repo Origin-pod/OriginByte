@@ -116,7 +116,7 @@ $$('[data-rune]').forEach(r => r.addEventListener('click', e => {
 }));
 
 /* ---------- surprise me ---------- */
-const PLACES = [['DB Simulator','/hacks/#db'],['a note on B-trees vs LSM trees','/notes/databases/b-trees-vs-lsm/'],['HTML to pixel','/blog/2025-07-02-from-html-to-pixel/'],['Database Internals','/library/database-internals/'],['the Void','/enter-the-void/'],['a page that isn’t there','/this-page-fell-off-the-shelf/']];
+const PLACES = [['DB Simulator','/hacks/#db'],['a note on B-trees vs LSM trees','/notes/databases/b-trees-vs-lsm/'],['HTML to pixel','/blog/2025-07-02-from-html-to-pixel/'],['Database Internals','/library/'],['the Void','/enter-the-void/'],['a page that isn’t there','/this-page-fell-off-the-shelf/']];
 const surprise = () => { const [n, h] = PLACES[Math.floor(Math.random()*PLACES.length)]; toast(`Taking you to <b style="color:inherit">${n}</b>…`, 1400); setTimeout(() => location.href = h, reduced() ? 0 : 900); };
 $$('[data-surprise]').forEach(b => b.addEventListener('click', surprise));
 

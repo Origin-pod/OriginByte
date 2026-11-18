@@ -1,20 +1,8 @@
 ---
 title: "Classical Mechanics"
 author: "John R. Taylor"
-coverAuthor: "Taylor"
-category: physics
-cover: lilac
-ornament: ellipses
-status: unread
-highlights: []
-fileUrl: ""
+status: want-to-read
 placeholder: true
-short: "Classical Mechanics"
-byline: "John R. Taylor"
-onDesk: false
-spineHeight: 222
-spineWidth: 40
-order: 15
 ---
 
-Placeholder shelf entry. The PDF is not in git; set `fileUrl` to the Cloudflare R2 object when it exists.
+Placeholder title. The real list replaces this entry. A file, when there is one, stays out of git and is linked with `fileUrl`.

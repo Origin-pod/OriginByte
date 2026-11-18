@@ -1,20 +1,8 @@
 ---
 title: "Operating Systems: Three Easy Pieces"
 author: "Remzi Arpaci-Dusseau and Andrea Arpaci-Dusseau"
-coverAuthor: "Arpaci-Dusseau"
-category: systems
-cover: verm
-ornament: triangle
-status: unread
-highlights: []
-fileUrl: ""
+status: want-to-read
 placeholder: true
-short: "OSTEP"
-byline: "Arpaci-Dusseau · 2018"
-onDesk: false
-spineHeight: 240
-spineWidth: 40
-order: 3
 ---
 
-Placeholder shelf entry. The PDF is not in git; set `fileUrl` to the Cloudflare R2 object when it exists.
+Placeholder title. The real list replaces this entry. A file, when there is one, stays out of git and is linked with `fileUrl`.

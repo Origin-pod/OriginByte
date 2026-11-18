@@ -428,3 +428,13 @@ body{overflow:hidden}
 .num em{color:var(--acc-txt)}
 .lost p{max-width:380px;margin:12px auto 22px}
 .lost .acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+
+/* reading list: hairline rows, author stays visible when the title is long */
+.reads .row{border-top:1px solid var(--hair);white-space:normal;align-items:baseline}
+.reads .row:last-child{border-bottom:1px solid var(--hair)}
+.reads .row .t{white-space:normal;flex-shrink:1}
+@media (max-width:720px){
+  .reads .row{flex-wrap:wrap;row-gap:2px}
+  .reads .row .t,.reads .row .d{flex-basis:100%;overflow:visible;white-space:normal;text-overflow:clip}
+  .reads .row .d{display:block}
+}

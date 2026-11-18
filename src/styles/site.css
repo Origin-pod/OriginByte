@@ -1,7 +1,7 @@
 /* ============ Origin Byte · Index — shared styles ============ */
 :root{
   --bg:#fbfbfa;--bg2:#f6f6f4;--surface:#f1f1ef;--raised-bg:#ffffff;
-  --ink:#0d0d0d;--txt:#6b6b69;--soft:#a3a3a0;--faint:#c9c9c6;
+  --ink:#0d0d0d;--txt:#6b6b69;--soft:#74746f;--faint:#c9c9c6;
   --hair:rgba(0,0,0,.075);--hair2:rgba(0,0,0,.12);
   --acc:#ff4f12;--acc-ink:#fff;--accbg:#fff0e8;--acc-txt:#d63c00;
   --sel:rgba(255,79,18,.16);
@@ -19,7 +19,7 @@
 }
 [data-theme="dark"]{
   --bg:#0f0f0e;--bg2:#121211;--surface:#1a1a19;--raised-bg:#1f1f1d;
-  --ink:#f3f2ee;--txt:#9b9a95;--soft:#64635f;--faint:#3d3d3a;
+  --ink:#f3f2ee;--txt:#9b9a95;--soft:#88867f;--faint:#3d3d3a;
   --hair:rgba(255,255,255,.07);--hair2:rgba(255,255,255,.12);
   --acc:#ff6b3d;--acc-ink:#140803;--accbg:rgba(255,107,61,.13);--acc-txt:#ff8a63;
   --sel:rgba(255,107,61,.28);

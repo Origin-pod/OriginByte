@@ -2,91 +2,66 @@
 import { getCollection } from 'astro:content';
 import IndexLayout from '../../layouts/IndexLayout.astro';
 import SiteFooter from '../../components/chrome/SiteFooter.astro';
-import BookCover from '../../components/BookCover.astro';
 
-const books = (await getCollection('library')).sort((a, b) => a.data.order - b.data.order);
-const desk = books.filter((b) => b.data.onDesk);
-const cats = ['all', 'databases', 'systems', 'graphics', 'languages', 'physics', 'reading'] as const;
+const books = (await getCollection('library')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
 
-function catOf(book: (typeof books)[number]) {
-  return book.data.status === 'reading' ? `${book.data.category} reading` : book.data.category;
-}
-function searchOf(book: (typeof books)[number]) {
-  return `${book.data.title} ${book.data.author} ${book.data.category}`;
-}
+const groups = [
+  { id: 'reading', label: 'Reading' },
+  { id: 'read', label: 'Read' },
+  { id: 'want-to-read', label: 'Want to read' },
+] as const;
+
+const byStatus = (id: string) => books.filter((book) => (book.data.status ?? 'want-to-read') === id);
+const shown = groups.filter((group) => byStatus(group.id).length > 0);
+
+const labelOf = (book: (typeof books)[number]) =>
+  book.data.author ? `${book.data.title} ${book.data.author}` : book.data.title;
 ---
 
-<IndexLayout title="Library" page="library" description="Books I keep coming back to.">
+<IndexLayout title="Library — Origin Byte" page="book" description="A reading list. Names, and an author when there is one.">
   <main class="col page" id="content">
-    <div class="top">
-      <div>
-        <div class="eyebrow" data-r>05 · Library</div>
-        <h1 class="h1" data-r>Books I keep <em>coming back to.</em></h1>
-        <p class="lede" data-r>A shelf of PDFs, filed by subject. Open one and it picks up where I left off.</p>
-      </div>
+    <header class="ph" data-r>
+      <div class="eyebrow">05 — Library</div>
+      <h1>The library.</h1>
+      <p class="lede">A reading list. Title, author when there is one, and whether it is open, finished, or waiting.</p>
+    </header>
+    <p class="note" data-r>These titles are still placeholders. The files, when they exist, stay out of git and are linked with <span class="mono">fileUrl</span>.</p>
+
+    <div class="search" data-r>
+      <label class="sbox">⌕<input data-search placeholder="Search the shelf" aria-label="Search the shelf"><span class="kbd">/</span></label>
     </div>
-    <div class="sh" data-r style="margin-top:40px">
-      <h2><span>●</span>On the desk</h2>
-      <span class="muted mono" style="font-size:12px">{desk.length} in progress</span>
+    <div class="chips" data-filter="#shelf" data-r>
+      <button aria-pressed="true" data-v="all">All <span class="n">{books.length}</span></button>
+      <button data-v="reading">Reading <span class="n">{byStatus('reading').length}</span></button>
+      <button data-v="read">Read <span class="n">{byStatus('read').length}</span></button>
+      <button data-v="want-to-read">Want to read <span class="n">{byStatus('want-to-read').length}</span></button>
     </div>
-    <div class="desk">
-      {desk.map((book) => (
-        <a href={`/library/${book.id}/`} data-r data-s={searchOf(book)}>
-          <span class={`mini cv-${book.data.cover}`} style="display:block"></span>
-          <div>
-            <b>{book.data.title}</b>
-            <span>{book.data.desk ?? `${book.data.progress ?? 0}%`}</span>
-            {book.data.progress != null && <div class="prog"><i style={`width:${book.data.progress}%`}></i></div>}
+    <p class="empty">Nothing on the shelf matches “<b></b>”.</p>
+
+    <div id="shelf">
+      {shown.map((group) => (
+        <section data-cat={group.id} data-sec data-r>
+          <div class="sh"><h2>{group.label}</h2><span class="muted mono">{byStatus(group.id).length}</span></div>
+          <div class="list reads">
+            {byStatus(group.id).map((book) => {
+              const inner = (
+                <>
+                  <span class="t">{book.data.title}</span>
+                  {book.data.author && <span class="d">{book.data.author}</span>}
+                </>
+              );
+              return book.data.fileUrl ? (
+                <a class="row" href={book.data.fileUrl} data-s={labelOf(book)}>{inner}</a>
+              ) : (
+                <div class="row" data-s={labelOf(book)}>{inner}</div>
+              );
+            })}
           </div>
-        </a>
+        </section>
       ))}
     </div>
-    <div class="tools" data-r>
-      <div class="chips" data-filter="#lib">
-        {cats.map((cat) => (
-          <button aria-pressed={cat === 'all'} data-v={cat}>{cat === 'all' ? 'All' : cat[0].toUpperCase() + cat.slice(1)}</button>
-        ))}
-      </div>
-      <div class="r">
-        <label class="sbox">⌕<input data-search placeholder="Title or author" aria-label="Search books"><span class="kbd">/</span></label>
-        <div class="vseg" id="vs">
-          <button aria-pressed="true" data-v="covers" type="button">Covers</button>
-          <button data-v="spines" type="button">Spines</button>
-        </div>
-      </div>
-    </div>
-    <p class="empty">No books match “<b></b>”.</p>
-    <div class="lib" id="lib">
-      <div class="grid">
-        {books.map((book) => (
-          <a class="book" href={`/library/${book.id}/`} data-cat={catOf(book)} data-s={searchOf(book)} data-r>
-            <BookCover cover={book.data.cover} author={book.data.coverAuthor ?? book.data.author} title={book.data.title} ornament={book.data.ornament} />
-            <div class="bt">{book.data.short ?? book.data.title}</div>
-            <div class="bm">PDF · {book.data.category[0].toUpperCase() + book.data.category.slice(1)}{book.data.progress != null ? ` · ${book.data.progress}%` : ''}</div>
-            {book.data.progress != null && <div class="prog"><i style={`width:${book.data.progress}%`}></i></div>}
-          </a>
-        ))}
-      </div>
-      <div class="shelfv">
-        {books.map((book) => (
-          <a
-            class={`spine cv-${book.data.cover}`}
-            href={`/library/${book.id}/`}
-            data-cat={catOf(book)}
-            data-s={searchOf(book)}
-            style={`height:${book.data.spineHeight ?? 220}px;width:${book.data.spineWidth ?? 40}px`}
-          >
-            <span>{book.data.short ?? book.data.title}</span>
-          </a>
-        ))}
-      </div>
-    </div>
-    <div class="note2" data-r>
-      <span>ⓘ</span>
-      <div>
-        <b>How the shelf works.</b> Only the metadata lives in the repo (<code>src/content/library</code>: title, author, category, cover, progress, status, highlights, fileUrl). The PDFs belong in private object storage — Cloudflare R2 — and stream into the reader. Nothing copyrighted is committed. Every book on this shelf is still a <code>placeholder: true</code> until its <code>fileUrl</code> is set.
-      </div>
-    </div>
-    <SiteFooter />
   </main>
+  <SiteFooter />
 </IndexLayout>
