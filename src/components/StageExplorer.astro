@@ -1,0 +1,47 @@
+<figure class="explore" data-r>
+  <div class="stages" id="stg" role="tablist" aria-label="Rendering stages">
+    <button type="button" aria-pressed="true">Parse</button>
+    <button type="button" aria-pressed="false">Style</button>
+    <button type="button" aria-pressed="false">Layout</button>
+    <button type="button" aria-pressed="false">Paint</button>
+    <button type="button" aria-pressed="false">Composite</button>
+  </div>
+  <div class="stage" id="stage">
+    <div class="on">
+      <pre><span class="t">&lt;article&gt;</span>
+  <span class="t">&lt;h1&gt;</span>Hello<span class="t">&lt;/h1&gt;</span>
+  <span class="t">&lt;p&gt;</span>Bytes become <span class="t">&lt;em&gt;</span>tokens<span class="t">&lt;/em&gt;</span>…<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;/article&gt;</span>
+
+→ tokens: StartTag(article) StartTag(h1) Char("Hello") EndTag(h1) …</pre>
+    </div>
+    <div class="tree2">
+      <div>article  <span class="muted">display:block · margin:0 auto</span></div>
+      <div>├─ h1  <span class="muted">font: 46px serif</span></div>
+      <div>└─ p   <span class="muted">font: 17px sans · color: var(--txt)</span></div>
+      <div>   └─ em  <span class="t" style="color:var(--acc-txt)">font-style: italic</span></div>
+    </div>
+    <div class="boxes">
+      <span style="left:18px;top:18px;right:18px;bottom:18px">article 584×224</span>
+      <span style="left:30px;top:44px;width:240px;height:52px">h1 240×52</span>
+      <span style="left:30px;top:108px;right:30px;height:70px">p 524×70</span>
+      <span class="a" style="left:150px;top:126px;width:64px;height:22px">em</span>
+    </div>
+    <div>
+      <pre>drawRect(article, bg)
+drawText("Hello", 30, 82, 46px serif)
+drawText("Bytes become", 30, 130)
+<span class="t">drawText("tokens", 150, 130, italic)</span>
+…  <span class="muted">// a display list, not pixels yet</span></pre>
+    </div>
+    <div class="layers">
+      <span style="top:40px;background:var(--surface);transform:translate(-40px,0)">layer 0 · page</span>
+      <span style="top:70px;background:var(--accbg);box-shadow:inset 0 0 0 1px var(--acc);transform:translate(0,0)">layer 1 · sticky header</span>
+      <span style="top:100px;background:var(--raised-bg);box-shadow:var(--raised);transform:translate(40px,0)">layer 2 · video</span>
+    </div>
+  </div>
+  <div class="cap">
+    <span id="capt"><b>Parse.</b> A tokenizer turns the byte stream into tags; a tree builder nests them into the DOM.</span>
+    <span class="mono">1 / 5</span>
+  </div>
+</figure>

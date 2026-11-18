@@ -27,42 +27,29 @@ function injectNoIndex(): void {
 function showLockScreen(): void {
   if (document.querySelector('.ssr-lock-screen')) return;
   const target =
-    document.querySelector('article .sl-markdown-content') ||
+    document.querySelector('.sl-markdown-content') ||
     document.querySelector('main') ||
     document.body;
   if (!target) return;
 
-  const article = target.closest('article') || target;
+  const article = target.closest('main') || target;
   const wrap = document.createElement('div');
   wrap.className = 'ssr-lock-screen';
   wrap.innerHTML = `
     <div class="ssr-lock-screen__inner">
       <div class="ssr-lock-screen__rune">🜲</div>
-      <h1 class="ssr-lock-screen__title">sealed</h1>
-      <p class="ssr-lock-screen__sub">this section is only visible in dev mode.</p>
-      <a class="ssr-lock-screen__cta" href="${RUNE_TARGET}">enter the void &rarr;</a>
+      <h1 class="ssr-lock-screen__title">Sealed</h1>
+      <p class="ssr-lock-screen__sub">These notes stay in the Void until you speak the word.</p>
+      <a class="btn" href="${RUNE_TARGET}">Enter the void →</a>
     </div>
   `;
   article.prepend(wrap);
 }
 
 function hidePrivateContent(): void {
-  const content = document.querySelector('article .sl-markdown-content');
-  if (content) {
-    content.classList.add('ssr-content-hidden');
-  }
-  const header = document.querySelector('article header');
-  if (header) {
-    header.classList.add('ssr-content-hidden');
-  }
-  const footer = document.querySelector('article footer');
-  if (footer) {
-    footer.classList.add('ssr-content-hidden');
-  }
-  const pager = document.querySelector('.sl-pagination');
-  if (pager) {
-    pager.classList.add('ssr-content-hidden');
-  }
+  document.querySelectorAll('.sl-markdown-content, #_top, .crumb, .pager, .toc').forEach((el) => {
+    el.classList.add('ssr-content-hidden');
+  });
 }
 
 function applyLockState(): void {
@@ -92,7 +79,8 @@ function showDevIndicator(): void {
 
 function bindRune(): void {
   const rune = document.querySelector<HTMLElement>('[data-ssr-rune]');
-  if (!rune) return;
+  // site.js owns the rune when it also carries the easter-egg hook.
+  if (!rune || rune.hasAttribute('data-rune')) return;
   const handler = (e: Event) => {
     e.preventDefault();
     e.stopPropagation();

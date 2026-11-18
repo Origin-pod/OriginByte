@@ -1,0 +1,28 @@
+---
+import SiteChrome from '../chrome/SiteChrome.astro';
+
+const { hasSidebar } = Astro.locals.starlightRoute;
+---
+
+<script is:inline>
+  document.body.dataset.page = 'note';
+</script>
+<SiteChrome page="note" hideRail={true} />
+<div class="doc doc-note">
+  {
+    hasSidebar && (
+      <nav class="tree" aria-label="Notes">
+        <a class="back" href="/notes/">← All notes</a>
+        <slot name="sidebar" />
+      </nav>
+    )
+  }
+  <div class="note-main">
+    <slot />
+  </div>
+</div>
+<script is:inline>
+  document.querySelectorAll('starlight-theme-select, .mobile-preferences').forEach(function (el) { el.remove(); });
+  var main = document.querySelector('main');
+  if (main && !main.id) main.id = 'content';
+</script>

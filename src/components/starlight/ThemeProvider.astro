@@ -1,0 +1,21 @@
+---
+---
+
+<script is:inline>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('ob-theme'); } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    var r = document.documentElement;
+    r.dataset.theme = t;
+    r.classList.add('js');
+    try { localStorage.setItem('starlight-theme', t); } catch (e) {}
+    try {
+      if (sessionStorage.getItem('ssr:devmode') === '1') r.classList.add('ssr-unlocked');
+      else r.classList.add('ssr-locked');
+    } catch (e) {
+      r.classList.add('ssr-locked');
+    }
+    window.StarlightThemeProvider = { updatePickers: function () {} };
+  })();
+</script>

@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import IndexLayout from '../../layouts/IndexLayout.astro';
+import SiteFooter from '../../components/chrome/SiteFooter.astro';
+import { shelfMeta, shelfOrder, swatches } from '../../data/shelves';
+
+const docs = await getCollection('docs', (entry) => {
+  const id = String(entry.id).replace(/\.mdx?$/, '');
+  return id.startsWith('notes/') && !id.endsWith('/index') && id !== 'notes';
+});
+
+const byShelf = new Map<string, { id: string; title: string; href: string }[]>();
+for (const entry of docs) {
+  const id = String(entry.id).replace(/\.mdx?$/, '');
+  const section = id.split('/')[1];
+  if (!section) continue;
+  const list = byShelf.get(section) ?? [];
+  list.push({ id, title: entry.data.title, href: `/${id}/` });
+  byShelf.set(section, list);
+}
+for (const list of byShelf.values()) list.sort((a, b) => a.title.localeCompare(b.title));
+
+const ids = [
+  ...shelfOrder.filter((id) => byShelf.has(id)),
+  ...[...byShelf.keys()].filter((id) => !shelfOrder.includes(id)),
+];
+
+const noteCount = docs.length;
+const shelfCount = ids.length;
+---
+
+<IndexLayout title="Notes" page="notes" description="A working wiki, kept in public.">
+  <main class="col page" id="content">
+    <div class="top">
+      <div>
+        <div class="eyebrow" data-r>03 · Notes</div>
+        <h1 class="h1" data-r>A working wiki, <em>kept in public.</em></h1>
+        <p class="lede" data-r>Everything I learn, filed by shelf. Some notes are polished; most are scaffolding. Built on Starlight, restyled to match the rest of the site.</p>
+      </div>
+      <div class="stats" data-r>
+        <div><b>{shelfCount}</b><span>shelves</span></div>
+        <div><b>{noteCount}</b><span>notes</span></div>
+        <div><b title="Placeholder — notes do not carry an updated date yet">—</b><span>this month</span></div>
+      </div>
+    </div>
+    <div class="bar2" data-r>
+      <div class="search"><label class="sbox">⌕<input data-search placeholder="Search notes" aria-label="Search notes"><span class="kbd">/</span></label></div>
+    </div>
+    <div class="chips" data-r data-filter="#areas">
+      <button aria-pressed="true" data-v="all">All shelves</button>
+      <button data-v="web">Web</button>
+      <button data-v="sys">Systems</button>
+      <button data-v="sci">Science</button>
+      <button data-v="ref">Reference</button>
+    </div>
+    <p class="empty">No notes match “<b></b>”.</p>
+
+    <div class="areas" id="areas">
+      {ids.map((id, index) => {
+        const meta = shelfMeta[id];
+        const notes = byShelf.get(id) ?? [];
+        const title = meta?.title ?? id;
+        const group = meta?.group ?? 'ref';
+        const swatch = swatches[index % swatches.length];
+        const preview = notes.slice(0, 3);
+        return (
+          <section class:list={['area', meta?.private && 'ssr-gated']} id={id} data-cat={group} data-sec data-r>
+            <span class="gl" style={`background:var(--c-${swatch});color:var(--c-${swatch}-t)`} set:html={meta?.icon ?? ''}></span>
+            <header>
+              <h2>{title}</h2>
+              <span>/{id} · {notes.length}</span>
+            </header>
+            <p>{meta?.blurb ?? 'Notes filed on this shelf.'}</p>
+            <div class="list">
+              {preview.map((note) => (
+                <a class="row" href={note.href} data-s={`${note.title} ${title}`}>
+                  <span class="t">{note.title}</span>
+                  {note.id.endsWith('b-trees-vs-lsm') && <span class="badge live">sample</span>}
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+    <SiteFooter />
+  </main>
+</IndexLayout>

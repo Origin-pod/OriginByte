@@ -1,71 +1,85 @@
-# Website
+# Origin Byte
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+A hand-kept index of the things Sheetal Singh builds, notes, and reads. Astro 5, Starlight 0.34, and React 19 islands, deployed on Netlify. The visual system is the approved Index mockup: off-white directory, hairline borders, vermilion `#ff4f12`, Public Sans, Geist Mono, and Newsreader (self-hosted, with the optical-size axis).
 
-### Installation
+## Develop
 
-```
-$ yarn
-```
-
-### Local Development
-
-```
-$ yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-
-### Twitter Bookmarks Scraper
-
-This repo includes a Playwright-based script to export your X/Twitter bookmarks to JSON.
-
-#### Usage
-
-1. Install dependencies and Playwright browsers:
-
-```
+```bash
 npm install
-npx playwright install --with-deps
+npm run dev
+npm run build
 ```
 
-2. Run the scraper:
+`netlify.toml` installs Playwright Chromium before the build so `rehype-mermaid` can render diagrams, then publishes `dist`. Node 22.
 
+## Layout
+
+| Path | What it is |
+| --- | --- |
+| `/` | Home. Card fan, letter, search. |
+| `/work/` | Résumé, from `src/data/resume.ts`. |
+| `/hacks/` | The Lab, from `src/data/apps.ts`. |
+| `/notes/` | Notes index. Individual notes stay on Starlight at `/notes/...`. |
+| `/blog/` | The eight essays. URLs are unchanged. |
+| `/library/` | Book metadata only. |
+| `/enter-the-void/` | Passphrase gate for private note shelves. |
+| `src/styles/site.css` | Design tokens and shared chrome. |
+| `src/styles/pages.css` | Page-specific layout. |
+| `src/styles/fonts.css` | Self-hosted `@font-face` rules. No Google Fonts. |
+| `src/scripts/site.js` | Theme, fan, rune, lists, reader, void, keyboard. |
+| `src/components/chrome/` | The one nav and footer. |
+
+Light and dark follow the system, and a manual choice is saved as `ob-theme`. An inline script in the document head applies it before paint. Switching uses a circular View Transitions reveal, with a fade when that API is missing. `prefers-reduced-motion` turns the motion off.
+
+Keyboard: `S` shuffles the home fan, `T` toggles the theme, `R` is surprise, `/` focuses search. The mockup’s `P` placeholder outline is not in production.
+
+## Add a note
+
+Put a Markdown or MDX file under `src/content/docs/notes/<shelf>/`. Starlight picks it up from the sidebar in `astro.config.mjs`. The notes index groups by the directory name and reads titles from `src/data/shelves.ts` (`shelfMeta`). Add a shelf there, and to `shelfOrder`, when you create a new directory. Private shelves (`theoretical-physics`, `quantum-computing`, `handbooks`) stay hidden until the Void passphrase is entered.
+
+The sample note `/notes/databases/b-trees-vs-lsm/` includes the write-ratio slider. The B-tree key-drop animation lives on the Lab feature, which is the figure the mockup animates.
+
+## Add an app
+
+Edit `src/data/apps.ts`. `group: 'here'` is for apps served by this site. Everything else is `ou` (Origin Universe) or `sq` (side quest) and should link to its own repository. Blurbs copied from the mockup are marked `blurbPlaceholder: true`.
+
+The DB Simulator has one canonical URL: `/dbsim/`. `public/_redirects` proxies that path to `https://origin-pod.github.io/Origin-DB-Simulator/`. The source repository stays `https://github.com/Origin-pod/Origin-DB-Simulator`.
+
+## Add a book
+
+Add `src/content/library/<slug>.md` with:
+
+```yaml
+title: ""
+author: ""
+category: databases # databases | systems | graphics | languages | physics
+cover: black       # verm | sand | moss | blue | black | lilac | cream | rose
+progress: 0
+status: unread     # unread | reading | finished
+highlights: []
+fileUrl: ""        # HTTPS URL of the PDF. Leave empty until it exists.
+placeholder: true  # set false once the real file is linked
 ```
-npm run scrape:twitter:bookmarks
-```
 
-On first run, a Chromium window opens. Log in to X/Twitter if prompted, then return to the terminal and press Enter to continue. Your session persists under `.playwright-user/` for subsequent runs.
+Optional fields the shelf UI uses: `coverAuthor`, `ornament`, `short`, `pages`, `added`, `desk`, `byline`, `pageLabel`, `onDesk`, `spineHeight`, `spineWidth`, `order`.
 
-3. Output
+### PDFs live in Cloudflare R2, not in git
 
-- JSON file written to `data/twitter-bookmarks.json` with fields: `scrapedAt`, `count`, and `items` (array of tweets with `authorName`, `authorHandle`, `time`, `url`, `text`, `images`, `videos`).
+Book files are not committed. `fileUrl` should be an object URL (or a signed URL minted by a Worker) on a private R2 bucket. The planned shape:
 
-Notes:
+1. Create an R2 bucket, for example `originbyte-library`, with public access off.
+2. Upload one PDF per book. Keep the object key stable, such as `books/database-internals.pdf`.
+3. Put a Worker or Netlify function in front of the bucket if the objects must stay private, and point `fileUrl` at that URL.
+4. Set `placeholder: false` once the link works. The reader today is the designed placeholder spread; wiring pdf.js to `fileUrl` is the next step after the files exist.
 
-- The scraper scrolls to load more bookmarks. Adjust limits in `scripts/scrape-twitter-bookmarks.ts` if needed.
-- Selectors may change if X/Twitter updates its UI.
+Every book currently in `src/content/library` is `placeholder: true` with an empty `fileUrl`.
+
+The PDF that used to live at `docs/Random Explorations/UBI/Tell me with web research what.pdf` was removed with the unused Docusaurus `docs/` tree. It was not referenced by the Astro build. It remains recoverable from git history and was not uploaded anywhere.
+
+## Résumé PDF
+
+`PUBLIC_RESUME_PDF_URL` (a public env var, read in `src/data/site.ts`) is the download target of the PDF button on `/work/`. It is empty until set. Do not commit the résumé PDF, and do not add the phone number from it — the email is the only contact published.
+
+## The Void
+
+`/enter-the-void/` compares a SHA-256 of the typed word with the hash in `src/data/site.ts` and, on a match, sets `sessionStorage['ssr:devmode']`. That reveals the private note shelves and the footer rune. This is a client-side courtesy, not access control: the notes are in the built HTML, and anyone can read the hash. The plaintext passphrase is not in the repo.

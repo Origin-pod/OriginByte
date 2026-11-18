@@ -1,0 +1,50 @@
+---
+title: B-trees vs LSM trees
+description: Every database eventually has to answer where on disk a key lives.
+sidebar:
+  badge:
+    text: sample
+    variant: tip
+---
+
+import WriteRatio from '../../../../components/notes/WriteRatio.astro';
+
+Every database eventually has to answer one boring question: **where on disk does this key live?** Two families of answers dominate. B-trees update data *in place*; LSM trees never overwrite, they only *append* and tidy up later.
+
+## Two ways to keep a key
+
+Both structures keep keys sorted so range scans are cheap. The difference is when they pay for that order: a B-tree pays on every write, an LSM tree defers the bill to background compaction.
+
+<div class="aside note"><b>Note</b>The DB Simulator in the Lab lets you swap these two engines under the same workload and watch the I/O counters diverge.</div>
+
+## B-trees
+
+A B-tree is a shallow, wide tree of fixed-size pages. Finding a key costs one page read per level, and with a fan-out in the hundreds, three or four levels cover billions of keys.
+
+```rust
+// descend from the root to the leaf that owns `key`
+fn find_leaf(&self, key: &[u8]) -> PageId {
+    let mut page = self.root;
+    while let Node::Internal(n) = self.pool.get(page) {
+        page = n.children[n.search(key)];
+    }
+    page
+}
+```
+
+## LSM trees
+
+Writes land in an in-memory `memtable` and the write-ahead log. When the memtable fills, it is flushed as an immutable sorted file; compaction later merges files level by level.
+
+<div class="aside tip"><b>Tip</b>Bloom filters are what make LSM point reads bearable: most files can say “definitely not here” without touching disk.</div>
+
+## The trade-off
+
+<WriteRatio />
+
+| Concern | B-tree | LSM tree |
+| --- | --- | --- |
+| Writes | In place, random I/O | Append, sequential I/O |
+| Point reads | One path, predictable | Several files + Bloom filters |
+| Space | Fragmentation in pages | Temporary duplicates until compaction |
+| Seen in | Postgres, InnoDB | RocksDB, Cassandra |

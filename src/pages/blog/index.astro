@@ -1,126 +1,85 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import IndexLayout from '../../layouts/IndexLayout.astro';
+import SiteFooter from '../../components/chrome/SiteFooter.astro';
+import { estimateMinutes, writingMeta } from '../../data/writing';
 
-const posts = (await getCollection('blog')).sort((a, b) => {
-  const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
-  const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
-  return dateB - dateA;
-});
+const posts = (await getCollection('blog'))
+  .map((post) => {
+    const meta = writingMeta[post.id];
+    const date = post.data.date ? new Date(post.data.date) : undefined;
+    return {
+      post,
+      meta,
+      date,
+      year: date ? date.getFullYear() : 0,
+      minutes: estimateMinutes(post.body ?? ''),
+    };
+  })
+  .sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
+
+const featured = posts.find((p) => p.meta?.featured) ?? posts[0];
+const years = [...new Set(posts.map((p) => p.year))];
+
+const day = (date?: Date) =>
+  date
+    ? date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+    : '';
+const monthYear = (date?: Date) =>
+  date ? date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : '';
 ---
 
-<BaseLayout title="Blog">
-  <main class="blog-page">
-    <header class="blog-hero">
-      <h1 class="blog-title">Blog</h1>
-      <p class="blog-sub">Deep dives, explorations, and things I learn along the way.</p>
-    </header>
+<IndexLayout title="Writing" page="writing" description="Long reads about how software draws.">
+  <main class="col page" id="content">
+    <div class="eyebrow" data-r>04 · Writing</div>
+    <h1 class="h1" data-r>Long reads about how <em>software draws.</em></h1>
+    <p class="lede" data-r>Essays on rendering, frameworks and engines, usually with something to poke at inside.</p>
 
-    <div class="post-list">
-      {posts.map((post) => {
-        const slug = post.id.replace(/\.md$/, '');
-        const date = post.data.date
-          ? new Date(post.data.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })
-          : '';
-        return (
-          <a href={`/blog/${slug}/`} class="post-card">
-            <div class="post-meta">
-              {date && <time>{date}</time>}
-            </div>
-            <h2 class="post-title">{post.data.title}</h2>
-            {post.data.description && (
-              <p class="post-desc">{post.data.description}</p>
-            )}
-          </a>
-        );
-      })}
+    {featured && (
+      <a class="featpost" href={`/blog/${featured.post.id}/`} data-r>
+        <div>
+          <span class="badge hot">Most read</span>
+          <h2>{featured.meta?.short ?? featured.post.data.title}</h2>
+          <p>{featured.meta?.dek ?? featured.post.data.description}</p>
+          <div class="mono muted" style="font-size:12px;margin-top:10px">{monthYear(featured.date)} · {featured.minutes} min</div>
+        </div>
+        <div aria-hidden="true">
+          <div class="pipe"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="pl"><span>parse</span><span>style</span><span>layout</span><span>paint</span><span>comp</span></div>
+        </div>
+      </a>
+    )}
+
+    <div class="chips" style="margin-top:34px" data-r data-filter="#posts">
+      <button aria-pressed="true" data-v="all">All</button>
+      <button data-v="rendering">Rendering</button>
+      <button data-v="frameworks">Frameworks</button>
+      <button data-v="engines">Engines</button>
     </div>
+
+    <div id="posts">
+      {years.map((year) => (
+        <div class="yr" data-r>
+          <span>{year || 'Undated'}</span>
+          <div class="list">
+            {posts.filter((p) => p.year === year).map(({ post, meta, date }) => (
+              <a class="row" href={`/blog/${post.id}/`} data-cat={meta?.cat ?? 'meta'} data-s={`${post.data.title} ${meta?.dek ?? ''}`}>
+                <span class="t">{meta?.short ?? post.data.title}</span>
+                <span class="d">{meta?.dek}</span>
+                {meta?.hot && <span class="badge hot">Hot</span>}
+                <span class="m">{day(date)}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <form class="subscribe" data-subscribe data-r>
+      <label class="sbox"><input type="email" placeholder="you@domain.com" aria-label="Email for new posts"></label>
+      <button class="btn mag" type="submit">Get new essays</button>
+      <a class="btn ghost mag" href="/rss.xml">RSS</a>
+    </form>
+    <SiteFooter />
   </main>
-</BaseLayout>
-
-<style>
-  .blog-page {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: calc(60px + 2rem) 1.5rem 4rem;
-  }
-
-  .blog-hero {
-    padding: 2rem 0 2.5rem;
-  }
-
-  .blog-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin: 0 0 0.5rem;
-    background: linear-gradient(135deg, #25c2a0, #4fddbf);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .blog-sub {
-    font-size: 1.05rem;
-    color: #888;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .post-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .post-card {
-    display: block;
-    padding: 1.25rem 1.5rem;
-    border-radius: 12px;
-    border: 1px solid #2a2a2a;
-    background: #111;
-    text-decoration: none;
-    color: #e3e3e3;
-    transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-  }
-
-  .post-card:hover {
-    border-color: #25c2a0;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  }
-
-  .post-meta {
-    font-size: 0.75rem;
-    color: #666;
-    margin-bottom: 0.4rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .post-title {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin: 0 0 0.3rem;
-    color: #fff;
-    letter-spacing: -0.01em;
-  }
-
-  .post-desc {
-    font-size: 0.88rem;
-    color: #999;
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  @media (max-width: 768px) {
-    .blog-page { padding: calc(60px + 1rem) 1rem 3rem; }
-    .blog-title { font-size: 2rem; }
-    .post-card { padding: 1rem 1.25rem; }
-    .post-title { font-size: 1.05rem; }
-  }
-</style>
+</IndexLayout>

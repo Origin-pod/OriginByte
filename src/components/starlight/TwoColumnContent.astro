@@ -1,0 +1,19 @@
+---
+const { toc, editUrl } = Astro.locals.starlightRoute;
+---
+
+<div class="note-columns">
+  <div class="main-pane"><slot /></div>
+  {
+    toc && (
+      <aside class="toc right-sidebar-container">
+        <slot name="right-sidebar" />
+        {editUrl && (
+          <a class="edit" href={editUrl}>
+            Edit this note on GitHub ↗
+          </a>
+        )}
+      </aside>
+    )
+  }
+</div>

@@ -1,0 +1,13 @@
+---
+import newsreader from '@fontsource-variable/newsreader/files/newsreader-latin-standard-normal.woff2?url';
+import publicSans from '@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2?url';
+import geist from '@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url';
+
+const { head } = Astro.locals.starlightRoute;
+---
+
+<link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={publicSans} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={geist} as="font" type="font/woff2" crossorigin />
+{head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+<noscript><style>[data-r]{opacity:1!important;transform:none!important;filter:none!important}</style></noscript>

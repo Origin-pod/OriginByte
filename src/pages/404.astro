@@ -1,0 +1,23 @@
+---
+import IndexLayout from '../layouts/IndexLayout.astro';
+---
+
+<IndexLayout title="404" page="" description="This page fell off the shelf." nosurprise={true} nochrome={true}>
+  <main class="lost" id="content">
+    <div>
+      <div class="pile" id="pile" role="button" tabindex="0" aria-label="Tidy the scattered cards">
+        <div class="c cv-verm">Library</div>
+        <div class="c cv-sand">Notes</div>
+        <div class="c cv-moss">Lab</div>
+        <div class="c cv-blue">Writing</div>
+        <div class="c cv-black">Résumé</div>
+      </div>
+      <div class="num" data-r>4<em>0</em>4</div>
+      <p data-r>This page fell off the shelf. The cards above did too — click them to tidy up, or let chance decide.</p>
+      <div class="acts" data-r>
+        <a class="btn mag" href="/">Back to the index</a>
+        <button class="btn ghost mag" type="button" data-surprise>Surprise me</button>
+      </div>
+    </div>
+  </main>
+</IndexLayout>

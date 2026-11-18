@@ -1,49 +1,167 @@
 ---
-import LandingPage from '../components/LandingPage';
-import GateElements from '../components/GateElements.astro';
-import '../styles/landing.css';
-import '../styles/gate.css';
+import { getCollection } from 'astro:content';
+import IndexLayout from '../layouts/IndexLayout.astro';
+import BookCover from '../components/BookCover.astro';
+import SiteFooter from '../components/chrome/SiteFooter.astro';
+import { site } from '../data/site';
+import { apps } from '../data/apps';
+import { homeShelves, shelfMeta } from '../data/shelves';
+import { writingMeta } from '../data/writing';
+
+const books = (await getCollection('library')).sort((a, b) => a.data.order - b.data.order);
+const homeBooks = ['designing-data-intensive-applications', 'database-internals', 'ostep', 'crafting-interpreters']
+  .map((id) => books.find((b) => b.id === id))
+  .filter((b) => b != null);
+
+const posts = (await getCollection('blog'))
+  .map((post) => ({ post, meta: writingMeta[post.id] }))
+  .filter((p) => p.meta)
+  .sort((a, b) => {
+    const da = a.post.data.date ? +new Date(a.post.data.date) : 0;
+    const db = b.post.data.date ? +new Date(b.post.data.date) : 0;
+    return db - da;
+  });
+const homePosts = ['2025-07-02-from-html-to-pixel', '2025-07-06-cpu-parallel-rendering', '2025-05-23-ui-framework-paradigms', '2025-07-04-game-engines-101']
+  .map((id) => posts.find((p) => p.post.id === id))
+  .filter((p) => p != null);
+
+const homeApps = ['DB Simulator', 'OriginBrain', 'OriginCodeIDE', 'CanvasGPT', 'RSVP-Reader']
+  .map((title) => apps.find((a) => a.title === title))
+  .filter((a) => a != null);
+
+const fmt = (date?: Date) =>
+  date
+    ? new Date(date).toLocaleDateString('en-GB', { month: 'short', year: '2-digit' })
+    : '';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SSR</title>
-    <meta name="description" content="Write it out" />
-    <link rel="icon" href="/favicon.svg" />
-    <script is:inline>
-      (function () {
-        try {
-          if (sessionStorage.getItem('ssr:devmode') === '1') {
-            document.documentElement.classList.add('ssr-unlocked');
-          } else {
-            document.documentElement.classList.add('ssr-locked');
-          }
-        } catch (e) {
-          document.documentElement.classList.add('ssr-locked');
-        }
-      })();
-    </script>
-  </head>
-  <body>
-    <nav class="site-nav">
-      <div class="nav-inner">
-        <a href="/" class="nav-brand">
-          <img src="/profile.jpg" alt="Profile" class="nav-logo" />
-          <span>SSR</span>
+<IndexLayout title="Origin Byte — Sheetal Singh" page="home" description="A hand-kept index of the things I build, the notes I take, and the books I keep coming back to.">
+  <main class="col page" id="content" style="padding-top:0!important">
+    <div class="deckwrap" data-r>
+      <div class="deck" aria-label="Five doors into the site">
+        <a class="card k1" href="/library/">
+          <svg viewBox="0 0 160 120"><g stroke="currentColor" stroke-width="1" opacity=".7"><path d="M8 120V18M16 120V30M24 120V10M32 120V26M40 120V14M48 120V34M56 120V8M64 120V22M72 120V30M80 120V12M88 120V24M96 120V6M104 120V28M112 120V16M120 120V32M128 120V12M136 120V22M144 120V8M152 120V26"/></g></svg>
+          <h3>The<br>Library</h3><small>PDF SHELF</small>
         </a>
-        <div class="nav-links">
-          <a href="/notes/frontend/reactivity/">Notes</a>
-          <a href="/hacks/">Hacks</a>
-          <a href="/blog/">Blog</a>
-          <a href="https://github.com/happycoder0011" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
+        <a class="card k2" href="/notes/">
+          <svg viewBox="0 0 160 120" fill="currentColor"><g opacity=".5"><rect x="0" y="0" width="14" height="14"/><rect x="32" y="0" width="14" height="14" opacity=".4"/><rect x="64" y="16" width="14" height="14"/><rect x="16" y="32" width="14" height="14" opacity=".7"/><rect x="96" y="0" width="14" height="14" opacity=".3"/><rect x="128" y="16" width="14" height="14"/><rect x="48" y="48" width="14" height="14" opacity=".5"/><rect x="112" y="48" width="14" height="14"/><rect x="0" y="64" width="14" height="14" opacity=".4"/><rect x="80" y="64" width="14" height="14"/><rect x="144" y="80" width="14" height="14" opacity=".6"/><rect x="32" y="96" width="14" height="14"/><rect x="96" y="96" width="14" height="14" opacity=".4"/></g></svg>
+          <h3>Working<br>Notes</h3><small>8 SHELVES · WIKI</small>
+        </a>
+        <a class="card k3" href="/hacks/#db">
+          <svg viewBox="0 0 160 120" fill="none" stroke="#25c2a0" stroke-width="1"><rect x="58" y="4" width="44" height="16" rx="3"/><rect x="8" y="48" width="44" height="16" rx="3"/><rect x="58" y="48" width="44" height="16" rx="3"/><rect class="pulse" x="108" y="48" width="44" height="16" rx="3" fill="#25c2a0" fill-opacity=".3"/><path d="M80 20V48M80 20L30 48M80 20L130 48" stroke-dasharray="2 3"/><g opacity=".5"><rect x="2" y="92" width="22" height="12" rx="2"/><rect x="28" y="92" width="22" height="12" rx="2"/><rect x="58" y="92" width="22" height="12" rx="2"/><rect x="84" y="92" width="22" height="12" rx="2"/><rect x="112" y="92" width="22" height="12" rx="2"/><rect x="136" y="92" width="22" height="12" rx="2"/><path d="M30 64L13 92M30 64L39 92M80 64L69 92M80 64L95 92M130 64L123 92M130 64L147 92"/></g></svg>
+          <h3>DB<br>Simulator</h3><small>THE LAB · RUST + WASM</small>
+        </a>
+        <a class="card k4 r" href="/blog/2025-07-02-from-html-to-pixel/">
+          <svg viewBox="0 0 160 120" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"><path d="M0 20C30 4 50 36 80 20S130 4 160 20"/><path d="M0 34C30 18 50 50 80 34S130 18 160 34"/><path d="M0 48C30 32 50 64 80 48S130 32 160 48"/><path d="M0 62C30 46 50 78 80 62S130 46 160 62"/><path d="M0 76C30 60 50 92 80 76S130 60 160 76"/><path d="M0 90C30 74 50 106 80 90S130 74 160 90"/></svg>
+          <h3>HTML<br>to pixel</h3><small>WRITING</small>
+        </a>
+        <a class="card k5 r" href="/work/">
+          <svg viewBox="0 0 160 120" fill="none" stroke="currentColor" stroke-width=".8" opacity=".55"><rect x="2" y="2" width="156" height="116" rx="4"/><rect x="10" y="10" width="40" height="100" rx="2"/><rect x="58" y="10" width="92" height="44" rx="2"/><rect x="58" y="62" width="44" height="48" rx="2"/><rect x="108" y="62" width="42" height="48" rx="2"/></svg>
+          <h3>The<br>Résumé</h3><small>2022 — NOW</small>
+        </a>
       </div>
-    </nav>
-    <main class="main-container">
-      <LandingPage client:load />
-    </main>
-    <GateElements />
-  </body>
-</html>
+      <div class="deckhint"><span class="k">hover to fan</span><button data-shuffle>⟲ shuffle <span class="kbd">S</span></button></div>
+    </div>
+
+    <div class="letter">
+      <p data-r>Hey,</p>
+      <p data-r>I'm <b>Sheetal Singh</b>. This is <span class="word">Origin Byte</span>, a hand-kept index of the things I build, the notes I take, and the books I keep coming back to.</p>
+      <p data-r>By day I'm a senior software engineer at <span class="nw"><span class="chip">Harness</span>,</span> building the interfaces that find AI agents and bots inside API traffic. Before that, Agent Builder at <span class="chip">Glean</span> and storefronts for car makers at <span class="nw"><span class="chip">Tekion</span>.</span></p>
+      <dl class="now" data-r>
+        <dt>now</dt><dd><span class="livedot"></span><b>Agent Discovery</b> at Harness</dd>
+        <dt>shipped</dt><dd><b>DB Simulator</b>, a database you build from parts</dd>
+        <dt>reading</dt><dd><b>{site.nowReading.title}</b>, {site.nowReading.detail}</dd>
+        <dt>based</dt><dd>Bengaluru · <span class="mono ist" style="font-size:13px">--:--</span> IST</dd>
+      </dl>
+    </div>
+
+    <hr data-r>
+    <div class="search" data-r>
+      <label class="sbox">⌕<input data-search placeholder="Search apps, notes, books" aria-label="Search"><span class="kbd">/</span></label>
+    </div>
+    <div class="seg ctrl" id="homeseg" data-r>
+      <button aria-pressed="true" data-v="all">All</button>
+      <button data-v="work">Work</button>
+      <button data-v="lab">Lab</button>
+      <button data-v="notes">Notes</button>
+      <button data-v="writing">Writing</button>
+      <button data-v="library">Library</button>
+    </div>
+    <p class="empty">Nothing matches “<b></b>”. Try <i>rust</i>, <i>agents</i> or <i>pixel</i>.</p>
+
+    <section data-sec="work" class="work" data-r>
+      <div class="sh"><h2><span>01</span>Work</h2><a href="/work/">full résumé <span class="arr">↗</span></a></div>
+      <div class="list">
+        <a class="row" href="/work/#harness" data-s="harness angular d3 security agents"><span class="t">Harness</span><span class="d">Senior Software Engineer · App &amp; API Security</span><span class="badge live">now</span><span class="m">2025</span></a>
+        <a class="row" href="/work/#glean" data-s="glean react agents llm slack"><span class="t">Glean</span><span class="d">Software Engineer · Agent Builder</span><span class="m">2024</span></a>
+        <a class="row" href="/work/#tekion" data-s="tekion next react ecommerce"><span class="t">Tekion</span><span class="d">Software Engineer · OEM e-commerce, 300k+ monthly users</span><span class="m">2022</span></a>
+        <a class="row" href="/work/#edu" data-s="iiit bhopal education"><span class="t">IIIT Bhopal</span><span class="d">B.Tech, Information Technology · CGPA 9.35</span><span class="m">2018</span></a>
+      </div>
+    </section>
+
+    <section data-sec="lab" data-r>
+      <div class="sh"><h2><span>02</span>Lab</h2><a href="/hacks/">{apps.length} apps <span class="arr">↗</span></a></div>
+      <div class="list">
+        {homeApps.map((app) => (
+          <a class="row" href={app.group === 'here' ? '/hacks/#db' : '/hacks/'} data-s={`${app.title} ${app.blurb}`}>
+            <span class="t">{app.title}</span>
+            <span class="d">{app.title === 'DB Simulator' ? 'Build a database from parts: LSM and B-trees, MVCC or 2PL, WAL with ARIES' : app.group === 'ou' ? 'Origin Universe' : 'Side quest'}</span>
+            {app.group === 'here' && <span class="badge live">runs here</span>}
+            <span class="m">{app.group === 'here' ? 'Feb 26' : 'repo'}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section data-sec="notes" data-r>
+      <div class="sh"><h2><span>03</span>Notes</h2><a href="/notes/">open the wiki <span class="arr">↗</span></a></div>
+      <div class="notes8">
+        {homeShelves.map((id) => {
+          const shelf = shelfMeta[id];
+          return (
+            <a href={`/notes/#${id}`} data-s={`${shelf.title} ${shelf.blurb}`} class:list={[shelf.private && 'ssr-gated']}>
+              <b>{shelf.title === 'Systems programming' ? 'Systems' : shelf.title === 'Operating systems' ? 'OS' : shelf.title}</b>
+              <span>/{id === 'system-programming' ? 'systems' : id === 'theoretical-physics' ? 'physics' : id === 'handbooks' ? 'handbooks' : id}</span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <section data-sec="writing" data-r>
+      <div class="sh"><h2><span>04</span>Writing</h2><a href="/blog/">all posts <span class="arr">↗</span></a></div>
+      <div class="list">
+        {homePosts.map(({ post, meta }) => (
+          <a class="row" href={`/blog/${post.id}/`} data-s={`${meta.short} ${meta.dek}`}>
+            <span class="t">{meta.short}</span>
+            <span class="d">{meta.dek}</span>
+            {meta.hot && <span class="badge hot">Hot</span>}
+            <span class="m">{fmt(post.data.date)}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section data-sec="library" data-r>
+      <div class="sh"><h2><span>05</span>Library</h2><a href="/library/">full shelf <span class="arr">↗</span></a></div>
+      <div class="shelf4">
+        {homeBooks.map((book) => (
+          <a class="book" href={`/library/${book.id}/`} data-s={`${book.data.title} ${book.data.author}`}>
+            <BookCover
+              cover={book.data.cover}
+              author={book.data.coverAuthor ?? book.data.author}
+              title={book.data.title}
+              italic={book.id === 'crafting-interpreters'}
+            />
+            <div class="bt">{book.data.short}</div>
+            <div class="bm">PDF · {book.id === 'database-internals' ? 'reading' : book.data.category[0].toUpperCase() + book.data.category.slice(1)}</div>
+            {book.id === 'database-internals' && book.data.progress != null && (
+              <div class="prog"><i style={`width:${book.data.progress}%`}></i></div>
+            )}
+          </a>
+        ))}
+      </div>
+    </section>
+    <SiteFooter />
+  </main>
+</IndexLayout>

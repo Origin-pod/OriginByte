@@ -1,0 +1,20 @@
+---
+import SiteFooter from '../chrome/SiteFooter.astro';
+
+const { pagination } = Astro.locals.starlightRoute;
+const { prev, next } = pagination;
+---
+
+{(prev || next) && (
+  <div class="pager" data-r>
+    {prev ? (
+      <a href={prev.href}><small>← previous</small><b>{prev.label}</b></a>
+    ) : (
+      <span></span>
+    )}
+    {next && (
+      <a href={next.href}><small>next →</small><b>{next.label}</b></a>
+    )}
+  </div>
+)}
+<SiteFooter />

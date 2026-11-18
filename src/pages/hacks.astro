@@ -1,47 +1,86 @@
 ---
-import HacksPage from '../components/HacksPage';
-import GateElements from '../components/GateElements.astro';
-import '../styles/hacks-page.css';
-import '../styles/gate.css';
+import IndexLayout from '../layouts/IndexLayout.astro';
+import SiteFooter from '../components/chrome/SiteFooter.astro';
+import { site } from '../data/site';
+import { apps, appGroups } from '../data/apps';
+
+const here = apps.filter((a) => a.group === 'here').length;
+const repos = apps.length - here;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Lab | SSR</title>
-    <meta name="description" content="Things I build when I should be sleeping" />
-    <link rel="icon" href="/favicon.svg" />
-    <script is:inline>
-      (function () {
-        try {
-          if (sessionStorage.getItem('ssr:devmode') === '1') {
-            document.documentElement.classList.add('ssr-unlocked');
-          } else {
-            document.documentElement.classList.add('ssr-locked');
-          }
-        } catch (e) {
-            document.documentElement.classList.add('ssr-locked');
-          }
-      })();
-    </script>
-  </head>
-  <body>
-    <nav class="site-nav">
-      <div class="nav-inner">
-        <a href="/" class="nav-brand">
-          <img src="/profile.jpg" alt="Profile" class="nav-logo" />
-          <span>SSR</span>
-        </a>
-        <div class="nav-links">
-          <a href="/notes/frontend/reactivity/">Notes</a>
-          <a href="/hacks/" class="active">Hacks</a>
-          <a href="/blog/">Blog</a>
-          <a href="https://github.com/happycoder0011" target="_blank" rel="noopener noreferrer">GitHub</a>
+<IndexLayout title="The Lab" page="lab" description="Things I built to understand things.">
+  <main class="col page" id="content">
+    <div class="eyebrow" data-r>02 · The Lab</div>
+    <h1 class="h1" data-r>Things I built to <em>understand</em> things.</h1>
+    <p class="lede" data-r>Thirteen apps. One runs right here on Origin Byte; the rest live in their own repos and open in a new tab. Sorted by universe.</p>
+
+    <section class="feat" id="db" data-r>
+      <div class="tx">
+        <div class="eb"><span class="badge" style="background:#25c2a0;color:#04130e">runs here</span>FEB 2026 · RUST · WASM</div>
+        <h2>DB Simulator</h2>
+        <p>A visual, modular database builder. Snap engine blocks together and watch the trade-offs happen in real time.</p>
+        <dl>
+          <dt>storage</dt><dd>LSM trees, B-trees</dd>
+          <dt>concurrency</dt><dd>MVCC, 2PL</dd>
+          <dt>recovery</dt><dd>WAL, ARIES</dd>
+          <dt>built with</dt><dd>Rust, TypeScript, React, WebAssembly</dd>
+        </dl>
+        <div class="go">
+          <a class="btn mag" href={site.dbSim}>Open simulator <span class="arr">↗</span></a>
+          <a class="btn ghost mag" href={site.dbSimSource} target="_blank" rel="noopener noreferrer">Source</a>
         </div>
       </div>
-    </nav>
-    <HacksPage client:load />
-    <GateElements />
-  </body>
-</html>
+      <div class="viz" aria-hidden="true">
+        <svg viewBox="0 0 400 340" fill="none" stroke="#25c2a0" stroke-width="1.2" font-family="Geist Mono" font-size="10">
+          <rect x="160" y="60" width="80" height="26" rx="5"/><text x="178" y="77" fill="#9fe8d2" stroke="none">17 · 42</text>
+          <path d="M200 86L90 150M200 86V150M200 86L310 150" stroke-dasharray="3 4" opacity=".6"/>
+          <rect x="50" y="150" width="80" height="26" rx="5"/><rect x="160" y="150" width="80" height="26" rx="5"/><rect class="split" x="270" y="150" width="80" height="26" rx="5" fill="#25c2a0"/>
+          <text x="72" y="167" fill="#9fe8d2" stroke="none">5 · 11</text><text x="180" y="167" fill="#9fe8d2" stroke="none">23 · 31</text><text x="290" y="167" fill="#9fe8d2" stroke="none">48 · 60</text>
+          <g opacity=".45"><rect x="30" y="236" width="40" height="18" rx="3"/><rect x="80" y="236" width="40" height="18" rx="3"/><rect x="150" y="236" width="40" height="18" rx="3"/><rect x="200" y="236" width="40" height="18" rx="3"/><rect x="270" y="236" width="40" height="18" rx="3"/><rect x="320" y="236" width="40" height="18" rx="3"/></g>
+          <path class="wal" d="M30 290H370" stroke-dasharray="6 6" opacity=".7"/><text x="30" y="306" fill="rgba(201,243,230,.5)" stroke="none">WAL ▸ append-only</text>
+          <g class="key"><circle cx="230" cy="30" r="7" fill="#25c2a0" stroke="none"/><text x="242" y="34" fill="#9fe8d2" stroke="none">INSERT 52</text></g>
+        </svg>
+        <span class="cap">fig. an insert travelling down a B+tree, logged first</span>
+      </div>
+    </section>
+
+    <div class="ctl" data-r>
+      <div class="seg" data-filter="#apps">
+        <button aria-pressed="true" data-v="all">All</button>
+        <button data-v="here">Runs here</button>
+        <button data-v="ou">Origin Universe</button>
+        <button data-v="sq">Side quests</button>
+      </div>
+      <span class="mono muted" style="font-size:12px">{apps.length} apps · {here} here · {repos} in repos</span>
+    </div>
+
+    <div id="apps">
+      {appGroups.map((group) => {
+        const items = apps.filter((a) => a.group === group.id);
+        return (
+          <div class="grp" data-cat={group.id} data-r>
+            <h3>{group.title} <span>{group.id === 'here' ? group.hint : `${items.length} apps · ${group.hint}`}</span></h3>
+            {group.id === 'here' ? (
+              <div class="here">
+                <span class="livedot" style="margin-top:7px"></span>
+                <div><b>DB Simulator</b> is the only app served from Origin Byte today. <span class="muted">It is proxied at <span class="mono">/dbsim/</span> so the lab, the résumé and the home card all open the same place.</span></div>
+              </div>
+            ) : (
+              <div class="tiles">
+                {items.map((app) => (
+                  <a class="tile" href={app.href} target={app.external ? '_blank' : undefined} rel={app.external ? 'noopener noreferrer' : undefined}>
+                    <span class="ico" style={`background:var(--c-${app.swatch});color:var(--c-${app.swatch}-t)`} set:html={app.icon}></span>
+                    <b>{app.title}</b>
+                    <p>{app.blurb}</p>
+                    <span class="ft2">repo<span class="arr">↗</span></span>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+    <SiteFooter />
+  </main>
+</IndexLayout>
