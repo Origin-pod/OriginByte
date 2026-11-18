@@ -1,4 +1,4 @@
-import { pages } from './private-pages.js';
+const pages = /* BEGIN_PAGES */ {} /* END_PAGES */;
 
 const SHELVES = ['theoretical-physics', 'quantum-computing', 'handbooks'];
 

@@ -9,7 +9,7 @@ import { marked } from 'marked';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const NOTES = join(ROOT, 'src/content/docs/notes');
-const OUT = join(ROOT, 'netlify/edge-functions/private-pages.js');
+const OUT = join(ROOT, 'netlify/edge-functions/void.js');
 const SHELVES = ['theoretical-physics', 'quantum-computing', 'handbooks'];
 
 marked.use({ gfm: true });
@@ -91,6 +91,9 @@ const indexItems = SHELVES.map((shelf) => {
 
 pages['/api/void'] = page('Sealed', `<p class="nav"><a href="/">← index</a></p><h1>Sealed shelves</h1>${indexItems}`);
 
-await mkdir(dirname(OUT), { recursive: true });
-await writeFile(OUT, `export const pages = ${JSON.stringify(pages)};\n`);
+const marker = /\/\* BEGIN_PAGES \*\/[\s\S]*?\/\* END_PAGES \*\//;
+const current = await readFile(OUT, 'utf8');
+if (!marker.test(current)) throw new Error('void.js is missing the pages marker');
+const next = current.replace(marker, `/* BEGIN_PAGES */ ${JSON.stringify(pages)} /* END_PAGES */`);
+await writeFile(OUT, next);
 console.log(`private pages: ${Object.keys(pages).length}`);
