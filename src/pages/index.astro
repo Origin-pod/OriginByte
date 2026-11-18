@@ -3,13 +3,14 @@ import { getCollection } from 'astro:content';
 import IndexLayout from '../layouts/IndexLayout.astro';
 import SiteFooter from '../components/chrome/SiteFooter.astro';
 import { apps } from '../data/apps';
+import { library } from '../data/library';
+import { isPrivateShelf } from '../data/private';
 import { homeShelves, shelfMeta } from '../data/shelves';
 import { writingMeta } from '../data/writing';
 
-const readingBooks = (await getCollection('library'))
-  .filter((book) => book.data.status === 'reading')
-  .sort((a, b) => a.data.title.localeCompare(b.data.title));
-const readingLine = readingBooks.map((book) => book.data.title).join(', ');
+const publicShelves = homeShelves.filter((id) => !isPrivateShelf(id));
+const readingBooks = library.filter((book) => book.status === 'reading');
+const readingLine = readingBooks.map((book) => book.title).join(', ');
 
 const posts = (await getCollection('blog'))
   .map((post) => ({ post, meta: writingMeta[post.id] }))
@@ -114,12 +115,12 @@ const fmt = (date?: Date) =>
     <section data-sec="notes" data-r>
       <div class="sh"><h2><span>03</span>Notes</h2><a href="/notes/">open the wiki <span class="arr">↗</span></a></div>
       <div class="notes8">
-        {homeShelves.map((id) => {
+        {publicShelves.map((id) => {
           const shelf = shelfMeta[id];
           return (
-            <a href={`/notes/#${id}`} data-s={`${shelf.title} ${shelf.blurb}`} class:list={[shelf.private && 'ssr-gated']}>
+            <a href={`/notes/#${id}`} data-s={`${shelf.title} ${shelf.blurb}`}>
               <b>{shelf.title === 'Systems programming' ? 'Systems' : shelf.title === 'Operating systems' ? 'OS' : shelf.title}</b>
-              <span>/{id === 'system-programming' ? 'systems' : id === 'theoretical-physics' ? 'physics' : id === 'handbooks' ? 'handbooks' : id}</span>
+              <span>/{id === 'system-programming' ? 'systems' : id}</span>
             </a>
           );
         })}
@@ -144,9 +145,11 @@ const fmt = (date?: Date) =>
       <div class="sh"><h2><span>05</span>Library</h2><a href="/library/">full shelf <span class="arr">↗</span></a></div>
       <div class="list reads">
         {readingBooks.map((book) => (
-          <a class="row" href="/library/" data-s={`${book.data.title} ${book.data.author ?? ''}`}>
-            <span class="t">{book.data.title}</span>
-            {book.data.author && <span class="d">{book.data.author}</span>}
+          <a class="row" href="/library/" data-s={`${book.title} ${book.author ?? ''}`}>
+            <span class="t">
+              {book.title}
+              {book.author && <span class="d">{book.author}</span>}
+            </span>
           </a>
         ))}
       </div>

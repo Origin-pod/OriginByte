@@ -1,20 +1,6 @@
-import { isUnlocked, lock, privatePrefix, isPrivatePath } from './auth';
+import { isUnlocked, lock } from './auth';
 
 const RUNE_TARGET = '/enter-the-void/';
-
-function hidePrivateSidebar(): void {
-  const links = document.querySelectorAll<HTMLAnchorElement>('a[href]');
-  const seen = new Set<HTMLElement>();
-  links.forEach((a) => {
-    const slug = privatePrefix(new URL(a.href, location.origin).pathname);
-    if (!slug) return;
-    const group = a.closest('details, li, .sidebar-group, .sidebar-entry');
-    if (group && !seen.has(group as HTMLElement)) {
-      seen.add(group as HTMLElement);
-      (group as HTMLElement).classList.add('ssr-gated');
-    }
-  });
-}
 
 function injectNoIndex(): void {
   if (document.querySelector('meta[name="robots"][content*="noindex"]')) return;
@@ -53,19 +39,9 @@ function hidePrivateContent(): void {
 }
 
 function applyLockState(): void {
-  const unlocked = isUnlocked();
-  const privatePath = isPrivatePath(location.pathname);
-
-  if (privatePath && !unlocked) {
-    document.documentElement.classList.add('ssr-locked');
-    showLockScreen();
-    hidePrivateContent();
-    injectNoIndex();
-  } else if (unlocked) {
+  if (isUnlocked()) {
     document.documentElement.classList.remove('ssr-locked');
     document.documentElement.classList.add('ssr-unlocked');
-  } else {
-    hidePrivateSidebar();
   }
 }
 

@@ -37,16 +37,21 @@ const publicSidebar = [
   { label: 'Dev Tooling', autogenerate: { directory: 'notes/dev-tooling' } },
 ];
 
-const privateSidebar = [
-  { label: 'Theoretical Physics', autogenerate: { directory: 'notes/theoretical-physics' } },
-  { label: 'Quantum Computing', autogenerate: { directory: 'notes/quantum-computing' } },
-  { label: 'In-Depth Handbooks', autogenerate: { directory: 'notes/handbooks' } },
+const sidebar = publicSidebar;
+
+const iconLinks = [
+  { tag: 'link', attrs: { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' } },
+  { tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' } },
+  { tag: 'link', attrs: { rel: 'manifest', href: '/site.webmanifest' } },
+  { tag: 'meta', attrs: { name: 'theme-color', content: '#fbfbfa', media: '(prefers-color-scheme: light)' } },
+  { tag: 'meta', attrs: { name: 'theme-color', content: '#0f0f0e', media: '(prefers-color-scheme: dark)' } },
+  { tag: 'meta', attrs: { property: 'og:image', content: 'https://sheetal.live/og.png' } },
+  { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
+  { tag: 'meta', attrs: { name: 'twitter:image', content: 'https://sheetal.live/og.png' } },
 ];
 
-const sidebar = [...publicSidebar, ...privateSidebar];
-
 export default defineConfig({
-  site: 'https://originbyte.netlify.app',
+  site: 'https://sheetal.live',
   trailingSlash: 'always',
   markdown: {
     rehypePlugins: [
@@ -55,7 +60,8 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'Origin Byte',
+      title: 'Sheetal Singh',
+      titleDelimiter: '—',
       favicon: '/favicon.svg',
       disable404Route: true,
       credits: false,
@@ -78,6 +84,7 @@ export default defineConfig({
       head: [
         { tag: 'script', content: themeBoot },
         { tag: 'meta', attrs: { name: 'color-scheme', content: 'light dark' } },
+        ...iconLinks,
       ],
       components: {
         Head: './src/components/starlight/Head.astro',

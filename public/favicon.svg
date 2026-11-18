@@ -1,4 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#000"/>
-  <text x="16" y="22" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="14" fill="#25c2a0">SSR</text>
+  <style>
+    .tile { fill: #141413; }
+    .mark { fill: #f6f5f1; }
+    .spark { fill: #ff4f12; }
+    @media (prefers-color-scheme: dark) {
+      .tile { fill: #f3f2ee; }
+      .mark { fill: #141413; }
+    }
+  </style>
+  <rect class="tile" width="32" height="32" rx="8"/>
+  <rect class="spark" x="25.4" y="3.2" width="3.6" height="3.6" rx="1"/>
+  <path class="mark" transform="translate(7.4 23.6) scale(0.0184 -0.0184)" d="M50 0V714H62L256 457L449 714H461L654 457L848 714H860V0ZM122 255H788V522L676 373H630L455 608L280 373H234L122 522ZM122 72H788V183H122Z"/>
 </svg>

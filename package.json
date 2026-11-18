@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/sync-goodreads.mjs && astro build && node scripts/build-private.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

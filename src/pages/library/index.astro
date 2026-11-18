@@ -1,39 +1,33 @@
 ---
-import { getCollection } from 'astro:content';
 import IndexLayout from '../../layouts/IndexLayout.astro';
 import SiteFooter from '../../components/chrome/SiteFooter.astro';
+import { GOODREADS_URL, library, type ReadingStatus } from '../../data/library';
 
-const books = (await getCollection('library')).sort((a, b) =>
-  a.data.title.localeCompare(b.data.title),
-);
-
-const groups = [
+const groups: { id: ReadingStatus; label: string }[] = [
   { id: 'reading', label: 'Reading' },
   { id: 'read', label: 'Read' },
   { id: 'want-to-read', label: 'Want to read' },
-] as const;
+];
 
-const byStatus = (id: string) => books.filter((book) => (book.data.status ?? 'want-to-read') === id);
+const byStatus = (id: ReadingStatus) => library.filter((book) => book.status === id);
 const shown = groups.filter((group) => byStatus(group.id).length > 0);
-
-const labelOf = (book: (typeof books)[number]) =>
-  book.data.author ? `${book.data.title} ${book.data.author}` : book.data.title;
+const labelOf = (book: (typeof library)[number]) => (book.author ? `${book.title} — ${book.author}` : book.title);
 ---
 
-<IndexLayout title="Library — Origin Byte" page="book" description="A reading list. Names, and an author when there is one.">
+<IndexLayout title="Library" page="book" description="A reading list. Names, and an author when there is one.">
   <main class="col page" id="content">
     <header class="ph" data-r>
       <div class="eyebrow">05 — Library</div>
       <h1>The library.</h1>
-      <p class="lede">A reading list. Title, author when there is one, and whether it is open, finished, or waiting.</p>
+      <p class="lede">Titles and authors, grouped by what is open, finished, or waiting. Pulled from Goodreads when the site builds.</p>
     </header>
-    <p class="note" data-r>These titles are still placeholders. The files, when they exist, stay out of git and are linked with <span class="mono">fileUrl</span>.</p>
+    <p class="note" data-r><a href={GOODREADS_URL} target="_blank" rel="noopener noreferrer">on Goodreads <span class="arr">↗</span></a></p>
 
     <div class="search" data-r>
       <label class="sbox">⌕<input data-search placeholder="Search the shelf" aria-label="Search the shelf"><span class="kbd">/</span></label>
     </div>
     <div class="chips" data-filter="#shelf" data-r>
-      <button aria-pressed="true" data-v="all">All <span class="n">{books.length}</span></button>
+      <button aria-pressed="true" data-v="all">All <span class="n">{library.length}</span></button>
       <button data-v="reading">Reading <span class="n">{byStatus('reading').length}</span></button>
       <button data-v="read">Read <span class="n">{byStatus('read').length}</span></button>
       <button data-v="want-to-read">Want to read <span class="n">{byStatus('want-to-read').length}</span></button>
@@ -47,15 +41,15 @@ const labelOf = (book: (typeof books)[number]) =>
           <div class="list reads">
             {byStatus(group.id).map((book) => {
               const inner = (
-                <>
-                  <span class="t">{book.data.title}</span>
-                  {book.data.author && <span class="d">{book.data.author}</span>}
-                </>
+                <span class="t">
+                  {book.title}
+                  {book.author && <span class="d">{book.author}</span>}
+                </span>
               );
-              return book.data.fileUrl ? (
-                <a class="row" href={book.data.fileUrl} data-s={labelOf(book)}>{inner}</a>
+              return book.fileUrl ? (
+                <a class="row" href={book.fileUrl} title={book.title} data-s={labelOf(book)}>{inner}</a>
               ) : (
-                <div class="row" data-s={labelOf(book)}>{inner}</div>
+                <div class="row" title={book.title} data-s={labelOf(book)}>{inner}</div>
               );
             })}
           </div>

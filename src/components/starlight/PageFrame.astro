@@ -1,5 +1,6 @@
 ---
 import SiteChrome from '../chrome/SiteChrome.astro';
+import Darkroom from '../Darkroom.astro';
 
 const { hasSidebar } = Astro.locals.starlightRoute;
 ---
@@ -21,6 +22,7 @@ const { hasSidebar } = Astro.locals.starlightRoute;
     <slot />
   </div>
 </div>
+<Darkroom />
 <script is:inline>
   document.querySelectorAll('starlight-theme-select, .mobile-preferences').forEach(function (el) { el.remove(); });
   var main = document.querySelector('main');

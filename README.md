@@ -22,7 +22,7 @@ npm run build
 | `/notes/` | Notes index. Individual notes stay on Starlight at `/notes/...`. |
 | `/blog/` | The eight essays. URLs are unchanged. |
 | `/library/` | Reading list. Title, optional author, and a status. |
-| `/enter-the-void/` | Passphrase gate for private note shelves. |
+| `/enter-the-void/` | Server-side gate for the sealed notes. |
 | `src/styles/site.css` | Design tokens and shared chrome. |
 | `src/styles/pages.css` | Page-specific layout. |
 | `src/styles/fonts.css` | Self-hosted `@font-face` rules. No Google Fonts. |
@@ -35,7 +35,9 @@ Keyboard: `S` shuffles the home fan, `T` toggles the theme, `R` is surprise, `/`
 
 ## Add a note
 
-Put a Markdown or MDX file under `src/content/docs/notes/<shelf>/`. Starlight picks it up from the sidebar in `astro.config.mjs`. The notes index groups by the directory name and reads titles from `src/data/shelves.ts` (`shelfMeta`). Add a shelf there, and to `shelfOrder`, when you create a new directory. Private shelves (`theoretical-physics`, `quantum-computing`, `handbooks`) stay hidden until the Void passphrase is entered.
+Put a Markdown or MDX file under `src/content/docs/notes/<shelf>/`. Starlight picks it up from the sidebar in `astro.config.mjs`. The notes index groups by the directory name and reads titles from `src/data/shelves.ts` (`shelfMeta`). Add a shelf there, and to `shelfOrder`, when you create a new directory.
+
+Private shelves (`theoretical-physics`, `quantum-computing`, `handbooks`) are drafts. A production build does not emit their pages, titles, or search entries. Locally, `npm run dev` still serves those drafts at their usual URLs. On Netlify they are served only by the `void` edge function after a password check. Set `VOID_PASSWORD` in the Netlify environment (it is not in the repo). The form at `/enter-the-void/` posts to `/api/void`, which sets an httpOnly cookie. Without that variable the sealed routes answer 404.
 
 The sample note `/notes/databases/b-trees-vs-lsm/` includes the write-ratio slider. The B-tree key-drop animation lives on the Lab feature, which is the figure the mockup animates.
 
@@ -47,17 +49,9 @@ The DB Simulator has one canonical URL: `/dbsim/`. `public/_redirects` proxies t
 
 ## Add a book
 
-Add `src/content/library/<slug>.md` with:
+The library is built from Goodreads user `166403141`. `scripts/sync-goodreads.mjs` runs before `astro build`. It tries `https://www.goodreads.com/review/list_rss/166403141?shelf=currently-reading|read|to-read` and, if that feed is empty, the public shelf widget. If both fail, `src/data/goodreads.json` is left as it is, so the build still succeeds. A Netlify rebuild refreshes the list: in the Netlify UI, open Deploys and choose Trigger deploy, or call a build hook if one is configured for the site.
 
-```yaml
-title: ""
-author: ""              # optional
-status: want-to-read    # reading | read | want-to-read, optional
-fileUrl: ""             # optional HTTPS URL of the file. Leave unset until it exists.
-placeholder: true       # set false once this is a real entry
-```
-
-The page groups and filters by `status` only. A `fileUrl` makes that row a link. There is no progress, no highlights, and no per-book page.
+Optional PDFs are `fileUrl`s in `src/data/library-files.ts`, keyed by the exact Goodreads title. The page groups by status only. There is no progress and no per-book page.
 
 ### PDFs live in Cloudflare R2, not in git
 
@@ -66,16 +60,13 @@ Book files are not committed. `fileUrl` should be an object URL (or a signed URL
 1. Create an R2 bucket, for example `originbyte-library`, with public access off.
 2. Upload one PDF per book. Keep the object key stable, such as `books/database-internals.pdf`.
 3. Put a Worker or Netlify function in front of the bucket if the objects must stay private, and point `fileUrl` at that URL.
-4. Set `placeholder: false` once the link works.
-
-Every book currently in `src/content/library` is `placeholder: true` with no `fileUrl`.
 
 The PDF that used to live at `docs/Random Explorations/UBI/Tell me with web research what.pdf` was removed with the unused Docusaurus `docs/` tree. It was not referenced by the Astro build. It remains recoverable from git history and was not uploaded anywhere.
 
 ## Résumé PDF
 
-`PUBLIC_RESUME_PDF_URL` (a public env var, read in `src/data/site.ts`) is the download target of the PDF button on `/work/`. It is empty until set. Do not commit the résumé PDF, and do not add the phone number from it — the email is the only contact published.
+`PUBLIC_RESUME_PDF_URL` (a public env var, read in `src/data/site.ts`) is the download target of the PDF button on `/work/`. It is empty until set. Do not commit the résumé PDF, and do not add the phone number from it.
 
 ## The Void
 
-`/enter-the-void/` compares a SHA-256 of the typed word with the hash in `src/data/site.ts` and, on a match, sets `sessionStorage['ssr:devmode']`. That reveals the private note shelves and the footer rune. This is a client-side courtesy, not access control: the notes are in the built HTML, and anyone can read the hash. The plaintext passphrase is not in the repo.
+`/enter-the-void/` posts the word to `/api/void`. The edge function compares it with `VOID_PASSWORD` and sets an httpOnly cookie. The private HTML is not in `dist/`. The plaintext passphrase is not in the repo.
