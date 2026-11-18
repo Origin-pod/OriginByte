@@ -1,5 +1,9 @@
 [build]
-  command = "npx playwright install --with-deps chromium && npm run build"
+  # `--with-deps` switches to root with `su` to apt-install libraries.
+  # Netlify's build image rejects that (`su: Authentication failure`) and the
+  # deploy preview dies before `npm run build`. Chromium alone is what
+  # rehype-mermaid launches, and this image already has the shared libraries.
+  command = "npx playwright install chromium && npm run build"
   publish = "dist"
 
 [build.environment]

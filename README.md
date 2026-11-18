@@ -10,7 +10,7 @@ npm run dev
 npm run build
 ```
 
-`netlify.toml` installs Playwright Chromium before the build so `rehype-mermaid` can render diagrams, then publishes `dist`. Node 22.
+`netlify.toml` installs Playwright Chromium (without `--with-deps`; that flag needs `su`, which the Netlify image rejects) before the build so `rehype-mermaid` can render diagrams, then publishes `dist`. Node 22.
 
 ## Layout
 
@@ -21,7 +21,7 @@ npm run build
 | `/hacks/` | The Lab, from `src/data/apps.ts`. |
 | `/notes/` | Notes index. Individual notes stay on Starlight at `/notes/...`. |
 | `/blog/` | The eight essays. URLs are unchanged. |
-| `/library/` | Book metadata only. |
+| `/library/` | Reading list. Title, optional author, and a status. |
 | `/enter-the-void/` | Passphrase gate for private note shelves. |
 | `src/styles/site.css` | Design tokens and shared chrome. |
 | `src/styles/pages.css` | Page-specific layout. |
@@ -51,17 +51,13 @@ Add `src/content/library/<slug>.md` with:
 
 ```yaml
 title: ""
-author: ""
-category: databases # databases | systems | graphics | languages | physics
-cover: black       # verm | sand | moss | blue | black | lilac | cream | rose
-progress: 0
-status: unread     # unread | reading | finished
-highlights: []
-fileUrl: ""        # HTTPS URL of the PDF. Leave empty until it exists.
-placeholder: true  # set false once the real file is linked
+author: ""              # optional
+status: want-to-read    # reading | read | want-to-read, optional
+fileUrl: ""             # optional HTTPS URL of the file. Leave unset until it exists.
+placeholder: true       # set false once this is a real entry
 ```
 
-Optional fields the shelf UI uses: `coverAuthor`, `ornament`, `short`, `pages`, `added`, `desk`, `byline`, `pageLabel`, `onDesk`, `spineHeight`, `spineWidth`, `order`.
+The page groups and filters by `status` only. A `fileUrl` makes that row a link. There is no progress, no highlights, and no per-book page.
 
 ### PDFs live in Cloudflare R2, not in git
 
@@ -70,9 +66,9 @@ Book files are not committed. `fileUrl` should be an object URL (or a signed URL
 1. Create an R2 bucket, for example `originbyte-library`, with public access off.
 2. Upload one PDF per book. Keep the object key stable, such as `books/database-internals.pdf`.
 3. Put a Worker or Netlify function in front of the bucket if the objects must stay private, and point `fileUrl` at that URL.
-4. Set `placeholder: false` once the link works. The reader today is the designed placeholder spread; wiring pdf.js to `fileUrl` is the next step after the files exist.
+4. Set `placeholder: false` once the link works.
 
-Every book currently in `src/content/library` is `placeholder: true` with an empty `fileUrl`.
+Every book currently in `src/content/library` is `placeholder: true` with no `fileUrl`.
 
 The PDF that used to live at `docs/Random Explorations/UBI/Tell me with web research what.pdf` was removed with the unused Docusaurus `docs/` tree. It was not referenced by the Astro build. It remains recoverable from git history and was not uploaded anywhere.
 

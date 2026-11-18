@@ -20,14 +20,6 @@ export const site = {
    */
   resumePdfUrl: (import.meta.env.PUBLIC_RESUME_PDF_URL ?? '') as string,
   /**
-   * TODO(owner): the “now reading” line is still the mockup placeholder.
-   */
-  nowReading: {
-    title: 'Database Internals',
-    detail: 'ch. 7',
-    placeholder: true,
-  },
-  /**
    * SHA-256 of the Void passphrase (trimmed, lowercased).
    * TODO(owner): replace this hash to change the word.
    * The check is client-side only and is not real privacy.

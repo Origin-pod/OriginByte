@@ -3,33 +3,18 @@ import { glob } from 'astro/loaders';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
 
+/**
+ * Reading tracker. Titles stay placeholders until the real list arrives.
+ * PDFs are not committed; `fileUrl` points at external storage when one exists.
+ */
 const library = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/library' }),
   schema: z.object({
     title: z.string(),
-    author: z.string(),
-    coverAuthor: z.string().optional(),
-    category: z.enum(['databases', 'systems', 'graphics', 'languages', 'physics']),
-    cover: z.enum(['verm', 'sand', 'moss', 'blue', 'black', 'lilac', 'cream', 'rose']),
-    ornament: z.string().optional(),
-    progress: z.number().min(0).max(100).optional(),
-    status: z.enum(['unread', 'reading', 'finished']).default('unread'),
-    highlights: z
-      .array(z.object({ quote: z.string(), note: z.string().optional() }))
-      .default([]),
-    /** External object URL (Cloudflare R2). Empty until the owner uploads the PDF. */
-    fileUrl: z.string().default(''),
+    author: z.string().optional(),
+    status: z.enum(['reading', 'read', 'want-to-read']).optional(),
+    fileUrl: z.string().optional(),
     placeholder: z.boolean().default(true),
-    short: z.string().optional(),
-    pages: z.number().optional(),
-    added: z.string().optional(),
-    desk: z.string().optional(),
-    byline: z.string().optional(),
-    pageLabel: z.string().optional(),
-    onDesk: z.boolean().default(false),
-    spineHeight: z.number().optional(),
-    spineWidth: z.number().optional(),
-    order: z.number().default(0),
   }),
 });
 
