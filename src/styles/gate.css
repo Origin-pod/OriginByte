@@ -1,8 +1,5 @@
 /* ---- private section sidebar gating (FART prevention) ---- */
-html.ssr-locked .ssr-gated,
-html.ssr-locked .sidebar-pane li:has(details ul a[href*="/notes/theoretical-physics/"]),
-html.ssr-locked .sidebar-pane li:has(details ul a[href*="/notes/quantum-computing/"]),
-html.ssr-locked .sidebar-pane li:has(details ul a[href*="/notes/handbooks/"]) {
+html.ssr-locked .ssr-gated {
   display: none !important;
 }
 

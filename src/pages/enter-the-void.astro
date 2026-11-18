@@ -1,9 +1,8 @@
 ---
 import IndexLayout from '../layouts/IndexLayout.astro';
-import { site } from '../data/site';
 ---
 
-<IndexLayout title="🜲" page="void" description="speak, friend, and enter." nosurprise={true}>
+<IndexLayout title="Void" page="void" description="speak, friend, and enter." nosurprise={true}>
   <div class="rings" aria-hidden="true">
     <svg viewBox="0 0 1000 1000" id="rings">
       <defs><path id="rp" d="M500 500m-330 0a330 330 0 1 1 660 0a330 330 0 1 1-660 0"/></defs>
@@ -18,18 +17,12 @@ import { site } from '../data/site';
     <div class="door" id="door">
       <span class="big" id="rn" data-r>🜲</span>
       <h1 data-r>speak, friend, and enter.</h1>
-      <p data-r>The Void holds notes I'm not ready to publish.</p>
-      <form class="pw" id="pw" data-r data-hash={site.voidHash} autocomplete="off">
-        <input id="pi" placeholder="the word…" aria-label="Passphrase" type="password">
+      <p data-r>The sealed notes are not in the public site. The word is checked on the server.</p>
+      <form class="pw" id="pw" data-r data-server method="post" action="/api/void" autocomplete="off">
+        <input id="pi" name="word" placeholder="the word…" aria-label="Passphrase" type="password">
         <button type="submit">Enter</button>
       </form>
       <div class="reply" id="rp2" role="status"></div>
-      <div class="inside">
-        <a href="/notes/theoretical-physics/">Theoretical physics<span>sealed shelf</span></a>
-        <a href="/notes/quantum-computing/">Quantum computing<span>sealed shelf</span></a>
-        <a href="/notes/handbooks/">Handbooks<span>sealed shelf</span></a>
-        <small>This check is a SHA-256 compare in your browser, stored in sessionStorage. It is not a lock. Anyone can read the page source.</small>
-      </div>
     </div>
   </main>
   <a class="back" href="/">← back to the light</a>

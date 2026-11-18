@@ -5,6 +5,7 @@ import '../styles/pages.css';
 import '../styles/gate.css';
 import '../styles/starlight.css';
 import SiteChrome from '../components/chrome/SiteChrome.astro';
+import Darkroom from '../components/Darkroom.astro';
 import newsreader from '@fontsource-variable/newsreader/files/newsreader-latin-standard-normal.woff2?url';
 import newsreaderItalic from '@fontsource-variable/newsreader/files/newsreader-latin-standard-italic.woff2?url';
 import publicSans from '@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2?url';
@@ -25,7 +26,8 @@ const {
   nosurprise = false,
   nochrome = false,
 } = Astro.props;
-const fullTitle = page === 'home' ? title : `${title} — Origin Byte`;
+const fullTitle = page === 'home' ? 'Sheetal Singh — Origin Byte' : `${title} — Sheetal Singh`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://sheetal.live').href;
 ---
 
 <!doctype html>
@@ -35,8 +37,20 @@ const fullTitle = page === 'home' ? title : `${title} — Origin Byte`;
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Origin Byte" />
+    <meta property="og:image" content="https://sheetal.live/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://sheetal.live/og.png" />
     <meta name="color-scheme" content="light dark" />
-    <link rel="icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0f0e" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={newsreaderItalic} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={publicSans} as="font" type="font/woff2" crossorigin />
@@ -63,5 +77,6 @@ const fullTitle = page === 'home' ? title : `${title} — Origin Byte`;
   <body data-page={page} data-nosurprise={nosurprise ? '1' : undefined} class:list={[nochrome && 'nochrome']}>
     <SiteChrome page={page} hideRail={nochrome || page === 'void'} nosurprise={nosurprise} />
     <slot />
+    <Darkroom />
   </body>
 </html>

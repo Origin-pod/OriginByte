@@ -19,12 +19,6 @@ export const site = {
    * The PDF itself is not in git.
    */
   resumePdfUrl: (import.meta.env.PUBLIC_RESUME_PDF_URL ?? '') as string,
-  /**
-   * SHA-256 of the Void passphrase (trimmed, lowercased).
-   * TODO(owner): replace this hash to change the word.
-   * The check is client-side only and is not real privacy.
-   */
-  voidHash: 'c7b9bdd40758eaa827b7abc1fc31408901ac99cef4f3891c1fb3598f531bb9e6',
 } as const;
 
 export const nav = [

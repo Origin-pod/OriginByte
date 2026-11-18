@@ -30,7 +30,7 @@ if (!d.querySelector('[data-chrome]')) {
   if (!body.dataset.nosurprise) body.insertAdjacentHTML('beforeend', `<div class="surprise"><button class="btn mag" data-surprise>Surprise me <span class="kbd">R</span></button></div>`);
 }
 const ft = $('#ft');
-if (ft) ft.outerHTML = `<footer class="ft"><span>© 2026 Sheetal Singh · <a class="link" href="mailto:sheetalsinghssr@gmail.com">sheetalsinghssr@gmail.com</a></span><span class="r"><button class="ssr-dev-indicator" data-ssr-lock type="button" hidden>dev mode</button><span class="mono" style="font-size:12px">Bengaluru · <span class="ist">--:--</span> IST</span><a class="ft-rune" data-rune data-ssr-rune href="/enter-the-void/" title="speak, friend">🜲</a></span></footer>`;
+if (ft) ft.outerHTML = `<footer class="ft"><span>© 2026 Sheetal Singh <button class="paw" type="button" data-paw aria-label="A small mark">🐾</button></span><span class="r"><button class="ssr-dev-indicator" data-ssr-lock type="button" hidden>dev mode</button><span class="mono" style="font-size:12px">Bengaluru · <span class="ist">--:--</span> IST</span><a class="ft-rune" data-rune data-ssr-rune href="/enter-the-void/" title="speak, friend">🜲</a></span></footer>`;
 
 /* ---------- clock ---------- */
 const tick = () => { const t = new Date().toLocaleTimeString('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit'}); $$('.ist').forEach(e=>e.textContent=t); };
@@ -289,31 +289,6 @@ if (pile) {
 const door = $('#door');
 const pw = $('#pw');
 if (door && pw) {
-  const replies = ['The door does not move.','The stone stays cold.','Try the elvish.','Almost. Think of the word for friend.'];
-  let n = 0;
-  const input = $('#pi'), reply = $('#rp2');
-  const sha256 = async (text) => {
-    const buf = new TextEncoder().encode(text);
-    const hash = await crypto.subtle.digest('SHA-256', buf);
-    return [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, '0')).join('');
-  };
-  pw.addEventListener('submit', async e => {
-    e.preventDefault();
-    const value = input.value.trim().toLowerCase();
-    if (!value) return;
-    let ok = false;
-    try { ok = (await sha256(value)) === (pw.dataset.hash || ''); } catch (err) { ok = false; }
-    if (ok) {
-      try { sessionStorage.setItem('ssr:devmode', '1'); } catch (err) {}
-      door.classList.add('open');
-      const rn = $('#rn'); if (rn) rn.style.transform = 'rotate(360deg) scale(1.15)';
-      if (reply) { reply.textContent = 'the way is open. this check lives in your browser — it is not a lock.'; reply.classList.add('on'); }
-      return;
-    }
-    if (reply) { reply.textContent = replies[Math.min(n++, replies.length - 1)]; reply.classList.add('on'); }
-    pw.classList.remove('shake'); void pw.offsetWidth; pw.classList.add('shake');
-    input.value = '';
-  });
   const glow = $('#glow'), rings = $('#rings');
   addEventListener('pointermove', e => {
     if (reduced()) return;
@@ -327,5 +302,43 @@ if (door && pw) {
 }
 
 $$('[data-empty-pdf]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); toast('The résumé PDF isn’t linked yet.'); }));
-$$('form[data-subscribe]').forEach(f => f.addEventListener('submit', e => { e.preventDefault(); toast('Essays aren’t emailed yet — the RSS feed is real.'); }));
+
+/* ---------- darkroom: type meow, or the small paw ---------- */
+const darkroom = $('#darkroom');
+const openDarkroom = () => { if (!darkroom) return; darkroom.hidden = false; };
+const closeDarkroom = () => { if (darkroom) darkroom.hidden = true; };
+$$('[data-paw]').forEach(b => b.addEventListener('click', openDarkroom));
+$$('[data-darkroom-close]').forEach(b => b.addEventListener('click', closeDarkroom));
+let heard = '';
+addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeDarkroom(); return; }
+  const typing = e.target && (e.target.closest('input, textarea, [contenteditable="true"]'));
+  if (typing || e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
+  heard = (heard + e.key.toLowerCase()).slice(-4);
+  if (heard === 'meow') { heard = ''; openDarkroom(); }
+});
+if (darkroom && !reduced()) {
+  $$('.pol', darkroom).forEach(card => {
+    let drag = null;
+    card.addEventListener('pointerdown', ev => {
+      if (ev.button !== 0) return;
+      card.setPointerCapture(ev.pointerId);
+      drag = { x: ev.clientX, y: ev.clientY, ox: 0, oy: 0 };
+    });
+    card.addEventListener('pointermove', ev => {
+      const r = card.getBoundingClientRect();
+      const px = ((drag ? drag.x : ev.clientX) - r.left) / r.width - .5;
+      if (drag && ev.buttons) {
+        drag.ox = ev.clientX - drag.x;
+        drag.oy = ev.clientY - drag.y;
+      }
+      const ox = drag ? drag.ox : 0;
+      const oy = drag ? drag.oy : 0;
+      card.style.transform = `translate(${ox}px, ${oy}px) rotate(${px * 8 - 2}deg)`;
+    });
+    const release = () => { drag = null; card.style.transform = ''; };
+    card.addEventListener('pointerup', release);
+    card.addEventListener('pointercancel', release);
+  });
+}
 })();

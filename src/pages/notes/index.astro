@@ -2,11 +2,12 @@
 import { getCollection } from 'astro:content';
 import IndexLayout from '../../layouts/IndexLayout.astro';
 import SiteFooter from '../../components/chrome/SiteFooter.astro';
+import { isPrivateDocId, isPrivateShelf } from '../../data/private';
 import { shelfMeta, shelfOrder, swatches } from '../../data/shelves';
 
 const docs = await getCollection('docs', (entry) => {
   const id = String(entry.id).replace(/\.mdx?$/, '');
-  return id.startsWith('notes/') && !id.endsWith('/index') && id !== 'notes';
+  return id.startsWith('notes/') && !id.endsWith('/index') && id !== 'notes' && !isPrivateDocId(id) && !entry.data.draft;
 });
 
 const byShelf = new Map<string, { id: string; title: string; href: string }[]>();
@@ -21,8 +22,8 @@ for (const entry of docs) {
 for (const list of byShelf.values()) list.sort((a, b) => a.title.localeCompare(b.title));
 
 const ids = [
-  ...shelfOrder.filter((id) => byShelf.has(id)),
-  ...[...byShelf.keys()].filter((id) => !shelfOrder.includes(id)),
+  ...shelfOrder.filter((id) => byShelf.has(id) && !isPrivateShelf(id)),
+  ...[...byShelf.keys()].filter((id) => !shelfOrder.includes(id) && !isPrivateShelf(id)),
 ];
 
 const noteCount = docs.length;
@@ -64,7 +65,7 @@ const shelfCount = ids.length;
         const swatch = swatches[index % swatches.length];
         const preview = notes.slice(0, 3);
         return (
-          <section class:list={['area', meta?.private && 'ssr-gated']} id={id} data-cat={group} data-sec data-r>
+          <section class="area" id={id} data-cat={group} data-sec data-r>
             <span class="gl" style={`background:var(--c-${swatch});color:var(--c-${swatch}-t)`} set:html={meta?.icon ?? ''}></span>
             <header>
               <h2>{title}</h2>
@@ -73,7 +74,7 @@ const shelfCount = ids.length;
             <p>{meta?.blurb ?? 'Notes filed on this shelf.'}</p>
             <div class="list">
               {preview.map((note) => (
-                <a class="row" href={note.href} data-s={`${note.title} ${title}`}>
+                <a class="row" href={note.href} title={note.title} data-s={`${note.title} ${title}`}>
                   <span class="t">{note.title}</span>
                   {note.id.endsWith('b-trees-vs-lsm') && <span class="badge live">sample</span>}
                 </a>

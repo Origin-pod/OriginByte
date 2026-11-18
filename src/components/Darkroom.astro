@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import cat from '../assets/darkroom/sheetal-and-cat.jpg';
+
+const INSTAGRAM = 'https://www.instagram.com/pondertub/';
+---
+
+<div id="darkroom" class="darkroom" hidden>
+  <div class="darkroom-scrim" data-darkroom-close></div>
+  <div class="darkroom-sheet" role="dialog" aria-modal="true" aria-label="Darkroom">
+    <button class="darkroom-x" type="button" data-darkroom-close aria-label="Close">close</button>
+    <div class="pols">
+      <figure class="pol" data-i="0">
+        <Image src={cat} alt="Sheetal, with a cat asleep on her lap at the desk." widths={[300, 600]} sizes="240px" />
+        <figcaption>Sheetal, and the cat.</figcaption>
+      </figure>
+    </div>
+    <a class="darkroom-ig" href={INSTAGRAM} target="_blank" rel="noopener noreferrer">more on Instagram <span class="arr">↗</span></a>
+  </div>
+</div>
+<script is:inline>
+  console.log('darkroom · the cat answers to meow');
+</script>

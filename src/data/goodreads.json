@@ -1,0 +1,267 @@
+[
+  {
+    "title": "Anxious People",
+    "author": "Fredrik Backman",
+    "status": "reading"
+  },
+  {
+    "title": "Can't Hurt Me: Master Your Mind and Defy the Odds",
+    "author": "David Goggins",
+    "status": "reading"
+  },
+  {
+    "title": "Mein Kampf",
+    "author": "Adolf Hitler",
+    "status": "reading"
+  },
+  {
+    "title": "Norwegian Wood",
+    "author": "Haruki Murakami",
+    "status": "reading"
+  },
+  {
+    "title": "Philosophy 101: From Plato and Socrates to Ethics and Metaphysics, an Essential Primer on the History of Thought",
+    "author": "Paul Kleinman",
+    "status": "reading"
+  },
+  {
+    "title": "The Practical MBA: A Guide to What You Don't Learn at B School",
+    "author": "Sandeep Das",
+    "status": "reading"
+  },
+  {
+    "title": "Superintelligence: Paths, Dangers, Strategies",
+    "author": "Nick Bostrom",
+    "status": "reading"
+  },
+  {
+    "title": "The Art of Learning: A Journey in the Pursuit of Excellence",
+    "author": "Josh Waitzkin",
+    "status": "read"
+  },
+  {
+    "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+    "author": "James Clear",
+    "status": "read"
+  },
+  {
+    "title": "Elon Musk",
+    "author": "Walter Isaacson",
+    "status": "read"
+  },
+  {
+    "title": "Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",
+    "author": "Ashlee Vance",
+    "status": "read"
+  },
+  {
+    "title": "It Ends with Us",
+    "author": "Colleen Hoover",
+    "status": "read"
+  },
+  {
+    "title": "The Kite Runner",
+    "author": "Khaled Hosseini",
+    "status": "read"
+  },
+  {
+    "title": "A Little Life",
+    "author": "Hanya Yanagihara",
+    "status": "read"
+  },
+  {
+    "title": "Man's Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "status": "read"
+  },
+  {
+    "title": "The One Thing: The Surprisingly Simple Truth Behind Extraordinary Results",
+    "author": "Gary Keller",
+    "status": "read"
+  },
+  {
+    "title": "Recursion",
+    "author": "Blake Crouch",
+    "status": "read"
+  },
+  {
+    "title": "The Silent Patient",
+    "author": "Alex Michaelides",
+    "status": "read"
+  },
+  {
+    "title": "The Story of My Life",
+    "author": "Helen Keller",
+    "status": "read"
+  },
+  {
+    "title": "The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living a Good Life",
+    "author": "Mark Manson",
+    "status": "read"
+  },
+  {
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "status": "read"
+  },
+  {
+    "title": "All Our Wrong Todays",
+    "author": "Elan Mastai",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Animal Farm / 1984",
+    "author": "George Orwell",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Becoming Bulletproof: Protect Yourself, Read People, Influence Situations, and Live Fearlessly",
+    "author": "Evy Poumpouras",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Beyond Good and Evil",
+    "author": "Friedrich Nietzsche",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Catalyst: The ultimate strategies on how to win at work and in life",
+    "author": "Chandramouli Venkatesan",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Creativity, Inc.: Overcoming the Unseen Forces That Stand in the Way of True Inspiration",
+    "author": "Ed Catmull",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The Defining Decade: Why Your Twenties Matter—And How to Make the Most of Them Now",
+    "author": "Meg Jay",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The First Fifteen Lives of Harry August",
+    "author": "Claire North",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Flow: The Psychology of Optimal Experience",
+    "author": "Mihály Csíkszentmihályi",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Freedom from the Known",
+    "author": "J. Krishnamurti",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Good Material",
+    "author": "Dolly Alderton",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The Hard Thing About Hard Things: Building a Business When There Are No Easy Answers―Straight Talk on the Challenges of Entrepreneurship",
+    "author": "Ben Horowitz",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Karma Yoga: the Yoga of Action",
+    "author": "Vivekananda",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Little, Big",
+    "author": "John Crowley",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The Long Earth",
+    "author": "Terry Pratchett",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Meditations",
+    "author": "Marcus Aurelius",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The Midnight Library",
+    "author": "Matt Haig",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The Most Important Thing",
+    "author": "Howard Marks",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Order from Chaos: The Everyday Grind of Staying Organized with Adult ADHD",
+    "author": "Jaclyn Paul",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Originals: How Non-Conformists Move the World",
+    "author": "Adam Grant",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The Power of Positive Thinking",
+    "author": "Norman Vincent Peale",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Power: Why Some People Have it and Others Don't",
+    "author": "Jeffrey Pfeffer",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Refactoring: Improving the Design of Existing Code",
+    "author": "Martin Fowler",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Replay",
+    "author": "Ken Grimwood",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Theory of Games and Economic Behavior",
+    "author": "John von Neumann",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Think and Grow Rich",
+    "author": "Napoleon Hill",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Thinking in Bets: Making Smarter Decisions When You Don't Have All the Facts",
+    "author": "Annie Duke",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Thinking In Systems: A Primer",
+    "author": "Donella H. Meadows",
+    "status": "want-to-read"
+  },
+  {
+    "title": "A Thousand Splendid Suns",
+    "author": "Khaled Hosseini",
+    "status": "want-to-read"
+  },
+  {
+    "title": "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
+    "author": "Martin Fowler",
+    "status": "want-to-read"
+  },
+  {
+    "title": "The Way to Love: The Last Meditations of Anthony de Mello",
+    "author": "Anthony de Mello",
+    "status": "want-to-read"
+  },
+  {
+    "title": "Yellowface",
+    "author": "R.F. Kuang",
+    "status": "want-to-read"
+  }
+]

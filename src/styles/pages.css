@@ -163,14 +163,16 @@ body[data-page="post"]{--colw:620px}
 .bar2{display:flex;gap:8px;margin:36px 0 8px;align-items:center}
 .bar2 .search{flex:1}
 .areas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
-.area{border-radius:14px;background:var(--raised-bg);box-shadow:var(--raised);padding:18px 18px 10px;scroll-margin-top:90px;transition:box-shadow .3s}
+.area{min-width:0;border-radius:14px;background:var(--raised-bg);box-shadow:var(--raised);padding:18px 18px 10px;scroll-margin-top:90px;transition:box-shadow .3s}
 .area:hover{box-shadow:var(--lift)}
 .area header{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
 .area h2{font:400 28px/1 var(--serif);color:var(--ink);letter-spacing:-.01em}
 .area header span{font:11.5px var(--mono);color:var(--soft)}
 .area p{font-size:13.5px;margin:6px 0 8px}
-.area .list .row{padding:6px 0;font-size:14px}
-.area .list .row .t{font-weight:400}
+.area .list .row{padding:6px 0;font-size:14px;white-space:normal;align-items:flex-start}
+.area .list .row .t{font-weight:400;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:anywhere}
+.area h2,.area p,.area header span{min-width:0;overflow-wrap:anywhere}
+.now dd,.tile,.tile b,.tile p,.notes8 a,.notes8 b,.featpost,.featpost h2,.featpost p,.feat .tx,.h1,.lede,.ph1,.dek,.job h3,.job li{min-width:0;overflow-wrap:anywhere}
 .area .list .hl{left:-8px;right:-8px}
 .gl{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;margin-bottom:12px}
 .gl svg{width:16px;height:16px}
@@ -428,11 +430,30 @@ body{overflow:hidden}
 .num em{color:var(--acc-txt)}
 .lost p{max-width:380px;margin:12px auto 22px}
 .lost .acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.lost .hint{color:var(--soft);font-size:13px;margin-top:-8px}
+
+.paw{border:0;background:none;padding:0 0 0 6px;font-size:11px;line-height:1;opacity:.28;cursor:pointer;vertical-align:1px}
+.paw:hover,.paw:focus-visible{opacity:.9}
+.darkroom[hidden]{display:none}
+.darkroom{position:fixed;inset:0;z-index:80;display:grid;place-items:center}
+.darkroom-scrim{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.darkroom-sheet{position:relative;z-index:1;width:min(440px,calc(100% - 32px));padding:28px 22px 22px;border-radius:18px;background:var(--bg);box-shadow:var(--lift);text-align:center}
+.darkroom-x{position:absolute;top:12px;right:14px;font:12px var(--mono);color:var(--soft)}
+.pols{display:flex;justify-content:center;min-height:280px;align-items:center}
+.pol{width:220px;margin:0;padding:12px 12px 16px;background:var(--raised-bg);box-shadow:var(--cardshadow);transform:rotate(-2deg);transition:transform .55s var(--spring);cursor:grab;touch-action:none}
+.pol:active{cursor:grabbing}
+.pol img{display:block;width:100%;height:auto}
+.pol figcaption{margin-top:10px;font:italic 15px/1.3 var(--serif);color:var(--ink)}
+.darkroom-ig{display:inline-block;margin-top:8px;font-size:14px;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){
+  .pol,.pol:hover{transform:none;transition:none}
+}
 
 /* reading list: hairline rows, author stays visible when the title is long */
 .reads .row{border-top:1px solid var(--hair);white-space:normal;align-items:baseline}
 .reads .row:last-child{border-bottom:1px solid var(--hair)}
-.reads .row .t{white-space:normal;flex-shrink:1}
+.reads .row .t{white-space:normal;flex-shrink:1;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+.reads .row .t .d{display:inline;margin-left:.45em;overflow:visible;text-overflow:clip;flex:none;white-space:normal;font-weight:400}
 @media (max-width:720px){
   .reads .row{flex-wrap:wrap;row-gap:2px}
   .reads .row .t,.reads .row .d{flex-basis:100%;overflow:visible;white-space:normal;text-overflow:clip}

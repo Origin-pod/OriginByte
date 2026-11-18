@@ -9,17 +9,15 @@ function isNested(b: Bullet): b is { text: string; children: string[] } {
 }
 ---
 
-<IndexLayout title="Résumé" page="work" description="Sheetal Singh, senior software engineer. Bengaluru.">
+<IndexLayout title="Work" page="work" description="Sheetal Singh, senior software engineer. Bengaluru.">
   <main class="col page" id="content">
     <div class="hdr">
       <div class="who" data-r>
         <div class="eyebrow"><span class="livedot"></span>Résumé · Bengaluru, India</div>
         <h1 class="h1">Sheetal Singh</h1>
         <p>Senior Software Engineer · 4+ years</p>
-        <p class="printonly">{site.email} · originbyte.netlify.app · github.com/Origin-pod</p>
       </div>
       <div class="acts" data-r>
-        <a class="btn mag" href={`mailto:${site.email}`}>✉ Email me</a>
         {site.resumePdfUrl ? (
           <a class="btn ghost mag" href={site.resumePdfUrl}>↓ PDF</a>
         ) : (
