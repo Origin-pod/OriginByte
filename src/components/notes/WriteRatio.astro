@@ -1,0 +1,10 @@
+<figure class="fig" data-r>
+  <div class="lbls"><span>read-heavy</span><span id="wv">50% writes</span><span>write-heavy</span></div>
+  <input type="range" id="w" min="0" max="100" value="50" aria-label="Share of writes in the workload">
+  <div class="bars">
+    <div class="bar"><span>B-tree</span><span class="track"><i id="bb"></i></span><span id="bt"></span></div>
+    <div class="bar lsm"><span>LSM</span><span class="track"><i id="lb"></i></span><span id="lt"></span></div>
+  </div>
+  <div class="verdict" id="vd"></div>
+  <figcaption>Fig. 1 — Relative I/O cost as the workload shifts. An illustrative model, not a benchmark: drag the slider.</figcaption>
+</figure>

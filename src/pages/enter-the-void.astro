@@ -1,84 +1,36 @@
 ---
-import '../styles/gate.css';
-import BaseLayout from '../layouts/BaseLayout.astro';
-
-const PASSPHRASE_HASH = 'c7b9bdd40758eaa827b7abc1fc31408901ac99cef4f3891c1fb3598f531bb9e6';
+import IndexLayout from '../layouts/IndexLayout.astro';
+import { site } from '../data/site';
 ---
 
-<BaseLayout title="enter the void" description="dev mode unlock">
-  <main class="ssr-void">
-    <div class="ssr-void__inner">
-      <div class="ssr-void__rune">🜲</div>
-      <h1 class="ssr-void__heading">speak, friend</h1>
-      <form class="ssr-void__form" id="ssr-void-form" autocomplete="off">
-        <input
-          class="ssr-void__input"
-          type="password"
-          name="passphrase"
-          id="ssr-void-input"
-          placeholder="the secret word…"
-          aria-label="passphrase"
-          required
-        />
-        <button class="ssr-void__submit" type="submit" id="ssr-void-submit">
-          unlock
-        </button>
+<IndexLayout title="🜲" page="void" description="speak, friend, and enter." nosurprise={true}>
+  <div class="rings" aria-hidden="true">
+    <svg viewBox="0 0 1000 1000" id="rings">
+      <defs><path id="rp" d="M500 500m-330 0a330 330 0 1 1 660 0a330 330 0 1 1-660 0"/></defs>
+      <circle cx="500" cy="500" r="480"/>
+      <circle cx="500" cy="500" r="400" stroke-dasharray="2 6"/>
+      <circle cx="500" cy="500" r="260"/>
+      <g class="sp"><text><textPath href="#rp">SPEAK FRIEND · AND ENTER · SPEAK FRIEND · AND ENTER · SPEAK FRIEND · AND ENTER · </textPath></text></g>
+    </svg>
+  </div>
+  <div class="glow" id="glow"></div>
+  <main class="vwrap" id="content">
+    <div class="door" id="door">
+      <span class="big" id="rn" data-r>🜲</span>
+      <h1 data-r>speak, friend, and enter.</h1>
+      <p data-r>The Void holds notes I'm not ready to publish.</p>
+      <form class="pw" id="pw" data-r data-hash={site.voidHash} autocomplete="off">
+        <input id="pi" placeholder="the word…" aria-label="Passphrase" type="password">
+        <button type="submit">Enter</button>
       </form>
-      <div class="ssr-void__feedback" id="ssr-void-feedback" aria-live="polite"></div>
+      <div class="reply" id="rp2" role="status"></div>
+      <div class="inside">
+        <a href="/notes/theoretical-physics/">Theoretical physics<span>sealed shelf</span></a>
+        <a href="/notes/quantum-computing/">Quantum computing<span>sealed shelf</span></a>
+        <a href="/notes/handbooks/">Handbooks<span>sealed shelf</span></a>
+        <small>This check is a SHA-256 compare in your browser, stored in sessionStorage. It is not a lock. Anyone can read the page source.</small>
+      </div>
     </div>
   </main>
-</BaseLayout>
-
-<script is:inline define:vars={{ expectedHash: PASSPHRASE_HASH }}>
-  (function () {
-    const form = document.getElementById('ssr-void-form');
-    const input = document.getElementById('ssr-void-input');
-    const submit = document.getElementById('ssr-void-submit');
-    const feedback = document.getElementById('ssr-void-feedback');
-    if (!form || !input || !submit || !feedback) return;
-
-    async function sha256(text) {
-      const buf = new TextEncoder().encode(text);
-      const hash = await crypto.subtle.digest('SHA-256', buf);
-      return Array.from(new Uint8Array(hash))
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('');
-    }
-
-    function setFeedback(msg, ok) {
-      feedback.textContent = msg;
-      feedback.className =
-        'ssr-void__feedback ' + (ok ? 'ssr-void__feedback--ok' : 'ssr-void__feedback--err');
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const value = input.value;
-      if (!value) return;
-      submit.disabled = true;
-      setFeedback('verifying…', false);
-      try {
-        const hash = await sha256(value.trim().toLowerCase());
-        if (hash === expectedHash) {
-          try {
-            sessionStorage.setItem('ssr:devmode', '1');
-          } catch (_) { /* noop */ }
-          setFeedback('access granted. opening the way…', true);
-          setTimeout(() => {
-            location.href = '/';
-          }, 600);
-        } else {
-          setFeedback('access denied.', false);
-          submit.disabled = false;
-          input.value = '';
-          input.focus();
-        }
-      } catch (err) {
-        setFeedback('something went wrong.', false);
-        submit.disabled = false;
-      }
-    });
-
-    input.focus();
-  })();
-</script>
+  <a class="back" href="/">← back to the light</a>
+</IndexLayout>

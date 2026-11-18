@@ -1,0 +1,18 @@
+---
+import { shelfMeta } from '../../data/shelves';
+
+const { entry } = Astro.locals.starlightRoute;
+const slug = String(entry.id).replace(/\.mdx?$/, '');
+const section = slug.split('/')[1] || '';
+const shelf = shelfMeta[section];
+---
+
+<div class="crumb" data-r>
+  <a href="/notes/">Notes</a>
+  {section && (
+    <>
+      / <a href={`/notes/#${section}`}>{shelf?.title ?? section}</a>
+    </>
+  )}
+</div>
+<h1 id="_top" data-r>{entry.data.title}</h1>

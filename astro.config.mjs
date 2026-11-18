@@ -3,6 +3,8 @@ import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
 import rehypeMermaid from 'rehype-mermaid';
 
+const themeBoot = `(function(){var t=null;try{t=localStorage.getItem('ob-theme')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=document.documentElement;r.dataset.theme=t;r.classList.add('js');try{localStorage.setItem('starlight-theme',t)}catch(e){}try{if(sessionStorage.getItem('ssr:devmode')==='1')r.classList.add('ssr-unlocked');else r.classList.add('ssr-locked')}catch(e){r.classList.add('ssr-locked')}})();`;
+
 const publicSidebar = [
   { label: 'Frontend', autogenerate: { directory: 'notes/frontend' } },
   { label: 'Backend', autogenerate: { directory: 'notes/backend' } },
@@ -43,16 +45,9 @@ const privateSidebar = [
 
 const sidebar = [...publicSidebar, ...privateSidebar];
 
-const ssrGateHead = [
-  {
-    tag: 'script',
-    attrs: { 'is:inline': true },
-    content: `(function(){try{var s=sessionStorage.getItem('ssr:devmode');if(s==='1'){document.documentElement.classList.add('ssr-unlocked')}else{document.documentElement.classList.add('ssr-locked')}}catch(e){document.documentElement.classList.add('ssr-locked')}})();`,
-  },
-];
-
 export default defineConfig({
   site: 'https://originbyte.netlify.app',
+  trailingSlash: 'always',
   markdown: {
     rehypePlugins: [
       [rehypeMermaid, { strategy: 'img-svg', dark: true }],
@@ -60,21 +55,38 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'SSR',
-      logo: {
-        src: './src/assets/profile.jpg',
-      },
+      title: 'Origin Byte',
       favicon: '/favicon.svg',
+      disable404Route: true,
+      credits: false,
+      lastUpdated: false,
+      editLink: {
+        baseUrl: 'https://github.com/Origin-pod/OriginByte/edit/master/',
+      },
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/happycoder0011' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/Origin-pod' },
         { icon: 'x.com', label: 'X', href: 'https://x.com/sheetalssr' },
+        { icon: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/sheetal-singh-218855176' },
       ],
       customCss: [
-        './src/styles/custom.css',
+        './src/styles/fonts.css',
+        './src/styles/site.css',
+        './src/styles/pages.css',
+        './src/styles/gate.css',
+        './src/styles/starlight.css',
       ],
-      head: ssrGateHead,
+      head: [
+        { tag: 'script', content: themeBoot },
+        { tag: 'meta', attrs: { name: 'color-scheme', content: 'light dark' } },
+      ],
       components: {
-        Footer: './src/components/SiteFooter.astro',
+        Head: './src/components/starlight/Head.astro',
+        ThemeProvider: './src/components/starlight/ThemeProvider.astro',
+        PageFrame: './src/components/starlight/PageFrame.astro',
+        TwoColumnContent: './src/components/starlight/TwoColumnContent.astro',
+        PageTitle: './src/components/starlight/PageTitle.astro',
+        Footer: './src/components/starlight/Footer.astro',
+        SkipLink: './src/components/starlight/SkipLink.astro',
       },
       sidebar,
     }),

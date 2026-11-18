@@ -1,0 +1,67 @@
+---
+import '../styles/fonts.css';
+import '../styles/site.css';
+import '../styles/pages.css';
+import '../styles/gate.css';
+import '../styles/starlight.css';
+import SiteChrome from '../components/chrome/SiteChrome.astro';
+import newsreader from '@fontsource-variable/newsreader/files/newsreader-latin-standard-normal.woff2?url';
+import newsreaderItalic from '@fontsource-variable/newsreader/files/newsreader-latin-standard-italic.woff2?url';
+import publicSans from '@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2?url';
+import geist from '@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url';
+
+interface Props {
+  title: string;
+  description?: string;
+  page?: string;
+  nosurprise?: boolean;
+  nochrome?: boolean;
+}
+
+const {
+  title,
+  description = 'A hand-kept index of the things Sheetal Singh builds, notes, and reads.',
+  page = '',
+  nosurprise = false,
+  nochrome = false,
+} = Astro.props;
+const fullTitle = page === 'home' ? title : `${title} — Origin Byte`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={newsreaderItalic} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={publicSans} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={geist} as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('ob-theme'); } catch (e) {}
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        var r = document.documentElement;
+        r.dataset.theme = t;
+        r.classList.add('js');
+        try { localStorage.setItem('starlight-theme', t); } catch (e) {}
+        try {
+          if (sessionStorage.getItem('ssr:devmode') === '1') r.classList.add('ssr-unlocked');
+          else r.classList.add('ssr-locked');
+        } catch (e) {
+          r.classList.add('ssr-locked');
+        }
+      })();
+    </script>
+    <noscript><style>[data-r]{opacity:1!important;transform:none!important;filter:none!important}</style></noscript>
+  </head>
+  <body data-page={page} data-nosurprise={nosurprise ? '1' : undefined} class:list={[nochrome && 'nochrome']}>
+    <SiteChrome page={page} hideRail={nochrome || page === 'void'} nosurprise={nosurprise} />
+    <slot />
+  </body>
+</html>

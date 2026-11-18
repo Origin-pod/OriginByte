@@ -1,0 +1,114 @@
+---
+import IndexLayout from '../layouts/IndexLayout.astro';
+import SiteFooter from '../components/chrome/SiteFooter.astro';
+import { site } from '../data/site';
+import { timeline, jobs, skills, project, education, type Bullet } from '../data/resume';
+
+function isNested(b: Bullet): b is { text: string; children: string[] } {
+  return typeof b !== 'string';
+}
+---
+
+<IndexLayout title="Résumé" page="work" description="Sheetal Singh, senior software engineer. Bengaluru.">
+  <main class="col page" id="content">
+    <div class="hdr">
+      <div class="who" data-r>
+        <div class="eyebrow"><span class="livedot"></span>Résumé · Bengaluru, India</div>
+        <h1 class="h1">Sheetal Singh</h1>
+        <p>Senior Software Engineer · 4+ years</p>
+        <p class="printonly">{site.email} · originbyte.netlify.app · github.com/Origin-pod</p>
+      </div>
+      <div class="acts" data-r>
+        <a class="btn mag" href={`mailto:${site.email}`}>✉ Email me</a>
+        {site.resumePdfUrl ? (
+          <a class="btn ghost mag" href={site.resumePdfUrl}>↓ PDF</a>
+        ) : (
+          <button class="btn ghost mag" type="button" data-empty-pdf title="TODO: set PUBLIC_RESUME_PDF_URL">↓ PDF</button>
+        )}
+        <button class="btn ghost mag" type="button" onclick="print()">⎙ Print</button>
+      </div>
+    </div>
+
+    <p class="summary" data-r>I build scalable, fast web applications and <em>AI-powered products</em> — end-to-end features for LLM and agent platforms, e-commerce and developer tools — with reusable frontend systems and a habit of automating the boring parts.</p>
+
+    <div class="tl" data-r>
+      <div class="axis"></div>
+      <span class="tick" style="left:0%;transform:none">2018</span>
+      <span class="tick" style="left:25%">2020</span>
+      <span class="tick" style="left:50%">2022</span>
+      <span class="tick" style="left:75%">2024</span>
+      <span class="tick" style="left:100%;transform:translateX(-100%)">2026</span>
+      {timeline.map((seg) => (
+        <a class:list={['tseg', seg.kind]} href={seg.href} style={`left:${seg.left};width:${seg.width}`}>{seg.label}</a>
+      ))}
+    </div>
+
+    <section>
+      <div class="sh" data-r><h2><span>01</span>Experience</h2><span class="muted mono" style="font-size:12px">Bangalore, Karnataka</span></div>
+      {jobs.map((job) => (
+        <article class:list={['job', job.current && 'cur']} id={job.id} data-r>
+          <div class="when">
+            {job.when.map((line, i) => (
+              <>
+                {i > 0 && <br />}
+                {job.current && i === 1 ? <em>{line}</em> : line}
+              </>
+            ))}
+          </div>
+          <div>
+            <h3>{job.company} <span>{job.role}</span></h3>
+            <ul>
+              {job.bullets.map((bullet) => isNested(bullet) ? (
+                <li>
+                  <span set:html={bullet.text} />
+                  <ul>
+                    {bullet.children.map((child) => <li set:html={child} />)}
+                  </ul>
+                </li>
+              ) : (
+                <li set:html={bullet} />
+              ))}
+            </ul>
+            <div class="stack">{job.stack.map((s) => <span>{s}</span>)}</div>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section>
+      <div class="sh" data-r><h2><span>02</span>Project</h2><a href="/hacks/#db">open in the Lab <span class="arr">↗</span></a></div>
+      <div class="proj" data-r>
+        <div>
+          <div class="eyebrow" style="margin-bottom:8px">{project.when} · {project.stack}</div>
+          <h3>{project.title}</h3>
+          <p>{project.summary}</p>
+        </div>
+        <svg viewBox="0 0 150 110" fill="none" stroke="var(--acc)" stroke-width="1.2" aria-hidden="true"><rect x="53" y="6" width="44" height="16" rx="3"/><rect x="5" y="46" width="44" height="16" rx="3"/><rect x="53" y="46" width="44" height="16" rx="3" fill="var(--acc)" fill-opacity=".2"/><rect x="101" y="46" width="44" height="16" rx="3"/><path d="M75 22V46M75 22L27 46M75 22L123 46" stroke-dasharray="2 3"/><g opacity=".45"><rect x="2" y="86" width="20" height="12" rx="2"/><rect x="26" y="86" width="20" height="12" rx="2"/><rect x="54" y="86" width="20" height="12" rx="2"/><rect x="78" y="86" width="20" height="12" rx="2"/><rect x="104" y="86" width="20" height="12" rx="2"/><rect x="128" y="86" width="20" height="12" rx="2"/></g></svg>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh" data-r><h2><span>03</span>Skills</h2></div>
+      <dl class="skills" data-r>
+        {skills.map((row) => (
+          <>
+            <dt>{row.term}</dt>
+            <dd>{row.lead}{row.rest && <> <span>· {row.rest}</span></>}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+
+    <section id="edu" style="scroll-margin-top:90px">
+      <div class="sh" data-r><h2><span>04</span>Education</h2></div>
+      <div class="edu" data-r>
+        <div class="mono muted" style="font-size:12px">{education.when}</div>
+        <div>
+          <b>{education.school}</b>
+          <div>{education.detail} · CGPA <b>{education.cgpa}</b>/10</div>
+        </div>
+      </div>
+    </section>
+    <SiteFooter />
+  </main>
+</IndexLayout>

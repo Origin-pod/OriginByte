@@ -1,0 +1,74 @@
+---
+import { nav, navKey, site } from '../../data/site';
+
+interface Props {
+  page?: string;
+  hideRail?: boolean;
+  nosurprise?: boolean;
+}
+
+const { page = '', hideRail = false, nosurprise = false } = Astro.props;
+const current = navKey(page);
+const sun = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.3M8 13.2v1.3M1.5 8h1.3M13.2 8h1.3M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9"/></svg>';
+const moon = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M13.5 9.6A5.6 5.6 0 0 1 6.4 2.5a5.6 5.6 0 1 0 7.1 7.1Z"/></svg>';
+---
+
+<span data-chrome hidden></span>
+<a class="skip" href="#content">Skip to content</a>
+<div class="edge t"></div>
+<div class="edge b"></div>
+<a class="brand" href="/"><span class="rune" data-rune>🜲</span>Origin Byte</a>
+<div class="theme" role="group" aria-label="Theme">
+  <span class="knob"></span>
+  <button data-set="light" aria-label="Light" set:html={sun}></button>
+  <button data-set="dark" aria-label="Dark" set:html={moon}></button>
+</div>
+<div class="topr">
+  <span><span class="ist mono">--:--</span> IST</span>
+  <button type="button" data-palette aria-label="Search">⌘K</button>
+</div>
+{!hideRail && (
+  <nav class="rail" aria-label="Sections">
+    {nav.map((item) => (
+      <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>{item.label}</a>
+    ))}
+    <div class="g">elsewhere</div>
+    <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub <span class="arr">↗</span></a>
+    <a href={site.x} target="_blank" rel="noopener noreferrer">X <span class="arr">↗</span></a>
+    <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span class="arr">↗</span></a>
+  </nav>
+)}
+<header class="mbar">
+  <a class="b" href="/"><span class="rune" data-rune>🜲</span>Origin Byte</a>
+  <div class="r">
+    <button class="ic" data-toggle-theme aria-label="Toggle theme">
+      <span class="i-l" set:html={moon}></span>
+    </button>
+    <button class="ic burger" data-menu aria-expanded="false" aria-controls="site-menu"><i></i>Menu</button>
+  </div>
+</header>
+<div class="scrim" data-menu-close></div>
+<div class="sheet" id="site-menu" aria-label="Menu">
+  <nav>
+    {nav.map((item, i) => (
+      <a href={item.href} aria-current={item.key === current ? 'page' : undefined} style={`transition-delay:${80 + i * 45}ms`}>
+        {item.label}<span>{item.num}</span>
+      </a>
+    ))}
+  </nav>
+  <div class="el">
+    <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    <a href={site.x} target="_blank" rel="noopener noreferrer">X ↗</a>
+    <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+    <a href="/enter-the-void/">🜲</a>
+  </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+{!nosurprise && (
+  <div class="surprise"><button class="btn mag" data-surprise>Surprise me <span class="kbd">R</span></button></div>
+)}
+
+<script>
+  import '../../scripts/site.js';
+  import '../../scripts/gate.ts';
+</script>
