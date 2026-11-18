@@ -5,9 +5,6 @@
 /build
 /dist
 
-# Private notes rendered for the edge function. Not part of the public site.
-/netlify/edge-functions/private-pages.js
-
 # Generated files
 .docusaurus
 .cache-loader
