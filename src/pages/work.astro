@@ -77,7 +77,7 @@ function isNested(b: Bullet): b is { text: string; children: string[] } {
       <div class="sh" data-r><h2><span>02</span>Project</h2><a href="/hacks/#db">open in the Lab <span class="arr">↗</span></a></div>
       <div class="proj" data-r>
         <div>
-          <div class="eyebrow" style="margin-bottom:8px">{project.when} · {project.stack}</div>
+          <div class="eyebrow">{project.when} · {project.stack}</div>
           <h3>{project.title}</h3>
           <p>{project.summary}</p>
         </div>
@@ -97,7 +97,7 @@ function isNested(b: Bullet): b is { text: string; children: string[] } {
       </dl>
     </section>
 
-    <section id="edu" style="scroll-margin-top:90px">
+    <section id="edu">
       <div class="sh" data-r><h2><span>04</span>Education</h2></div>
       <div class="edu" data-r>
         <div class="mono muted" style="font-size:12px">{education.when}</div>

@@ -44,15 +44,15 @@ const shelfCount = ids.length;
         <div><b title="Placeholder — notes do not carry an updated date yet">—</b><span>this month</span></div>
       </div>
     </div>
-    <div class="bar2" data-r>
+    <div class="controls" data-r>
       <div class="search"><label class="sbox">⌕<input data-search placeholder="Search notes" aria-label="Search notes"><span class="kbd">/</span></label></div>
-    </div>
-    <div class="chips" data-r data-filter="#areas">
-      <button aria-pressed="true" data-v="all">All shelves</button>
-      <button data-v="web">Web</button>
-      <button data-v="sys">Systems</button>
-      <button data-v="sci">Science</button>
-      <button data-v="ref">Reference</button>
+      <div class="chips" data-filter="#areas">
+        <button aria-pressed="true" data-v="all">All shelves</button>
+        <button data-v="web">Web</button>
+        <button data-v="sys">Systems</button>
+        <button data-v="sci">Science</button>
+        <button data-v="ref">Reference</button>
+      </div>
     </div>
     <p class="empty">No notes match “<b></b>”.</p>
 

@@ -41,7 +41,7 @@ const monthYear = (date?: Date) =>
           <span class="badge hot">Most read</span>
           <h2>{featured.meta?.short ?? featured.post.data.title}</h2>
           <p>{featured.meta?.dek ?? featured.post.data.description}</p>
-          <div class="mono muted" style="font-size:12px;margin-top:10px">{monthYear(featured.date)} · {featured.minutes} min</div>
+          <div class="mono muted">{monthYear(featured.date)} · {featured.minutes} min</div>
         </div>
         <div aria-hidden="true">
           <div class="pipe"><i></i><i></i><i></i><i></i><i></i></div>
@@ -50,11 +50,13 @@ const monthYear = (date?: Date) =>
       </a>
     )}
 
-    <div class="chips" style="margin-top:34px" data-r data-filter="#posts">
-      <button aria-pressed="true" data-v="all">All</button>
-      <button data-v="rendering">Rendering</button>
-      <button data-v="frameworks">Frameworks</button>
-      <button data-v="engines">Engines</button>
+    <div class="controls" data-r>
+      <div class="chips" data-filter="#posts">
+        <button aria-pressed="true" data-v="all">All</button>
+        <button data-v="rendering">Rendering</button>
+        <button data-v="frameworks">Frameworks</button>
+        <button data-v="engines">Engines</button>
+      </div>
     </div>
 
     <div id="posts">

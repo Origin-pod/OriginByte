@@ -20,17 +20,19 @@ const labelOf = (book: (typeof library)[number]) => (book.author ? `${book.title
       <div class="eyebrow">05 — Library</div>
       <h1>The library.</h1>
       <p class="lede">Titles and authors, grouped by what is open, finished, or waiting. Pulled from Goodreads when the site builds.</p>
+      <p class="metalink"><a href={GOODREADS_URL} target="_blank" rel="noopener noreferrer">on Goodreads <span class="arr">↗</span></a></p>
     </header>
-    <p class="note" data-r><a href={GOODREADS_URL} target="_blank" rel="noopener noreferrer">on Goodreads <span class="arr">↗</span></a></p>
 
-    <div class="search" data-r>
-      <label class="sbox">⌕<input data-search placeholder="Search the shelf" aria-label="Search the shelf"><span class="kbd">/</span></label>
-    </div>
-    <div class="chips" data-filter="#shelf" data-r>
-      <button aria-pressed="true" data-v="all">All <span class="n">{library.length}</span></button>
-      <button data-v="reading">Reading <span class="n">{byStatus('reading').length}</span></button>
-      <button data-v="read">Read <span class="n">{byStatus('read').length}</span></button>
-      <button data-v="want-to-read">Want to read <span class="n">{byStatus('want-to-read').length}</span></button>
+    <div class="controls" data-r>
+      <div class="search">
+        <label class="sbox">⌕<input data-search placeholder="Search the shelf" aria-label="Search the shelf"><span class="kbd">/</span></label>
+      </div>
+      <div class="chips" data-filter="#shelf">
+        <button aria-pressed="true" data-v="all">All <span class="n">{library.length}</span></button>
+        <button data-v="reading">Reading <span class="n">{byStatus('reading').length}</span></button>
+        <button data-v="read">Read <span class="n">{byStatus('read').length}</span></button>
+        <button data-v="want-to-read">Want to read <span class="n">{byStatus('want-to-read').length}</span></button>
+      </div>
     </div>
     <p class="empty">Nothing on the shelf matches “<b></b>”.</p>
 
@@ -41,10 +43,10 @@ const labelOf = (book: (typeof library)[number]) => (book.author ? `${book.title
           <div class="list reads">
             {byStatus(group.id).map((book) => {
               const inner = (
-                <span class="t">
-                  {book.title}
+                <>
+                  <span class="t">{book.title}</span>
                   {book.author && <span class="d">{book.author}</span>}
-                </span>
+                </>
               );
               return book.fileUrl ? (
                 <a class="row" href={book.fileUrl} title={book.title} data-s={labelOf(book)}>{inner}</a>

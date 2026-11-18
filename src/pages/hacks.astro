@@ -62,7 +62,7 @@ const repos = apps.length - here;
             <h3>{group.title} <span>{group.id === 'here' ? group.hint : `${items.length} apps · ${group.hint}`}</span></h3>
             {group.id === 'here' ? (
               <div class="here">
-                <span class="livedot" style="margin-top:7px"></span>
+                <span class="livedot" style="margin-top:var(--space-2)"></span>
                 <div><b>DB Simulator</b> is the only app served from Origin Byte today. <span class="muted">It is proxied at <span class="mono">/dbsim/</span> so the lab, the résumé and the home card all open the same place.</span></div>
               </div>
             ) : (
